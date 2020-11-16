@@ -66,5 +66,8 @@
     <None Include="data\shaders\shad_materials.vs" />
     <None Include="data\shaders\shad_specular_map.fs" />
     <None Include="data\shaders\shad_specular_map.vs" />
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="README.md" />
   </ItemGroup>
 </Project>

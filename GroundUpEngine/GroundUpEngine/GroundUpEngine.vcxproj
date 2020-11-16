@@ -163,6 +163,8 @@
     <Image Include="data\images\container2_specular.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
     <None Include="data\shaders\shad_ambient.fs" />
     <None Include="data\shaders\shad_ambient.vs" />
     <None Include="data\shaders\shad_basic_lighting.fs" />
@@ -181,6 +183,7 @@
     <None Include="data\shaders\shad_specular.vs" />
     <None Include="data\shaders\shad_specular_map.fs" />
     <None Include="data\shaders\shad_specular_map.vs" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
