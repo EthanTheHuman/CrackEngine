@@ -24,6 +24,9 @@
     <ClCompile Include="stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -33,6 +36,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shader_m.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -66,8 +72,5 @@
     <None Include="data\shaders\shad_materials.vs" />
     <None Include="data\shaders\shad_specular_map.fs" />
     <None Include="data\shaders\shad_specular_map.vs" />
-    <None Include=".gitattributes" />
-    <None Include=".gitignore" />
-    <None Include="README.md" />
   </ItemGroup>
 </Project>
