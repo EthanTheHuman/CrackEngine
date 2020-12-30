@@ -8,6 +8,8 @@
 
 #include "shader_m.h"
 #include "camera.h"
+#include "code/Sprite.h"
+#include "code/Model.h"
 
 #include <iostream>
 
@@ -134,6 +136,8 @@ int main()
     lightingShader.setVec3("material.ambient", 1.0f, 1.0f, 1.0f);
     lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f); 
 
+    Sprite Jotaro("data/images/3688.png");
+
 
     // render loop
     // -----------
@@ -157,6 +161,7 @@ int main()
         // be sure to activate shader when setting uniforms/drawing objects
         lightingShader.use();
         lightingShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
+        Model::cameraPos = camera.Position;
         lightingShader.setVec3("viewPos", camera.Position);
 
         // light properties
@@ -172,8 +177,8 @@ int main()
         lightingShader.setFloat("material.shininess", 64.0f);
 
         // view/projection transformations
-        glm::mat4 projection = glm::ortho(-1.f, 1.f, -1.f, 1.f, -100.f, 100.f);
-        //glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        //glm::mat4 projection = glm::ortho(-1.f, 1.f, -1.f, 1.f, -100.f, 100.f);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
@@ -192,6 +197,8 @@ int main()
         // render the cube
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        Jotaro.render();
 
         // also draw the lamp object
         lightCubeShader.use();

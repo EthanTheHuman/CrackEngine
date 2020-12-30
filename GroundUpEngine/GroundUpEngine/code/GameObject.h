@@ -8,8 +8,12 @@
 class GameObject
 {
 public:
-	void update();
-	void render();
+	GameObject();
+	~GameObject();
+
+	virtual void init();
+	virtual void update();
+	virtual void render();
 
 	// Transforms
 	glm::vec3& getPosition();
@@ -19,7 +23,7 @@ public:
 	glm::vec3& getScale();
 	glm::vec3& setScale(glm::vec3 _scale);
 
-private:
+protected:
 	glm::vec3 position;
 	glm::vec3 rotation;
 	glm::vec3 scale;
