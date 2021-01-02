@@ -15,6 +15,8 @@ public:
     void render() override;
     Shader getShader();
     static glm::vec3 cameraPos;
+    static glm::mat4 projection;
+    static glm::mat4 view;
     void setShader(Shader& _shader);
     float* vertices;
 
@@ -22,4 +24,5 @@ protected:
     Shader shader;
     unsigned int VBO, VAO;
     unsigned int loadTexture(char const* path);
+    unsigned int loadTexture(char const* path, int* _width, int* _height);
 };

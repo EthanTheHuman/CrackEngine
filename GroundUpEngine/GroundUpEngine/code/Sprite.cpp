@@ -18,9 +18,9 @@ Sprite::~Sprite()
 void Sprite::init()
 {
 	Shader newShader("data/shaders/shad_ambient.vs", "data/shaders/shad_ambient.fs");
-	this->setShader(newShader);
+	setShader(newShader);
 
-    vertices = new float[48] {
+    float vertices2[] = {
         // positions          // normals           // texture coords
         -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
          0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
@@ -35,7 +35,7 @@ void Sprite::init()
     glGenBuffers(1, &VBO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
 
     glBindVertexArray(VAO);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -45,19 +45,15 @@ void Sprite::init()
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
 
-    // second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
-    unsigned int lightCubeVAO;
-    glGenVertexArrays(1, &lightCubeVAO);
-    glBindVertexArray(lightCubeVAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    // note that we update the lamp's position attribute's stride to reflect the updated buffer data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     // load textures (we now use a utility function to keep the code more organized)
     // -----------------------------------------------------------------------------
-    unsigned int spriteImage = loadTexture(spriteFileName);
+    spriteImage = loadTexture(spriteFileName, &spriteWidth, &spriteHeight);
+    std::cout << "Width: " << spriteWidth << std::endl;
+    std::cout << "Height: " << spriteHeight << std::endl;
+    scale.x = spriteWidth / 100;
+    scale.y = spriteHeight / 100;
 
     // shader configuration
     // --------------------
@@ -79,6 +75,7 @@ void Sprite::render()
     shader.setVec3("viewPos", cameraPos);
 
     // light properties
+    shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
     shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
     shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
     shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
@@ -98,6 +95,8 @@ void Sprite::render()
     model = glm::rotate(model, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::scale(model, scale);
     shader.setMat4("model", model);
+    shader.setMat4("view", view);
+    shader.setMat4("projection", projection);
 
     // bind diffuse map
     glActiveTexture(GL_TEXTURE0);
@@ -105,5 +104,5 @@ void Sprite::render()
 
     // render the cube
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, (sizeof(&vertices)/sizeof(vertices[0])) / 8.0f);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 }

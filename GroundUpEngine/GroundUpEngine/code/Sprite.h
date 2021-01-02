@@ -16,6 +16,7 @@ public:
 protected:
     const char* spriteFileName;
     unsigned int spriteImage;
+    int spriteWidth, spriteHeight;
 
 private:
 };

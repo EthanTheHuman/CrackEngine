@@ -155,14 +155,15 @@ int main()
 
         // render
         // ------
+
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // be sure to activate shader when setting uniforms/drawing objects
         lightingShader.use();
         lightingShader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
-        Model::cameraPos = camera.Position;
         lightingShader.setVec3("viewPos", camera.Position);
+        Model::cameraPos = camera.Position;
 
         // light properties
         lightingShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
@@ -180,6 +181,8 @@ int main()
         //glm::mat4 projection = glm::ortho(-1.f, 1.f, -1.f, 1.f, -100.f, 100.f);
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
+        Model::projection = projection;
+        Model::view = view;
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
 
@@ -198,6 +201,7 @@ int main()
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
+        Jotaro.update();
         Jotaro.render();
 
         // also draw the lamp object
