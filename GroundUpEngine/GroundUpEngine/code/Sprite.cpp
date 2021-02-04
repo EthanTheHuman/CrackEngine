@@ -4,6 +4,8 @@ Sprite::Sprite()
 {
 }
 
+unsigned int Sprite::pixelsPerUnit = 400;
+
 Sprite::Sprite(char const* _filename)
 {
     spriteFileName = _filename;
@@ -22,12 +24,12 @@ void Sprite::init()
 
     float vertices2[] = {
         // positions          // normals           // texture coords
-        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+        -0.0f, -0.0f, 0.0f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+         1.0f, -0.0f, 0.0f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+         1.0f,  1.0f, 0.0f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+         1.0f,  1.0f, 0.0f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+        -0.0f,  1.0f, 0.0f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+        -0.0f, -0.0f, 0.0f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
     };
 
     // first, configure the cube's VAO (and VBO)
@@ -52,8 +54,7 @@ void Sprite::init()
     spriteImage = loadTexture(spriteFileName, &spriteWidth, &spriteHeight);
     std::cout << "Width: " << spriteWidth << std::endl;
     std::cout << "Height: " << spriteHeight << std::endl;
-    scale.x = spriteWidth / 100;
-    scale.y = spriteHeight / 100;
+    setScale(glm::vec3(1, 1, 1));
 
     // shader configuration
     // --------------------
@@ -88,7 +89,7 @@ void Sprite::render()
     shader.setFloat("material.shininess", 64.0f);
 
     // world transformation
-    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 model(1.0f);
     model = glm::translate(model, position);
     model = glm::rotate(model, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
     model = glm::rotate(model, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -105,4 +106,20 @@ void Sprite::render()
     // render the cube
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+glm::vec3& Sprite::setScale(glm::vec3 _scale)
+{
+    scale.x = (float)(_scale.x * spriteWidth) / (float)pixelsPerUnit;
+    scale.y = (float)(_scale.y * spriteHeight) / (float)pixelsPerUnit;
+    scale.z = (float)_scale.z;
+    return scale;
+}
+
+glm::vec3& Sprite::setPosition(glm::vec3 _pos)
+{
+    position.x = (float)_pos.x / (float)pixelsPerUnit;
+    position.y = (float)_pos.y / (float)pixelsPerUnit;
+    position.z = (float)_pos.z / (float)pixelsPerUnit;
+    return position;
 }
