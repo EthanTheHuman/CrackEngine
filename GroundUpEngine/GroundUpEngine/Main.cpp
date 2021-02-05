@@ -79,8 +79,8 @@ int main()
 
     // configure global opengl state
     // -----------------------------
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
+    //glEnable(GL_DEPTH_TEST);
+    //glDepthFunc(GL_LEQUAL);
 
     Sprite Jotaro("data/images/3688.png");
     Jotaro.setPosition(glm::vec3(-200.f, 0.f, 0.01f));
@@ -120,13 +120,13 @@ int main()
         Model::projection = projection;
         Model::view = view;
 
+        Stage.update();
+        Stage.render();
         Jotaro.update();
         Jotaro.setPosition(playerPos);
         Jotaro.render();
         Polnareff.update();
         Polnareff.render();
-        Stage.update();
-        Stage.render();
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

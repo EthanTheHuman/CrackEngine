@@ -33,6 +33,9 @@
     <ClCompile Include="code\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="code\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -51,6 +54,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Includes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
