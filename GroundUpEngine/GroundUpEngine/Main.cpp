@@ -12,6 +12,8 @@
 #include "code/Model.h"
 
 #include <iostream>
+#include "code/Includes.h"
+#include "code/Log.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -100,6 +102,7 @@ int main()
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+        Log::log(std::to_string(1 / deltaTime) + "fps", Log::logMode::WARNING);
 
         // input
         // -----
