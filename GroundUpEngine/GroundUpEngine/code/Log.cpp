@@ -35,22 +35,3 @@ void Log::log(std::string _input, logMode _mode)
 	}
 }
 
-void Log::log(std::string _input)
-{
-	log(_input, logMode::LOG);
-}
-
-void Log::warn(std::string _input)
-{
-	log(_input, logMode::WARNING);
-}
-
-void Log::error(std::string _input)
-{
-	log(_input, logMode::ERROR);
-}
-
-void Log::important(std::string _input)
-{
-	log(_input, logMode::IMPORTANT);
-}
