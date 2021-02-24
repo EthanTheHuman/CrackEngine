@@ -15,6 +15,8 @@
 #include "code/Includes.h"
 #include "code/Log.h"
 
+#include "code/ImGuiUI.h"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -24,6 +26,9 @@ unsigned int loadTexture(const char* path);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+
+// ImGui
+ImGuiUI imgui;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -69,6 +74,7 @@ int main()
     glfwSetScrollCallback(window, scroll_callback);
 
     // tell GLFW to capture our mouse
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // glad: load all OpenGL function pointers
@@ -83,6 +89,10 @@ int main()
     // -----------------------------
     //glEnable(GL_DEPTH_TEST);
     //glDepthFunc(GL_LEQUAL);
+
+    // set up ImGui
+    // ------------
+    imgui.init(window);
 
     Sprite Jotaro("data/images/3688.png");
     Jotaro.setPosition(glm::vec3(-200.f, 0.f, 0.01f));
@@ -102,7 +112,6 @@ int main()
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        Log::log(std::to_string(1 / deltaTime) + "fps", Log::logMode::WARNING);
 
         // input
         // -----
@@ -130,6 +139,9 @@ int main()
         Jotaro.render();
         Polnareff.update();
         Polnareff.render();
+
+        // Render UI
+        imgui.render();
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
