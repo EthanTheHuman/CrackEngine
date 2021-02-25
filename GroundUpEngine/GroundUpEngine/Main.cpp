@@ -24,8 +24,8 @@ void processInput(GLFWwindow* window);
 unsigned int loadTexture(const char* path);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 960;
+const unsigned int SCR_HEIGHT = 640;
 
 // ImGui
 ImGuiUI imgui;
@@ -97,11 +97,11 @@ int main()
     // ------------
     imgui.init(window);
 
-    Sprite Jotaro("data/images/3688.png");
-    Jotaro.setPosition(glm::vec3(0.f, 0.f, 0.01f));
-    playerPos = Jotaro.getPosition();
+    Sprite Gravedigger("data/images/3688.png");
+    Gravedigger.setPosition(glm::vec3(0.f, 0.f, 0.01f));
+    playerPos = Gravedigger.getPosition();
     Sprite Polnareff("data/images/3676.png");
-    Polnareff.setPosition(glm::vec3(400.f, 0.f, 0.f));
+    Polnareff.setPosition(glm::vec3(240.f, 0.f, 0.f));
     Polnareff.setScale(glm::vec3(-1.f, 1.f, 1.f));
     Sprite Stage("data/images/stage.gif");
     Stage.setPosition(glm::vec3(0.f, 0.f, -0.01f));
@@ -137,9 +137,9 @@ int main()
 
         Stage.update();
         Stage.render();
-        Jotaro.update();
-        Jotaro.setPosition(playerPos);
-        Jotaro.render();
+        Gravedigger.update();
+        Gravedigger.setPosition(playerPos);
+        Gravedigger.render();
         Polnareff.update();
         Polnareff.render();
 
