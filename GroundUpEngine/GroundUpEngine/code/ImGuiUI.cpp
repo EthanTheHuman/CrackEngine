@@ -37,8 +37,8 @@ void ImGuiUI::init(GLFWwindow* window)
     style.Colors[ImGuiCol_FrameBg] = ImVec4(0.00f, 0.00f, 0.01f, 1.00f);
     style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.90f, 0.80f, 0.80f, 0.40f);
     style.Colors[ImGuiCol_FrameBgActive] = ImVec4(0.90f, 0.65f, 0.65f, 0.45f);
-    style.Colors[ImGuiCol_TitleBg] = ImVec4(1.00f, 0.00f, 0.00f, 0.83f);
-    style.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.40f, 0.40f, 0.80f, 0.20f);
+    style.Colors[ImGuiCol_TitleBg] = ImVec4((26.f / 255.f), (26.f / 255.f), (26.f / 255.f), 1.00f);
+    style.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4((26.f / 255.f), (26.f / 255.f), (26.f / 255.f), 1.00f);
     style.Colors[ImGuiCol_TitleBgActive] = ImVec4((240.f / 255.f), (136.f / 255.f), (40.f / 255.f), 1.00f);
     style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.01f, 0.01f, 0.02f, 0.80f);
     style.Colors[ImGuiCol_ScrollbarBg] = ImVec4(0.20f, 0.25f, 0.30f, 0.60f);
