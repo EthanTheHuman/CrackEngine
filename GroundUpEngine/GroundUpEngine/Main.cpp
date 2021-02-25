@@ -126,7 +126,7 @@ int main()
         Model::cameraPos = camera.Position;
 
         // view/projection transformations
-        glm::mat4 projection = glm::ortho(0.f, 1.f, 0.f, 1.f, -100.f, 100.f);
+        glm::mat4 projection = glm::ortho(0.f, 1.f, 0.f, ((float)SCR_HEIGHT / (float)SCR_WIDTH), -100.f, 100.f);
         //glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
         Model::projection = projection;
