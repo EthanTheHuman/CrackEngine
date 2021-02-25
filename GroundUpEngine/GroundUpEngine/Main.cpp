@@ -98,10 +98,10 @@ int main()
     imgui.init(window);
 
     Sprite Jotaro("data/images/3688.png");
-    Jotaro.setPosition(glm::vec3(-200.f, 0.f, 0.01f));
+    Jotaro.setPosition(glm::vec3(0.f, 0.f, 0.01f));
     playerPos = Jotaro.getPosition();
     Sprite Polnareff("data/images/3676.png");
-    Polnareff.setPosition(glm::vec3(200.f, 0.f, 0.f));
+    Polnareff.setPosition(glm::vec3(400.f, 0.f, 0.f));
     Polnareff.setScale(glm::vec3(-1.f, 1.f, 1.f));
     Sprite Stage("data/images/stage.gif");
     Stage.setPosition(glm::vec3(0.f, 0.f, -0.01f));
