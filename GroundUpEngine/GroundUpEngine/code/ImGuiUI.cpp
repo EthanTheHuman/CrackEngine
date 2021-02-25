@@ -101,18 +101,24 @@ void ImGuiUI::init(GLFWwindow* window)
 
 void ImGuiUI::render()
 {
-    static bool isPressed = true;
     if (glfwGetKey(_window, GLFW_KEY_F1) == GLFW_PRESS)
     {
         if (isPressed == false)
         {
             show_fps = !show_fps;
             isPressed = true;
+            if (show_fps)
+                glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            else
+                glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
     }
     else
     {
-        isPressed = false;
+        if (isPressed == true)
+        {
+            isPressed = false;
+        }
     }
 
     // Start the Dear ImGui frame
