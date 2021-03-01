@@ -14,6 +14,7 @@ public:
     void render() override;
     glm::vec3& setScale(glm::vec3 _scale);
     glm::vec3& setPosition(glm::vec3 _scale);
+    glm::vec3 getPosition();
 
 protected:
     const char* spriteFileName;

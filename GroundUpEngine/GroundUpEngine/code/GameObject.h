@@ -17,11 +17,11 @@ public:
 	virtual void render();
 
 	// Transforms
-	glm::vec3& getPosition();
+	virtual glm::vec3 getPosition();
 	virtual glm::vec3& setPosition(glm::vec3 _pos);
-	glm::vec3& getRotation();
+	glm::vec3 getRotation();
 	glm::vec3& setRotation(glm::vec3 _rot);
-	glm::vec3& getScale();
+	glm::vec3 getScale();
 	virtual glm::vec3& setScale(glm::vec3 _scale);
 
 protected:

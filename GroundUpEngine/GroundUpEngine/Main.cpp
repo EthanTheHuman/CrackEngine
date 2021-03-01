@@ -36,7 +36,7 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-glm::vec3 playerPos = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 playerPos = glm::vec3(20.0f, 20.0f, 0.0f);
 
 // timing
 float deltaTime = 0.0f;
@@ -98,13 +98,14 @@ int main()
     imgui.init(window);
 
     Sprite Gravedigger("data/images/3688.png");
-    Gravedigger.setPosition(glm::vec3(0.f, 0.f, 0.01f));
+    Gravedigger.setPosition(glm::vec3(20.f, 20.f, 0.f));
     playerPos = Gravedigger.getPosition();
-    Sprite Polnareff("data/images/3676.png");
-    Polnareff.setPosition(glm::vec3(240.f, 0.f, 0.f));
+    Sprite Polnareff("data/images/3688.png");
+    //Sprite Polnareff("data/images/3676.png");
+    Polnareff.setPosition(glm::vec3(220.f, 20.f, 0.f));
     Polnareff.setScale(glm::vec3(-1.f, 1.f, 1.f));
     Sprite Stage("data/images/stage.gif");
-    Stage.setPosition(glm::vec3(0.f, 0.f, -0.01f));
+    Stage.setPosition(glm::vec3(-300.f, 0.f, 0.f));
 
     // render loop
     // -----------

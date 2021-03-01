@@ -123,3 +123,12 @@ glm::vec3& Sprite::setPosition(glm::vec3 _pos)
     position.z = (float)_pos.z / (float)pixelsPerUnit;
     return position;
 }
+
+glm::vec3 Sprite::getPosition()
+{
+    glm::vec3 res;
+    res.x = (float)position.x * (float)pixelsPerUnit;
+    res.y = (float)position.y * (float)pixelsPerUnit;
+    res.z = (float)position.z * (float)pixelsPerUnit;
+    return res;
+}
