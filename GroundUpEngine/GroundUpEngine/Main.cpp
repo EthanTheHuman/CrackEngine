@@ -20,7 +20,7 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void processInput(GLFWwindow* window);
+void processInput(GLFWwindow* window, double deltaTime);
 unsigned int loadTexture(const char* path);
 
 // settings
@@ -39,8 +39,7 @@ bool firstMouse = true;
 glm::vec3 playerPos = glm::vec3(20.0f, 20.0f, 0.0f);
 
 // timing
-float deltaTime = 0.0f;
-float lastFrame = 0.0f;
+//float deltaTime = 0.0f;
 
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
@@ -107,19 +106,38 @@ int main()
     Sprite Stage("data/images/stage.gif");
     Stage.setPosition(glm::vec3(-300.f, 0.f, 0.f));
 
+    // per-frame time logic
+    // --------------------
+    double previous = glfwGetTime();
+    //std::cout << "glfwGetTime: " << previous << std::endl;
+    double lag = 0.0;
+    double FrameStep = (1000 / 120);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
         // per-frame time logic
         // --------------------
-        float currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        double current = glfwGetTime();
+        double deltaTime = (current - previous) * 1000.f;
+        //std::cout << "glfwGetTime: " << deltaTime << std::endl;
+        previous = current;
+        lag += deltaTime;
 
         // input
         // -----
-        processInput(window);
+        processInput(window, deltaTime);
+
+        // update
+        // ------
+        while (lag >= FrameStep)
+        {
+            Stage.update();
+            Gravedigger.setPosition(playerPos);
+            Gravedigger.update();
+            Polnareff.update();
+            lag -= FrameStep;
+        }
 
         // render
         // ------
@@ -136,12 +154,8 @@ int main()
         Model::projection = projection;
         Model::view = view;
 
-        Stage.update();
         Stage.render();
-        Gravedigger.update();
-        Gravedigger.setPosition(playerPos);
         Gravedigger.render();
-        Polnareff.update();
         Polnareff.render();
 
         // Render UI
@@ -167,7 +181,7 @@ int main()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window, double deltaTime)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);

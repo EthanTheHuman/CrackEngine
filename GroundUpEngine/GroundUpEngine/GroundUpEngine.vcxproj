@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="code\GameObject.cpp" />
+    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="code\Log.cpp" />
     <ClCompile Include="code\ImGuiUI.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="code\Model.h" />
     <ClInclude Include="code\Log.h" />
     <ClInclude Include="code\ImGuiUI.h" />
+    <ClInclude Include="Frame.h" />
     <ClInclude Include="Shader_m.h" />
     <ClInclude Include="code\Sprite.h" />
     <ClInclude Include="stb_image.h" />
