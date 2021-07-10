@@ -4,7 +4,7 @@ Sprite::Sprite()
 {
 }
 
-unsigned int Sprite::pixelsPerUnit = 240;
+unsigned int Sprite::pixelsPerUnit = 384;
 
 Sprite::Sprite(char const* _filename)
 {

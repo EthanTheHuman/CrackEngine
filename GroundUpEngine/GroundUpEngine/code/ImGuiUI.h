@@ -19,5 +19,8 @@ public:
 	bool show_fps = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	const char* glsl_version = "#version 130";
+
+	float deltaTime = 0.f;
+	float fps = 0.f;
 };
 

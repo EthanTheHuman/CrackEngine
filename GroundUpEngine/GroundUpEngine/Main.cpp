@@ -17,15 +17,18 @@
 
 #include "code/ImGuiUI.h"
 
+#include <chrono>
+#include <thread>
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void processInput(GLFWwindow* window, double deltaTime);
+void processInput(GLFWwindow* window);
 unsigned int loadTexture(const char* path);
 
 // settings
-const unsigned int SCR_WIDTH = 960;
-const unsigned int SCR_HEIGHT = 640;
+const unsigned int SCR_WIDTH = 1536;
+const unsigned int SCR_HEIGHT = 896;
 
 // ImGui
 ImGuiUI imgui;
@@ -108,30 +111,55 @@ int main()
 
     // per-frame time logic
     // --------------------
-    double previous = glfwGetTime();
+    double current = glfwGetTime();
+    double previous = current;
     //std::cout << "glfwGetTime: " << previous << std::endl;
     double lag = 0.0;
-    double FrameStep = (1000 / 120);
+    double deltaTime = 0.0f;
+    double FrameStep = (1000 / 60);
+    int targetFPS = 0;
+
+    auto start = std::chrono::steady_clock::now();
+    int frames = 0;
+    int fps = 0;
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
         // per-frame time logic
         // --------------------
-        double current = glfwGetTime();
-        double deltaTime = (current - previous) * 1000.f;
-        //std::cout << "glfwGetTime: " << deltaTime << std::endl;
+
+        auto now = std::chrono::steady_clock::now();
+        auto diff = now - start;
+        auto end = now + std::chrono::microseconds((int)((1000.f / targetFPS) * 1000));
+        std::cout << "frame delay: " << std::chrono::duration_cast<std::chrono::microseconds>(end - now).count() << std::endl;
+        frames++;
+        if (diff >= std::chrono::seconds(1))
+        {
+            fps = frames;
+            imgui.fps = fps;
+            start = now;
+            frames = 0;
+        }
+
+
+        current = glfwGetTime();
+        deltaTime = (current - previous) * 1000.f;
+        imgui.deltaTime = deltaTime;
         previous = current;
+        //std::cout << "glfwGetTime: " << deltaTime << std::endl;
         lag += deltaTime;
 
         // input
         // -----
-        processInput(window, deltaTime);
+        glfwPollEvents();
 
         // update
         // ------
         while (lag >= FrameStep)
         {
+            processInput(window);    // Temporary, inputs should be done every frame
             Stage.update();
             Gravedigger.setPosition(playerPos);
             Gravedigger.update();
@@ -164,7 +192,11 @@ int main()
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
-        glfwPollEvents();
+
+        if (targetFPS != 0) // If target FPS is provided, sleep the program until the expected time for next frame
+        {
+            std::this_thread::sleep_until(end);
+        }
     }
 
     // optional: de-allocate all resources once they've outlived their purpose:
@@ -181,7 +213,7 @@ int main()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* window, double deltaTime)
+void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -194,19 +226,19 @@ void processInput(GLFWwindow* window, double deltaTime)
     }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
-        camera.ProcessKeyboard(FORWARD, deltaTime);
+        camera.ProcessKeyboard(FORWARD);
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
     {
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
+        camera.ProcessKeyboard(BACKWARD);
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
-        camera.ProcessKeyboard(LEFT, deltaTime);
+        camera.ProcessKeyboard(LEFT);
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     {
-        camera.ProcessKeyboard(RIGHT, deltaTime);
+        camera.ProcessKeyboard(RIGHT);
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {

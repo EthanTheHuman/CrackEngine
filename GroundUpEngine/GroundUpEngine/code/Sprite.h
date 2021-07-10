@@ -15,12 +15,12 @@ public:
     glm::vec3& setScale(glm::vec3 _scale);
     glm::vec3& setPosition(glm::vec3 _scale);
     glm::vec3 getPosition();
+    static unsigned int pixelsPerUnit;
 
 protected:
     const char* spriteFileName;
     unsigned int spriteImage;
     int spriteWidth, spriteHeight;
-    static unsigned int pixelsPerUnit;
 
 private:
 };

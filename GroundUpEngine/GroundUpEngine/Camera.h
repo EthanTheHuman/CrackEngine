@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <vector>
+#include "code/Sprite.h"
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
@@ -18,7 +19,7 @@ enum Camera_Movement {
 // Default camera values
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
-const float SPEED = 2.5f;
+const int SPEED = 1;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 
@@ -63,13 +64,15 @@ public:
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
     glm::mat4 GetViewMatrix()
     {
-        return glm::lookAt(Position, Position + Front, Up);
+        int pixelRatio = Sprite::pixelsPerUnit;
+        glm::vec3 pixelPos = glm::vec3(Position.x / pixelRatio, Position.y / pixelRatio, Position.z / pixelRatio);
+        return glm::lookAt(pixelPos, pixelPos + Front, Up);
     }
 
     // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
-    void ProcessKeyboard(Camera_Movement direction, float deltaTime)
+    void ProcessKeyboard(Camera_Movement direction)
     {
-        float velocity = MovementSpeed * deltaTime;
+        float velocity = MovementSpeed;
         if (direction == FORWARD)
             Position += Front * velocity;
         if (direction == BACKWARD)
