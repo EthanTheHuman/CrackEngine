@@ -19,6 +19,11 @@
 
 #include <chrono>
 #include <thread>
+#include "includes/json.hpp"
+#include "code/Config.h"
+
+// for convenience
+using json = nlohmann::json;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -27,8 +32,8 @@ void processInput(GLFWwindow* window);
 unsigned int loadTexture(const char* path);
 
 // settings
-const unsigned int SCR_WIDTH = 1536;
-const unsigned int SCR_HEIGHT = 896;
+unsigned int SCR_WIDTH = 1536;
+unsigned int SCR_HEIGHT = 896;
 
 // ImGui
 ImGuiUI imgui;
@@ -49,13 +54,23 @@ glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 int main()
 {
+    Config config;
+    config.Init();
+    SCR_WIDTH = config.SCR_WIDTH;
+    SCR_HEIGHT = config.SCR_HEIGHT;
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+    if (config.resizableWindow)
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+    else
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+    const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
     // glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 
 #ifdef __APPLE__
@@ -64,7 +79,18 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Ethan's Engine", NULL, NULL);
+    GLFWwindow* window;
+    if (config.fullscreen)
+    {
+        config.SCR_WIDTH = mode->width;
+        config.SCR_HEIGHT = mode->height;
+        SCR_WIDTH = mode->width;
+        SCR_HEIGHT = mode->height;
+        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Ethan's Engine", glfwGetPrimaryMonitor(), NULL);
+    }
+    else
+        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Ethan's Engine", NULL, NULL);
+
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -99,13 +125,16 @@ int main()
     // ------------
     imgui.init(window);
 
-    Sprite Gravedigger("data/images/3688.png");
-    Gravedigger.setPosition(glm::vec3(20.f, 20.f, 0.f));
-    playerPos = Gravedigger.getPosition();
-    Sprite Polnareff("data/images/3688.png");
+    Sprite Jotaro("data/images/Jotaro.png");
+    Jotaro.setPosition(glm::vec3(20.f, 20.f, 0.f));
+    playerPos = Jotaro.getPosition();
+    Sprite Polnareff("data/images/3676.png");
     //Sprite Polnareff("data/images/3676.png");
-    Polnareff.setPosition(glm::vec3(220.f, 20.f, 0.f));
+    Polnareff.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
     Polnareff.setScale(glm::vec3(-1.f, 1.f, 1.f));
+    Sprite PolnareffShadow("data/images/Shadow.png");
+    PolnareffShadow.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 15, 0.f));
+    PolnareffShadow.setScale(glm::vec3(-1.f, 1.f, 1.f));
     Sprite Stage("data/images/stage.gif");
     Stage.setPosition(glm::vec3(-300.f, 0.f, 0.f));
 
@@ -133,7 +162,6 @@ int main()
         auto now = std::chrono::steady_clock::now();
         auto diff = now - start;
         auto end = now + std::chrono::microseconds((int)((1000.f / targetFPS) * 1000));
-        std::cout << "frame delay: " << std::chrono::duration_cast<std::chrono::microseconds>(end - now).count() << std::endl;
         frames++;
         if (diff >= std::chrono::seconds(1))
         {
@@ -161,8 +189,8 @@ int main()
         {
             processInput(window);    // Temporary, inputs should be done every frame
             Stage.update();
-            Gravedigger.setPosition(playerPos);
-            Gravedigger.update();
+            Jotaro.setPosition(playerPos);
+            Jotaro.update();
             Polnareff.update();
             lag -= FrameStep;
         }
@@ -183,7 +211,8 @@ int main()
         Model::view = view;
 
         Stage.render();
-        Gravedigger.render();
+        Jotaro.render();
+        PolnareffShadow.render();
         Polnareff.render();
 
         // Render UI

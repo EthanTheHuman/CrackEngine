@@ -1,0 +1,8 @@
+{
+	"screenWidth": 1536,
+	"screenHeight": 896,
+	"vsync": false,
+	"fullscreen": false,
+	"resizableWindow": true,
+	"targetFPS": 0
+}
