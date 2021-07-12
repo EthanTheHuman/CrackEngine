@@ -86,10 +86,10 @@ int main()
         config.SCR_HEIGHT = mode->height;
         SCR_WIDTH = mode->width;
         SCR_HEIGHT = mode->height;
-        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Ethan's Engine", glfwGetPrimaryMonitor(), NULL);
+        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, config.windowName.c_str(), glfwGetPrimaryMonitor(), NULL);
     }
     else
-        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Ethan's Engine", NULL, NULL);
+        window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, config.windowName.c_str(), NULL, NULL);
 
     if (window == NULL)
     {
@@ -145,8 +145,7 @@ int main()
     //std::cout << "glfwGetTime: " << previous << std::endl;
     double lag = 0.0;
     double deltaTime = 0.0f;
-    double FrameStep = (1000 / 60);
-    int targetFPS = 0;
+    double FrameStep = (1000 / config.targetFramestep);
 
     auto start = std::chrono::steady_clock::now();
     int frames = 0;
@@ -161,7 +160,7 @@ int main()
 
         auto now = std::chrono::steady_clock::now();
         auto diff = now - start;
-        auto end = now + std::chrono::microseconds((int)((1000.f / targetFPS) * 1000));
+        auto end = now + std::chrono::microseconds((int)((1000.f / config.targetFPS) * 1000));
         frames++;
         if (diff >= std::chrono::seconds(1))
         {
@@ -222,7 +221,7 @@ int main()
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
 
-        if (targetFPS != 0) // If target FPS is provided, sleep the program until the expected time for next frame
+        if (config.targetFPS != 0) // If target FPS is provided, sleep the program until the expected time for next frame
         {
             std::this_thread::sleep_until(end);
         }

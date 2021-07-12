@@ -1,8 +1,4 @@
 #include "Config.h"
-#include <fstream>
-#include <string>
-#include <iostream>
-#include "../includes/json.hpp"
 
 using namespace std;
 using json = nlohmann::json;
@@ -14,14 +10,18 @@ bool Config::fullscreen = false;
 bool Config::resizableWindow = true;
 unsigned int Config::targetFPS = 0;
 
+std::string Config::windowName = "Ethan's Engine";
+unsigned int Config::targetFramestep = 60;
+
 void Config::Init()
 {
-	ifstream myfile ("config.json", ios::out | ios::app | ios::binary);
-	if (myfile.is_open())
+	// Read config.json
+	ifstream configfile ("config.json", ios::out | ios::app | ios::binary);
+	if (configfile.is_open())
 	{
 		// Proceed with output
 		json config;
-		myfile >> config;
+		configfile >> config;
 
 		cout << "config:" << endl;
 		cout << config.dump() << endl;
@@ -38,6 +38,27 @@ void Config::Init()
 		// Error opening file
 		cout << "Unable to open file" << endl;
 	}
-	myfile.close();
+	configfile.close();
+
+	// Read config.json
+	ifstream projectsettingsfile("data/config/ProjectSettings.json", ios::out | ios::app | ios::binary);
+	if (projectsettingsfile.is_open())
+	{
+		// Proceed with output
+		json config;
+		projectsettingsfile >> config;
+
+		cout << "project settings:" << endl;
+		cout << config.dump() << endl;
+		windowName = config["windowName"];
+		targetFramestep = config["targetFramestep"];
+	}
+	else
+	{
+		// Error opening file
+		cout << "Unable to open file" << endl;
+	}
+	projectsettingsfile.close();
+
 	return;
 }
