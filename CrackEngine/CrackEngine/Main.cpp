@@ -125,6 +125,10 @@ int main()
     // ------------
     imgui.init(window);
 
+    Sprite Goku1("data/images/ghn/ghn00_07.png");
+    Sprite Goku2("data/images/ghn/ghn00_08.png");
+    bool GokuFrame = false;
+
     Sprite Jotaro("data/images/Jotaro.png");
     Jotaro.setPosition(glm::vec3(20.f, 20.f, 0.f));
     playerPos = Jotaro.getPosition();
@@ -168,6 +172,16 @@ int main()
             imgui.fps = fps;
             start = now;
             frames = 0;
+            if (GokuFrame == false)
+            {
+                Jotaro.setImage(Goku1.spriteImage, Goku1.spriteWidth, Goku1.spriteHeight);
+                GokuFrame = true;
+            }
+            else
+            {
+                Jotaro.setImage(Goku2.spriteImage, Goku2.spriteWidth, Goku2.spriteHeight);
+                GokuFrame = false;
+            }
         }
 
 

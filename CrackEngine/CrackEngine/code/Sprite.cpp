@@ -108,6 +108,26 @@ void Sprite::render()
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
+int Sprite::setImage(int textureRef)
+{
+    spriteImage = textureRef;
+    return 0;
+}
+
+int Sprite::setImage(int textureRef, int width, int height)
+{
+    spriteImage = textureRef;
+    spriteWidth = width;
+    spriteHeight = height;
+    setScale(glm::vec3((scale.x * (float)pixelsPerUnit / spriteWidth), (scale.y * (float)pixelsPerUnit / spriteHeight), 1));
+    return 0;
+}
+
+int Sprite::setImage(std::string texturePath)
+{
+    return 0;
+}
+
 glm::vec3& Sprite::setScale(glm::vec3 _scale)
 {
     scale.x = (float)(_scale.x * spriteWidth) / (float)pixelsPerUnit;
