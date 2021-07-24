@@ -94,7 +94,7 @@ void Sprite::render()
     model = glm::rotate(model, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
     model = glm::rotate(model, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
     model = glm::rotate(model, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::scale(model, scale);
+    model = glm::scale(model, convertedScale());
     shader.setMat4("model", model);
     shader.setMat4("view", view);
     shader.setMat4("projection", projection);
@@ -119,7 +119,7 @@ int Sprite::setImage(int textureRef, int width, int height)
     spriteImage = textureRef;
     spriteWidth = width;
     spriteHeight = height;
-    setScale(glm::vec3((scale.x * (float)pixelsPerUnit / spriteWidth), (scale.y * (float)pixelsPerUnit / spriteHeight), 1));
+    setScale(glm::vec3(1, 1, 1));
     return 0;
 }
 
@@ -130,9 +130,7 @@ int Sprite::setImage(std::string texturePath)
 
 glm::vec3& Sprite::setScale(glm::vec3 _scale)
 {
-    scale.x = (float)(_scale.x * spriteWidth) / (float)pixelsPerUnit;
-    scale.y = (float)(_scale.y * spriteHeight) / (float)pixelsPerUnit;
-    scale.z = (float)_scale.z;
+    scale = _scale;
     return scale;
 }
 
@@ -151,4 +149,13 @@ glm::vec3 Sprite::getPosition()
     res.y = (float)position.y * (float)pixelsPerUnit;
     res.z = (float)position.z * (float)pixelsPerUnit;
     return res;
+}
+
+glm::vec3 Sprite::convertedScale()
+{
+    glm::vec3 newScale;
+    newScale.x = (float)(scale.x * spriteWidth) / (float)pixelsPerUnit;
+    newScale.y = (float)(scale.y * spriteHeight) / (float)pixelsPerUnit;
+    newScale.z = (float)scale.z;
+    return newScale;
 }

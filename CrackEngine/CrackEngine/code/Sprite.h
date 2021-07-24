@@ -23,6 +23,7 @@ public:
     int spriteWidth, spriteHeight;
 
 protected:
+    glm::vec3 convertedScale();
     const char* spriteFileName;
 
 private:
