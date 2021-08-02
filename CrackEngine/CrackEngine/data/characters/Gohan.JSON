@@ -1,0 +1,61 @@
+{
+  "characterName": "Gohan",
+  "anims": [
+    {
+      "index": 0,
+      "name": "idle",
+      "frames": [
+        {
+          "index": 0,
+          "filename": "data/images/ghn/ghn00_09.png",
+          "framecount": 8,
+          "xscale": -1,
+          "yscale": 1,
+          "xpos": -49,
+          "ypos": -7
+        },
+        {
+          "index": 1,
+          "filename": "data/images/ghn/ghn00_08.png",
+          "framecount": 6,
+          "xscale": -1,
+          "xpos": -49,
+          "ypos": -14
+        },
+        {
+          "index": 2,
+          "filename": "data/images/ghn/ghn00_07.png",
+          "framecount": 6,
+          "xscale": -1,
+          "xpos": -49,
+          "ypos": -11
+        },
+        {
+          "index": 3,
+          "filename": "data/images/ghn/ghn00_06.png",
+          "framecount": 8,
+          "xscale": -1,
+          "xpos": -49,
+          "ypos": -10
+        },
+        {
+          "index": 4,
+          "filename": "data/images/ghn/ghn00_07.png",
+          "framecount": 4,
+          "xscale": -1,
+          "xpos": -49,
+          "ypos": -11
+        },
+        {
+          "index": 5,
+          "filename": "data/images/ghn/ghn00_08.png",
+          "framecount": 4,
+          "xscale": -1,
+          "xpos": -49,
+          "ypos": -14
+        }
+
+      ]
+    }
+  ]
+}

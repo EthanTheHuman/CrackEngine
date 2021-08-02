@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -72,23 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(SolutionDir)includes;$(SolutionDir)includes</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(SolutionDir)includes;$(SolutionDir)includes;$(SolutionDir)includes\libpng</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(SolutionDir)includes</IncludePath>
-    <LibraryPath>$(SolutionDir)libs;$(SolutionDir)libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(SolutionDir)includes\libpng</IncludePath>
+    <LibraryPath>$(SolutionDir)libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(SolutionDir)includes;$(SolutionDir)includes</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(SolutionDir)includes;$(SolutionDir)includes;$(SolutionDir)includes\libpng</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(SolutionDir)includes</IncludePath>
-    <LibraryPath>$(SolutionDir)libs;$(SolutionDir)libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);$(SolutionDir)includes;$(SolutionDir)includes\libpng</IncludePath>
+    <LibraryPath>$(SolutionDir)libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -100,6 +100,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libpng.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -112,7 +113,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,6 +130,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libpng.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -137,7 +139,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -145,56 +147,18 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="code\GameObject.cpp" />
-    <ClCompile Include="code\Config.cpp" />
-    <ClCompile Include="Frame.cpp" />
-    <ClCompile Include="glad.c" />
-    <ClCompile Include="code\Log.cpp" />
-    <ClCompile Include="code\ImGuiUI.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="code\Model.cpp" />
-    <ClCompile Include="code\Sprite.cpp" />
-    <ClCompile Include="stb_image.cpp" />
-    <ClCompile Include="vendor\imgui\imgui.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_tables.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="code\GameObject.h" />
-    <ClInclude Include="code\Includes.h" />
-    <ClInclude Include="code\Model.h" />
-    <ClInclude Include="code\Log.h" />
-    <ClInclude Include="code\ImGuiUI.h" />
-    <ClInclude Include="code\Config.h" />
-    <ClInclude Include="Frame.h" />
-    <ClInclude Include="includes\json.hpp" />
-    <ClInclude Include="Shader_m.h" />
-    <ClInclude Include="code\Sprite.h" />
-    <ClInclude Include="stb_image.h" />
-    <ClInclude Include="vendor\imgui\imconfig.h" />
-    <ClInclude Include="vendor\imgui\imgui.h" />
-    <ClInclude Include="vendor\imgui\imgui_impl_glfw.h" />
-    <ClInclude Include="vendor\imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="vendor\imgui\imgui_internal.h" />
-    <ClInclude Include="vendor\imgui\imstb_rectpack.h" />
-    <ClInclude Include="vendor\imgui\imstb_textedit.h" />
-    <ClInclude Include="vendor\imgui\imstb_truetype.h" />
-  </ItemGroup>
   <ItemGroup>
     <Image Include="data\images\3688.png" />
     <Image Include="data\images\container2.png" />
     <Image Include="data\images\container2_specular.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="config.json" />
+    <None Include="data\characters\Gohan.JSON" />
+    <None Include="data\characters\GohanHurt.JSON" />
     <None Include="data\shaders\shad_ambient.fs" />
     <None Include="data\shaders\shad_ambient.vs" />
     <None Include="data\shaders\shad_basic_lighting.fs" />
@@ -213,6 +177,53 @@
     <None Include="data\shaders\shad_specular.vs" />
     <None Include="data\shaders\shad_specular_map.fs" />
     <None Include="data\shaders\shad_specular_map.vs" />
+    <None Include="imgui.ini" />
+    <None Include="libpng16.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="code\Graphics\AnimManager.cpp" />
+    <ClCompile Include="code\Graphics\Animation.cpp" />
+    <ClCompile Include="code\Config.cpp" />
+    <ClCompile Include="code\GameObject.cpp" />
+    <ClCompile Include="code\ImGuiUI.cpp" />
+    <ClCompile Include="code\Log.cpp" />
+    <ClCompile Include="code\Graphics\Model.cpp" />
+    <ClCompile Include="code\Graphics\Sprite.cpp" />
+    <ClCompile Include="code\Graphics\Frame.cpp" />
+    <ClCompile Include="glad.c" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="vendor\imgui\imgui.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_tables.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\Graphics\AnimManager.h" />
+    <ClInclude Include="code\Graphics\Animation.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="code\Config.h" />
+    <ClInclude Include="code\GameObject.h" />
+    <ClInclude Include="code\ImGuiUI.h" />
+    <ClInclude Include="code\Includes.h" />
+    <ClInclude Include="code\Log.h" />
+    <ClInclude Include="code\Graphics\Model.h" />
+    <ClInclude Include="code\Graphics\Sprite.h" />
+    <ClInclude Include="code\Graphics\Frame.h" />
+    <ClInclude Include="includes\json.hpp" />
+    <ClInclude Include="Shader_m.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="vendor\imgui\imconfig.h" />
+    <ClInclude Include="vendor\imgui\imgui.h" />
+    <ClInclude Include="vendor\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="vendor\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="vendor\imgui\imgui_internal.h" />
+    <ClInclude Include="vendor\imgui\imstb_rectpack.h" />
+    <ClInclude Include="vendor\imgui\imstb_textedit.h" />
+    <ClInclude Include="vendor\imgui\imstb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

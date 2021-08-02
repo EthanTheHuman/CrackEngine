@@ -1,4 +1,5 @@
 {
 	"windowName": "Ethan's Engine",
-	"targetFramestep": 60
+	"targetFramestep": 60,
+	"pixelsPerUnit":  384
 }

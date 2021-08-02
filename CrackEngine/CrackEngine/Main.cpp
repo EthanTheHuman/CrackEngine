@@ -8,8 +8,8 @@
 
 #include "shader_m.h"
 #include "camera.h"
-#include "code/Sprite.h"
-#include "code/Model.h"
+#include "code/Graphics/Sprite.h"
+#include "code/Graphics/Model.h"
 
 #include <iostream>
 #include "code/Includes.h"
@@ -21,6 +21,8 @@
 #include <thread>
 #include "includes/json.hpp"
 #include "code/Config.h"
+#include <vector>
+#include "code/Graphics/AnimManager.h"
 
 // for convenience
 using json = nlohmann::json;
@@ -125,22 +127,28 @@ int main()
     // ------------
     imgui.init(window);
 
-    Sprite Goku1("data/images/ghn/ghn00_07.png");
-    Sprite Goku2("data/images/ghn/ghn00_08.png");
-    bool GokuFrame = false;
+    Sprite Player1("data/images/ghn/ghn00_06.png");
+    Player1.setPosition(glm::vec3(60.f, 20.f, 0.f));
+    AnimManager player1Manager(&Player1, (std::string)"data/characters/Gohan.JSON");
+    playerPos = Player1.getPosition();
+    Sprite Player2("data/images/ghn/ghn00_01.png");
+    Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
+    AnimManager player2Manager(&Player2, (std::string)"data/characters/GohanHurt.JSON");
+    Player2.setScale(glm::vec3(-1.f, 1.f, 1.f));
+    //Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
+    Sprite Shadow("data/images/Shadow.png");
+    Shadow.setPosition(glm::vec3(-50, 8, 0));
 
-    Sprite Jotaro("data/images/Jotaro.png");
-    Jotaro.setPosition(glm::vec3(20.f, 20.f, 0.f));
-    playerPos = Jotaro.getPosition();
-    Sprite Polnareff("data/images/3676.png");
-    //Sprite Polnareff("data/images/3676.png");
-    Polnareff.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
-    Polnareff.setScale(glm::vec3(-1.f, 1.f, 1.f));
-    Sprite PolnareffShadow("data/images/Shadow.png");
-    PolnareffShadow.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 15, 0.f));
-    PolnareffShadow.setScale(glm::vec3(-1.f, 1.f, 1.f));
-    Sprite Stage("data/images/stage.gif");
-    Stage.setPosition(glm::vec3(-300.f, 0.f, 0.f));
+    std::vector<Sprite> stageElements;
+    Sprite SkyBG("data/images/DokkanBGs/Muscle Tower/battle_bg_00030_01.png");
+    SkyBG.setPosition(glm::vec3(0, 0.f, 0.f));
+    stageElements.push_back(SkyBG);
+    Sprite PlainsBG("data/images/DokkanBGs/Muscle Tower/battle_bg_00030_02.png");
+    PlainsBG.setPosition(glm::vec3(0, 0.f, 0.f));
+    stageElements.push_back(PlainsBG);
+    Sprite GroundBG("data/images/DokkanBGs/Muscle Tower/battle_bg_00030_03.png");
+    GroundBG.setPosition(glm::vec3(0, 0.f, 0.f));
+    stageElements.push_back(GroundBG);
 
     // per-frame time logic
     // --------------------
@@ -172,16 +180,6 @@ int main()
             imgui.fps = fps;
             start = now;
             frames = 0;
-            if (GokuFrame == false)
-            {
-                Jotaro.setImage(Goku1.spriteImage, Goku1.spriteWidth, Goku1.spriteHeight);
-                GokuFrame = true;
-            }
-            else
-            {
-                Jotaro.setImage(Goku2.spriteImage, Goku2.spriteWidth, Goku2.spriteHeight);
-                GokuFrame = false;
-            }
         }
 
 
@@ -201,10 +199,16 @@ int main()
         while (lag >= FrameStep)
         {
             processInput(window);    // Temporary, inputs should be done every frame
-            Stage.update();
-            Jotaro.setPosition(playerPos);
-            Jotaro.update();
-            Polnareff.update();
+
+            for (std::vector<Sprite>::iterator it = stageElements.begin(); it != stageElements.end(); ++it)
+            {
+                it->update();
+            }
+            Player1.setPosition(playerPos);
+            player1Manager.update();
+            player2Manager.update();
+            Player1.update();
+            Player2.update();
             lag -= FrameStep;
         }
 
@@ -223,10 +227,16 @@ int main()
         Model::projection = projection;
         Model::view = view;
 
-        Stage.render();
-        Jotaro.render();
-        PolnareffShadow.render();
-        Polnareff.render();
+        for (std::vector<Sprite>::iterator it = stageElements.begin(); it != stageElements.end(); ++it)
+        {
+            it->render();
+        }
+        Shadow.framePos = glm::vec3(Player1.getPosition().x, 0, 0);
+        Shadow.render();
+        Shadow.framePos = glm::vec3(Player2.getPosition().x, 0, 0);
+        Shadow.render();
+        player1Manager.render();
+        player2Manager.render();
 
         // Render UI
         imgui.render();
