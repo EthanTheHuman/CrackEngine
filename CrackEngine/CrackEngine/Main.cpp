@@ -127,10 +127,10 @@ int main()
     // ------------
     imgui.init(window);
 
-    Sprite Player1("data/images/ghn/ghn00_06.png");
-    Player1.setPosition(glm::vec3(60.f, 20.f, 0.f));
-    AnimManager player1Manager(&Player1, (std::string)"data/characters/Gohan.JSON");
-    playerPos = Player1.getPosition();
+    //Sprite Player1("data/images/ghn/ghn00_06.png");
+    AnimManager player1Manager((std::string)"data/characters/Gohan.JSON");
+    player1Manager.setPosition(glm::vec3(60.f, 20.f, 0.f));
+    playerPos = player1Manager.getPosition();
     Sprite Player2("data/images/ghn/ghn00_01.png");
     Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
     AnimManager player2Manager(&Player2, (std::string)"data/characters/GohanHurt.JSON");
@@ -204,10 +204,9 @@ int main()
             {
                 it->update();
             }
-            Player1.setPosition(playerPos);
+            player1Manager.setPosition(playerPos);
             player1Manager.update();
             player2Manager.update();
-            Player1.update();
             Player2.update();
             lag -= FrameStep;
         }
@@ -231,7 +230,7 @@ int main()
         {
             it->render();
         }
-        Shadow.framePos = glm::vec3(Player1.getPosition().x, 0, 0);
+        Shadow.framePos = glm::vec3(player1Manager.getPosition().x, 0, 0);
         Shadow.render();
         Shadow.framePos = glm::vec3(Player2.getPosition().x, 0, 0);
         Shadow.render();

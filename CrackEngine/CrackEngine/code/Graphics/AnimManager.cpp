@@ -1,5 +1,11 @@
 #include "AnimManager.h"
 
+glm::vec3& AnimManager::setScale(glm::vec3 _scale)
+{
+	sprite->setScale(_scale);
+	return _scale;
+}
+
 AnimManager::AnimManager(Sprite* _sprite, json _characterData)
 {
 	sprite = _sprite;
@@ -32,9 +38,51 @@ AnimManager::AnimManager(Sprite* _sprite, string _characterData)
 	configfile.close();
 }
 
+AnimManager::AnimManager(string _characterData)
+{
+	sprite = new Sprite("");
+	sprite->setPosition(glm::vec3(60.f, 20.f, 0.f));
+
+	ifstream configfile(_characterData, ios::out | ios::app | ios::binary);
+	if (configfile.is_open())
+	{
+		// Proceed with output
+		json jsonData;
+		configfile >> jsonData;
+
+		parseJson(jsonData);
+		currentAnim = &animList[0];
+		currentFrame = &currentAnim->frameList[0];
+		sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
+		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
+		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
+	}
+	else
+	{
+		// Error opening file
+		cout << "Unable to open file" << endl;
+	}
+	configfile.close();
+}
+
 void AnimManager::render()
 {
 	sprite->render();
+}
+
+glm::vec3 AnimManager::getPosition()
+{
+	return sprite->getPosition();
+}
+
+glm::vec3& AnimManager::setPosition(glm::vec3 _pos)
+{
+	sprite->setPosition(_pos);
+	return _pos;
+}
+
+void AnimManager::init()
+{
 }
 
 void AnimManager::update()
@@ -54,6 +102,7 @@ void AnimManager::update()
 		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 		frameCount = 0;
 	}
+	sprite->update();
 }
 
 void AnimManager::parseJson(json& _jsonData)
