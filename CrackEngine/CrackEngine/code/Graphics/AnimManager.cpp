@@ -12,11 +12,11 @@ AnimManager::AnimManager(Sprite* _sprite, json _characterData)
 	parseJson(_characterData);
 }
 
-AnimManager::AnimManager(Sprite* _sprite, string _characterData)
+AnimManager::AnimManager(Sprite* _sprite, std::string _characterData)
 {
 	sprite = _sprite;
 
-	ifstream configfile(_characterData, ios::out | ios::app | ios::binary);
+	std::ifstream configfile(_characterData, std::ios::out | std::ios::app | std::ios::binary);
 	if (configfile.is_open())
 	{
 		// Proceed with output
@@ -26,6 +26,7 @@ AnimManager::AnimManager(Sprite* _sprite, string _characterData)
 		parseJson(jsonData);
 		currentAnim = &animList[0];
 		currentFrame = &currentAnim->frameList[0];
+		mainPalette = Palette();
 		sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
 		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
 		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
@@ -33,17 +34,17 @@ AnimManager::AnimManager(Sprite* _sprite, string _characterData)
 	else
 	{
 		// Error opening file
-		cout << "Unable to open file" << endl;
+		std::cout << "Unable to open file" << std::endl;
 	}
 	configfile.close();
 }
 
-AnimManager::AnimManager(string _characterData)
+AnimManager::AnimManager(std::string _characterData)
 {
 	sprite = new Sprite("");
 	sprite->setPosition(glm::vec3(60.f, 20.f, 0.f));
 
-	ifstream configfile(_characterData, ios::out | ios::app | ios::binary);
+	std::ifstream configfile(_characterData, std::ios::out | std::ios::app | std::ios::binary);
 	if (configfile.is_open())
 	{
 		// Proceed with output
@@ -60,9 +61,14 @@ AnimManager::AnimManager(string _characterData)
 	else
 	{
 		// Error opening file
-		cout << "Unable to open file" << endl;
+		std::cout << "Unable to open file" << std::endl;
 	}
 	configfile.close();
+}
+
+void AnimManager::setPalette(std::string _newColorFileName, std::string _oldColorFileName)
+{
+	sprite->mainPalette = Palette(_newColorFileName, _oldColorFileName);
 }
 
 void AnimManager::render()
@@ -112,7 +118,7 @@ void AnimManager::parseJson(json& _jsonData)
 		if (anim.find("frames") != anim.end())
 		{
 			// frame count
-			map<int, Frame> frameList;
+			std::map<int, Frame> frameList;
 			for (const auto& frame : anim["frames"])
 			{
 				int xScale = 1;
@@ -127,7 +133,7 @@ void AnimManager::parseJson(json& _jsonData)
 				int yPos = 0;
 				if (frame.find("ypos") != frame.end() && frame["ypos"].is_number_integer())
 					yPos = frame["ypos"];
-				string spriteFileName = "";
+				std::string spriteFileName = "";
 				if (frame.find("filename") != frame.end() && frame["filename"].is_string())
 					spriteFileName = frame["filename"];
 				int spriteframeCount = 1;

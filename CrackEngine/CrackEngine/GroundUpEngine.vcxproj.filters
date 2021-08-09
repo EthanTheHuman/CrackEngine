@@ -49,6 +49,8 @@
     <None Include="libpng16.dll" />
     <None Include="data\characters\Gohan.JSON" />
     <None Include="data\characters\GohanHurt.JSON" />
+    <None Include="data\shaders\shad_palette.fs" />
+    <None Include="data\shaders\shad_palette.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Config.cpp">
@@ -106,6 +108,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\Graphics\AnimManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Graphics\Palette.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -174,6 +179,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\Graphics\AnimManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Graphics\Palette.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

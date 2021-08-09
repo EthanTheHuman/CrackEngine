@@ -1,6 +1,7 @@
 #pragma once
 #include "Model.h"
 #include "../Config.h"
+#include "Palette.h"
 
 class Sprite :
     public Model
@@ -32,6 +33,7 @@ public:
 
     glm::vec3 frameScale = glm::vec3(1,1,1);
     glm::vec3 framePos = glm::vec3(0, 0, 0);
+    Palette mainPalette = Palette();
 
 protected:
     glm::vec3 getLocalPos();

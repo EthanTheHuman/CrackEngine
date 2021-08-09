@@ -19,7 +19,7 @@ Sprite::~Sprite()
 
 void Sprite::init()
 {
-	static Shader newShader("data/shaders/shad_ambient.vs", "data/shaders/shad_ambient.fs");
+	static Shader newShader("data/shaders/shad_palette.vs", "data/shaders/shad_palette.fs");
 	setShader(newShader);
 
     float vertices2[] = {
@@ -69,6 +69,8 @@ void Sprite::update()
 
 void Sprite::render()
 {
+    //spriteWidth = 2;
+    //spriteHeight = 256;
     shader.use();
     shader.setVec3("light.direction", -0.2f, -1.0f, -0.3f);
     shader.setVec3("viewPos", cameraPos);
@@ -86,6 +88,17 @@ void Sprite::render()
     shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
     shader.setFloat("material.shininess", 64.0f);
 
+    for (int i = 0; i < mainPalette.baseColors.size(); i++) {
+        GLint baseColorsLoc = glGetUniformLocation(shader.ID, ("baseColors["+i+(std::string)"]").c_str());
+        glUniform3f(baseColorsLoc, mainPalette.baseColors[i].x, mainPalette.baseColors[i].y, mainPalette.baseColors[i].z);
+        //shader.setVec3("baseColors[" + i + (std::string)"]", mainPalette.baseColors[i]);
+    }
+    for (int i = 0; i != mainPalette.convertedColors.size(); i++) {
+        GLint convertedColorsLoc = glGetUniformLocation(shader.ID, ("convertedColors[" + i + (std::string)"]").c_str());
+        glUniform4f(convertedColorsLoc, mainPalette.convertedColors[i].x, mainPalette.convertedColors[i].y, mainPalette.convertedColors[i].z, mainPalette.convertedColors[i].w);
+    }
+    shader.setInt("colorCount", mainPalette.paletteCount);
+
     // world transformation
     glm::mat4 model(1.0f);
     model = glm::translate(model, convertedPosition(position + getLocalPos()));
@@ -99,7 +112,29 @@ void Sprite::render()
 
     // bind diffuse map
     glActiveTexture(GL_TEXTURE0);
+    //spriteImage = mainPalette.paletteTexIndex;
+    //spriteWidth = 2;
+    //spriteHeight = 256;
+
     glBindTexture(GL_TEXTURE_2D, spriteImage);
+
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, mainPalette.paletteTexIndex);
+
+    //--------------
+    auto texLoc = glGetUniformLocation(shader.ID, "Texture0");
+    glUniform1i(texLoc, 0);
+
+    texLoc = glGetUniformLocation(shader.ID, "Texture1");
+    glUniform1i(texLoc, 1);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, spriteImage);
+
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, mainPalette.paletteTexIndex);
+    
+    //--------------------------------
 
     // render the cube
     glBindVertexArray(VAO);

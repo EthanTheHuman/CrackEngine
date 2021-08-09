@@ -10,7 +10,7 @@ Animation::Animation(json _jsonData)
 	json jsonFrames = _jsonData["frames"];
 }
 
-Animation::Animation(map<int, Frame> _frameList, int _index)
+Animation::Animation(std::map<int, Frame> _frameList, int _index)
 {
 	index = _index;
 	frameList = _frameList;

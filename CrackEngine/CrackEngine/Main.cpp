@@ -1,3 +1,8 @@
+#include <iostream>
+#include <vector>
+#include <list>
+#include <string>
+#include <vector>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "stb_image.h"
@@ -6,13 +11,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "shader_m.h"
-#include "camera.h"
+#include "Shader_m.h"
+#include "Camera.h"
 #include "code/Graphics/Sprite.h"
 #include "code/Graphics/Model.h"
 
 #include <iostream>
-#include "code/Includes.h"
 #include "code/Log.h"
 
 #include "code/ImGuiUI.h"
@@ -21,7 +25,6 @@
 #include <thread>
 #include "includes/json.hpp"
 #include "code/Config.h"
-#include <vector>
 #include "code/Graphics/AnimManager.h"
 
 // for convenience
@@ -129,12 +132,13 @@ int main()
 
     //Sprite Player1("data/images/ghn/ghn00_06.png");
     AnimManager player1Manager((std::string)"data/characters/Gohan.JSON");
+    player1Manager.setPalette((std::string)"data/images/ghn/Pal_SSJ.pal", (std::string)"data/images/ghn/Pal_Template.pal");
     player1Manager.setPosition(glm::vec3(60.f, 20.f, 0.f));
     playerPos = player1Manager.getPosition();
-    Sprite Player2("data/images/ghn/ghn00_01.png");
-    Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
-    AnimManager player2Manager(&Player2, (std::string)"data/characters/GohanHurt.JSON");
-    Player2.setScale(glm::vec3(-1.f, 1.f, 1.f));
+    AnimManager player2Manager((std::string)"data/characters/GohanHurt.JSON");
+    player2Manager.setPosition(glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
+    player2Manager.setPalette((std::string)"data/images/ghn/Pal_Demon.pal", (std::string)"data/images/ghn/Pal_Template.pal");
+    player2Manager.setScale(glm::vec3(-1.f, 1.f, 1.f));
     //Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
     Sprite Shadow("data/images/Shadow.png");
     Shadow.setPosition(glm::vec3(-50, 8, 0));
@@ -207,7 +211,6 @@ int main()
             player1Manager.setPosition(playerPos);
             player1Manager.update();
             player2Manager.update();
-            Player2.update();
             lag -= FrameStep;
         }
 
@@ -232,7 +235,7 @@ int main()
         }
         Shadow.framePos = glm::vec3(player1Manager.getPosition().x, 0, 0);
         Shadow.render();
-        Shadow.framePos = glm::vec3(Player2.getPosition().x, 0, 0);
+        Shadow.framePos = glm::vec3(player2Manager.getPosition().x, 0, 0);
         Shadow.render();
         player1Manager.render();
         player2Manager.render();

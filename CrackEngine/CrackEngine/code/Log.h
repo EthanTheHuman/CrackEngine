@@ -1,12 +1,9 @@
 #pragma once
-#include "Includes.h"
 #include <iostream>
 #include <string>
 #include <chrono>
 #include <ctime>  
 #include <iomanip>
-
-using namespace std;
 
 class Log
 {

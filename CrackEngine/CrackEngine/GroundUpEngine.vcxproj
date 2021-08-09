@@ -102,6 +102,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libpng.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)CrackEngine\data\" "$(TargetDir)data\" /E /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -116,6 +119,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)CrackEngine\data\" "$(TargetDir)data\" /E /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -133,6 +139,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libpng.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)CrackEngine\data\" "$(TargetDir)data\" /E /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -151,6 +160,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)CrackEngine\data\" "$(TargetDir)data\" /E /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Image Include="data\images\3688.png" />
@@ -175,6 +187,8 @@
     <None Include="data\shaders\shad_light_cube.vs" />
     <None Include="data\shaders\shad_materials.fs" />
     <None Include="data\shaders\shad_materials.vs" />
+    <None Include="data\shaders\shad_palette.fs" />
+    <None Include="data\shaders\shad_palette.vs" />
     <None Include="data\shaders\shad_specular.fs" />
     <None Include="data\shaders\shad_specular.vs" />
     <None Include="data\shaders\shad_specular_map.fs" />
@@ -194,6 +208,7 @@
     <ClCompile Include="code\Graphics\Frame.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="code\Graphics\Palette.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
     <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
@@ -216,6 +231,7 @@
     <ClInclude Include="code\Graphics\Sprite.h" />
     <ClInclude Include="code\Graphics\Frame.h" />
     <ClInclude Include="includes\json.hpp" />
+    <ClInclude Include="code\Graphics\Palette.h" />
     <ClInclude Include="Shader_m.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="vendor\imgui\imconfig.h" />

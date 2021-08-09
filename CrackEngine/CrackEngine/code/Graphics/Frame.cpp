@@ -18,14 +18,14 @@ Frame::Frame(json _frameData)
 	if (_frameData["index"] != NULL)
 		index = _frameData["index"];
 	if (_frameData["filename"] != NULL)
-		spriteFileName = (string)_frameData["filename"];
+		spriteFileName = (std::string)_frameData["filename"];
 	if (_frameData["framecount"] != NULL)
 		frameCount = _frameData["frameCount"];
 	if (_frameData["xscale"] != NULL)
 		xScale = _frameData["xscale"];
 }
 
-Frame::Frame(int _xScale, int _yScale, int _xPos, int _yPos, string _fileName, int _frameCount, int _index)
+Frame::Frame(int _xScale, int _yScale, int _xPos, int _yPos, std::string _fileName, int _frameCount, int _index)
 {
 	xScale = _xScale;
 	yScale = _yScale;
