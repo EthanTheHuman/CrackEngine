@@ -113,6 +113,9 @@
     <ClCompile Include="code\Graphics\Palette.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="code\Engine\CrackEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Config.h">
@@ -182,6 +185,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\Graphics\Palette.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Engine\CrackEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
