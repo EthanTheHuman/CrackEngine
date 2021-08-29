@@ -10,13 +10,11 @@ namespace Crack {
 		}
 		return instance;
 	}
-    CrackEngine::CrackEngine()
-    {
-        
-    }
+    CrackEngine::CrackEngine() { }
     CrackEngine::~CrackEngine()
 	{
 		delete instance;
+        delete window;
 	}
 	int CrackEngine::Init()
 	{
@@ -100,41 +98,31 @@ namespace Crack {
         player2Manager->setPalette((std::string)"data/images/ghn/Pal_Demon.pal", (std::string)"data/images/ghn/Pal_Template.pal");
         player2Manager->setScale(glm::vec3(-1.f, 1.f, 1.f));
         //Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
-        Shadow = new Sprite("data/images/Shadow.png");
-        Shadow->setPosition(glm::vec3(-50, 8, 0));
+        Shadow1 = new Sprite("data/images/Shadow.png");
+        Shadow1->setPosition(glm::vec3(-50, 8, 0));
+        Shadow2 = new Sprite("data/images/Shadow.png");
+        Shadow2->setPosition(glm::vec3(-50, 8, 0));
+        AddToGameObject(Shadow1);
+        AddToGameObject(Shadow2);
+        AddToGameObject(player2Manager);
+        AddToGameObject(player1Manager);
 
-        Sprite SkyBG("data/images/DokkanBGs/Muscle Tower/battle_bg_00030_01.png");
-        SkyBG.setPosition(glm::vec3(0, 0.f, 0.f));
-        stageElements.push_back(SkyBG);
-        Sprite PlainsBG("data/images/DokkanBGs/Muscle Tower/battle_bg_00030_02.png");
-        PlainsBG.setPosition(glm::vec3(0, 0.f, 0.f));
-        stageElements.push_back(PlainsBG);
-        Sprite GroundBG("data/images/DokkanBGs/Muscle Tower/battle_bg_00030_03.png");
-        GroundBG.setPosition(glm::vec3(0, 0.f, 0.f));
-        stageElements.push_back(GroundBG);
-
-        // per-frame time logic
-        // --------------------
-        double current = glfwGetTime();
-        double previous = current;
-        //std::cout << "glfwGetTime: " << previous << std::endl;
-        double lag = 0.0;
-        double deltaTime = 0.0f;
-        double FrameStep = (1000 / config.targetFramestep);
-
-        auto start = std::chrono::steady_clock::now();
-        int frames = 0;
-        int fps = 0;
+        Sprite* SkyBG = new Sprite("data/images/DokkanBGs/Muscle Tower/battle_bg_00030_01.png");
+        SkyBG->setPosition(glm::vec3(0, 0.f, 0.f));
+        AddToBackground(SkyBG);
+        Sprite* PlainsBG = new Sprite("data/images/DokkanBGs/Muscle Tower/battle_bg_00030_02.png");
+        PlainsBG->setPosition(glm::vec3(0, 0.f, 0.f));
+        AddToBackground(PlainsBG);
+        Sprite* GroundBG = new Sprite("data/images/DokkanBGs/Muscle Tower/battle_bg_00030_03.png");
+        GroundBG->setPosition(glm::vec3(0, 0.f, 0.f));
+        AddToBackground(GroundBG);
         return 0;
 	}
     void CrackEngine::Step()
     {
+        glfwPollEvents();
         processInput(window);    // Temporary, inputs should be done every frame
 
-        for (std::vector<Sprite>::iterator it = stageElements.begin(); it != stageElements.end(); ++it)
-        {
-            it->update();
-        }
         player1Manager->setPosition(playerPos);
         player1Manager->update();
         player2Manager->update();
@@ -154,16 +142,9 @@ namespace Crack {
         Model::projection = projection;
         Model::view = view;
 
-        for (std::vector<Sprite>::iterator it = stageElements.begin(); it != stageElements.end(); ++it)
-        {
-            it->render();
-        }
-        Shadow->framePos = glm::vec3(player1Manager->getPosition().x, 0, 0);
-        Shadow->render();
-        Shadow->framePos = glm::vec3(player2Manager->getPosition().x, 0, 0);
-        Shadow->render();
-        player1Manager->render();
-        player2Manager->render();
+        Shadow1->framePos = glm::vec3(player1Manager->getPosition().x, 0, 0);
+        Shadow2->framePos = glm::vec3(player2Manager->getPosition().x, 0, 0);
+        RenderLists();
 
         // Render UI
         imgui.render();

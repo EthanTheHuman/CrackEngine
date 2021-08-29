@@ -23,10 +23,11 @@
 #include "../../includes/json.hpp"
 #include "../Config.h"
 #include "../Graphics/AnimManager.h"
+#include "Graphics.h"
 
 namespace Crack {
 
-	class CrackEngine
+	class CrackEngine : public Graphics
 	{
     public:
 		static CrackEngine* Instance();
@@ -47,8 +48,8 @@ namespace Crack {
         ImGuiUI imgui;
         AnimManager* player1Manager;
         AnimManager* player2Manager;
-        Sprite* Shadow;
-        std::vector<Sprite> stageElements;
+        Sprite* Shadow1;
+        Sprite* Shadow2;
         GLFWwindow* window;
 
         unsigned int SCR_WIDTH = 1536;
