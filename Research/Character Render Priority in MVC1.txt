@@ -1,0 +1,6 @@
+At very start, Player 1 is on top
+Player is on top after landing a hit
+Player is not on top after moving or crouching, but is after landing from a jump
+Player is in front when executing a command
+Player does not go in front when blocking
+Some and fireballs are between p1 and p2, others are in front of both or behind both

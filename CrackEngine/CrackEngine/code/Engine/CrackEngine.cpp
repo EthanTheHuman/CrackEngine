@@ -129,6 +129,7 @@ namespace Crack {
 	}
     void CrackEngine::Step()
     {
+        glfwPollEvents();
         processInput(window);    // Temporary, inputs should be done every frame
 
         for (std::vector<Sprite>::iterator it = stageElements.begin(); it != stageElements.end(); ++it)
