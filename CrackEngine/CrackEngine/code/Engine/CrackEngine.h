@@ -23,6 +23,7 @@
 #include "../../includes/json.hpp"
 #include "../Config.h"
 #include "../Graphics/AnimManager.h"
+#include "../Input/InputManager.h"
 
 namespace Crack {
 
@@ -33,6 +34,8 @@ namespace Crack {
 		int Init();
         void Step();
         void Render();
+        bool GetWindowShouldClose();
+        GLFWwindow* window;
 
 	private:
 		static CrackEngine *instance;
@@ -49,7 +52,6 @@ namespace Crack {
         AnimManager* player2Manager;
         Sprite* Shadow;
         std::vector<Sprite> stageElements;
-        GLFWwindow* window;
 
         unsigned int SCR_WIDTH = 1536;
         unsigned int SCR_HEIGHT = 896;
@@ -57,6 +59,8 @@ namespace Crack {
         bool firstMouse = true;
         float lastX = SCR_WIDTH / 2.0f;
         float lastY = SCR_HEIGHT / 2.0f;
+
+        InputManager Player1Inputs;
 
         Camera camera = (glm::vec3(0.0f, 0.0f, 3.0f));
         glm::vec3 playerPos = glm::vec3(20.0f, 20.0f, 0.0f);

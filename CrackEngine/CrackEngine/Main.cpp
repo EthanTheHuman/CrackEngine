@@ -17,7 +17,7 @@ int main()
 {
     Crack::CrackEngine::Instance()->Init();
 
-    while (true)
+    while (!Crack::CrackEngine::Instance()->GetWindowShouldClose())
     {
         Crack::CrackEngine::Instance()->Step();
         Crack::CrackEngine::Instance()->Render();

@@ -92,12 +92,12 @@ namespace Crack {
 
         //Sprite Player1("data/images/ghn/ghn00_06.png");
         player1Manager = new AnimManager((std::string)"data/characters/Gohan.JSON");
-        player1Manager->setPalette((std::string)"data/images/ghn/Pal_SSJ.pal", (std::string)"data/images/ghn/Pal_Template.pal");
+        player1Manager->setPalette((std::string)"data/images/ghn/Pal_Default.pal", (std::string)"data/images/ghn/Pal_Template.pal");
         player1Manager->setPosition(glm::vec3(60.f, 20.f, 0.f));
         playerPos = player1Manager->getPosition();
         player2Manager = new AnimManager((std::string)"data/characters/GohanHurt.JSON");
         player2Manager->setPosition(glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
-        player2Manager->setPalette((std::string)"data/images/ghn/Pal_Demon.pal", (std::string)"data/images/ghn/Pal_Template.pal");
+        player2Manager->setPalette((std::string)"data/images/ghn/Pal_Training.pal", (std::string)"data/images/ghn/Pal_Template.pal");
         player2Manager->setScale(glm::vec3(-1.f, 1.f, 1.f));
         //Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
         Shadow = new Sprite("data/images/Shadow.png");
@@ -174,6 +174,11 @@ namespace Crack {
         glfwSwapBuffers(window);
     }
 
+    bool CrackEngine::GetWindowShouldClose()
+    {
+        return glfwWindowShouldClose(window);
+    }
+
     // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
     void CrackEngine::framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -223,30 +228,28 @@ namespace Crack {
 
             glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, mode->refreshRate);
         }
+        if (Player1Inputs.getButton(InputManager::eInputs::X))
+        {
+            camera.ProcessKeyboard(LEFT);
+        }
+        if (Player1Inputs.getButton(InputManager::eInputs::Y))
+        {
+            camera.ProcessKeyboard(BACKWARD);
+        }
+        if (Player1Inputs.getButton(InputManager::eInputs::Z))
+        {
+            camera.ProcessKeyboard(RIGHT);
+        }
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         {
             camera.ProcessKeyboard(FORWARD);
         }
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        if (Player1Inputs.getButton(InputManager::eInputs::WEST))
         {
-            camera.ProcessKeyboard(BACKWARD);
-        }
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        {
-            camera.ProcessKeyboard(LEFT);
-        }
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        {
-            camera.ProcessKeyboard(RIGHT);
-        }
-        if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        {
-            //playerPos.x -= (deltaTime * 60.0f);
             playerPos.x -= 1;
         }
-        if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        if (Player1Inputs.getButton(InputManager::eInputs::EAST))
         {
-            //playerPos.x += (deltaTime * 60.0f);
             playerPos.x += 1;
         }
     }
