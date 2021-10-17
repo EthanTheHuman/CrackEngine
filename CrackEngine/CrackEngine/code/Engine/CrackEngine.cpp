@@ -113,6 +113,9 @@ namespace Crack {
         GroundBG.setPosition(glm::vec3(0, 0.f, 0.f));
         stageElements.push_back(GroundBG);
 
+        // Input manager
+        Player1Inputs = InputManager(window);
+
         // per-frame time logic
         // --------------------
         double current = glfwGetTime();

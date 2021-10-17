@@ -5,11 +5,17 @@ InputManager::InputManager()
 	init();
 }
 
+InputManager::InputManager(GLFWwindow* _window)
+{
+	window = _window;
+	init();
+}
+
 bool InputManager::getButton(eInputs inputkey)
 {
 	if (inputMap.find(inputkey) == inputMap.end()) {
 		InputButton& input = inputMap[inputkey];
-		if (glfwGetKey(Crack::CrackEngine::Instance()->window, input.buttonIndex) == GLFW_PRESS)
+		if (glfwGetKey(window, input.buttonIndex) == GLFW_PRESS)
 		{
 			return true;
 		}

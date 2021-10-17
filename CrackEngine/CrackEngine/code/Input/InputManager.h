@@ -1,6 +1,5 @@
 #pragma once
 #include "../Includes.h"
-#include "../Engine/CrackEngine.h"
 
 class InputButton
 {
@@ -68,6 +67,7 @@ public:
 
 public:
 	InputManager();
+	InputManager(GLFWwindow* _window);
 	std::map<eInputs, InputButton> inputMap;
 	void ResetBuffer();
 	bool getButton(eInputs button);
@@ -76,6 +76,7 @@ public:
 	sInputSnapshot RollbackInputs(int _droppedFrames);
 
 private:
+	GLFWwindow* window;
 	void init();
 	void update();
 	sInputSnapshot currentInputs;
