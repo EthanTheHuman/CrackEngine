@@ -25,6 +25,61 @@ Frame::Frame(json _frameData)
 		xScale = _frameData["xscale"];
 }
 
+Frame::Frame(pugi::xml_node _frameData)
+{
+	spriteFileName = "";
+	xScale = 1;
+	yScale = 1;
+	xPos = 0;
+	yPos = 0;
+	spriteImage = 0;
+	spriteWidth = 0;
+	spriteHeight = 0;
+	frameCount = 1;
+	index = 0;
+
+	if (_frameData.attribute("xscale").as_int() != NULL)
+	{
+		xScale = _frameData.attribute("xscale").as_int();
+	}
+	if (_frameData.attribute("yscale").as_int() != NULL)
+	{
+		yScale = _frameData.attribute("yscale").as_int();
+	}
+	if (_frameData.attribute("xpos").as_int() != NULL)
+	{
+		xPos = _frameData.attribute("xpos").as_int();
+	}
+	if (_frameData.attribute("ypos").as_int() != NULL)
+	{
+		yPos = _frameData.attribute("ypos").as_int();
+	}
+	if (_frameData.attribute("filename").as_string() != NULL)
+	{
+		spriteFileName = _frameData.attribute("filename").as_string();
+	}
+	else
+	{
+		return;
+	}
+	if (_frameData.attribute("stepcount").as_int() != NULL)
+	{
+		frameCount = _frameData.attribute("stepcount").as_int();
+	}
+	else
+	{
+		return;
+	}
+	if (_frameData.attribute("index").as_int() != NULL)
+	{
+		index = _frameData.attribute("index").as_int();
+	}
+
+	// load textures (we now use a utility function to keep the code more organized)
+	// -----------------------------------------------------------------------------
+	spriteImage = loadTexture(spriteFileName.c_str(), &spriteWidth, &spriteHeight);
+}
+
 Frame::Frame(int _xScale, int _yScale, int _xPos, int _yPos, std::string _fileName, int _frameCount, int _index)
 {
 	xScale = _xScale;

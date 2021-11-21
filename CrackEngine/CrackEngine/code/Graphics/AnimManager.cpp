@@ -44,26 +44,27 @@ AnimManager::AnimManager(std::string _characterData)
 	sprite = new Sprite("");
 	sprite->setPosition(glm::vec3(60.f, 20.f, 0.f));
 
-	std::ifstream configfile(_characterData, std::ios::out | std::ios::app | std::ios::binary);
-	if (configfile.is_open())
-	{
-		// Proceed with output
-		json jsonData;
-		configfile >> jsonData;
+	parseXml(_characterData.c_str());
+	//std::ifstream configfile(_characterData, std::ios::out | std::ios::app | std::ios::binary);
+	//if (configfile.is_open())
+	//{
+	//	// Proceed with output
+	//	json jsonData;
+	//	configfile >> jsonData;
 
-		parseJson(jsonData);
-		currentAnim = &animList[0];
-		currentFrame = &currentAnim->frameList[0];
-		sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
-		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
-		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
-	}
-	else
-	{
-		// Error opening file
-		std::cout << "Unable to open file" << std::endl;
-	}
-	configfile.close();
+	//	parseJson(jsonData);
+	//	currentAnim = &animList[0];
+	//	currentFrame = &currentAnim->frameList[0];
+	//	sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
+	//	sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
+	//	sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
+	//}
+	//else
+	//{
+	//	// Error opening file
+	//	std::cout << "Unable to open file" << std::endl;
+	//}
+	//configfile.close();
 }
 
 void AnimManager::setPalette(std::string _newColorFileName, std::string _oldColorFileName)
@@ -150,4 +151,38 @@ void AnimManager::parseJson(json& _jsonData)
 			animList[newAnim.index] = newAnim;
 		}
 	}
+}
+
+void AnimManager::parseXml(const char* _filename)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(_filename);
+	if (!result)
+	{
+		std::cout << "no file found at " << _filename << std::endl;
+		return;
+	}
+	else
+	{
+		std::cout << "character anim file loaded at " << _filename << std::endl;
+	}
+
+	for (pugi::xml_node anim : doc.child("character").child("anims").children("anim"))
+	{
+		// frame count
+		std::map<int, Frame> frameList;
+		for (pugi::xml_node frame : anim.child("frames").children("frame"))
+		{
+			Frame newFrame(frame);
+			frameList.emplace(newFrame.index, newFrame);
+		}
+		Animation newAnim(frameList, anim.attribute("index").as_int());
+		animList[newAnim.index] = newAnim;
+	}
+
+	currentAnim = &animList[0];
+	currentFrame = &currentAnim->frameList[0];
+	sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
+	sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
+	sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 }

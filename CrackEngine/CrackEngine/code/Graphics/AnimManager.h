@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "Animation.h"
 #include "Palette.h"
+#include "../../includes/xml/pugixml.hpp"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -35,5 +36,6 @@ public:
 	int frameCount = 0;
 protected:
 	void parseJson(json& _jsonData);
+	void parseXml(const char* _filename);
 };
 

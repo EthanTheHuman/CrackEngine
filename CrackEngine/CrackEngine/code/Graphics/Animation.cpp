@@ -10,6 +10,10 @@ Animation::Animation(json _jsonData)
 	json jsonFrames = _jsonData["frames"];
 }
 
+Animation::Animation(pugi::xml_node _animData)
+{
+}
+
 Animation::Animation(std::map<int, Frame> _frameList, int _index)
 {
 	index = _index;

@@ -1,0 +1,60 @@
+<character
+  characterName="Gohan">
+  <anims>
+    <anim
+      index = "0"
+      name = "idle">
+      <frames>
+        <frame
+          index ="0"
+          filename = "data/images/ghn/ghn00_09.png"
+          stepcount = "8"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-49"
+          ypos = "-7">
+        </frame>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn00_08.png"
+          stepcount = "6"
+          xscale = "-1"
+          xpos = "-49"
+          ypos = "-14">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn00_07.png"
+          stepcount = "6"
+          xscale = "-1"
+          xpos = "-49"
+          ypos = "-11">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn00_06.png"
+          stepcount = "8"
+          xscale = "-1"
+          xpos = "-49"
+          ypos = "-10">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn00_07.png"
+          stepcount = "4"
+          xscale = "-1"
+          xpos = "-49"
+          ypos = "-11">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn00_08.png"
+          stepcount = "4"
+          xscale = "-1"
+          xpos = "-49"
+          ypos = "-14">
+        </frame>
+      </frames>
+    </anim>
+  </anims>
+</character>

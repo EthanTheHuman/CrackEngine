@@ -13,7 +13,7 @@ InputManager::InputManager(GLFWwindow* _window)
 
 bool InputManager::getButton(eInputs inputkey)
 {
-	if (inputMap.find(inputkey) == inputMap.end()) {
+	if (inputMap.find(inputkey) != inputMap.end()) {
 		InputButton& input = inputMap[inputkey];
 		if (glfwGetKey(window, input.buttonIndex) == GLFW_PRESS)
 		{

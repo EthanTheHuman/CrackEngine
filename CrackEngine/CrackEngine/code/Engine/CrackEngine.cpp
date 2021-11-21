@@ -91,11 +91,11 @@ namespace Crack {
         imgui.init(window);
 
         //Sprite Player1("data/images/ghn/ghn00_06.png");
-        player1Manager = new AnimManager((std::string)"data/characters/Gohan.JSON");
+        player1Manager = new AnimManager((std::string)"data/characters/Gohan.xml");
         player1Manager->setPalette((std::string)"data/images/ghn/Pal_Default.pal", (std::string)"data/images/ghn/Pal_Template.pal");
         player1Manager->setPosition(glm::vec3(60.f, 20.f, 0.f));
         playerPos = player1Manager->getPosition();
-        player2Manager = new AnimManager((std::string)"data/characters/GohanHurt.JSON");
+        player2Manager = new AnimManager((std::string)"data/characters/GohanHurt.xml");
         player2Manager->setPosition(glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
         player2Manager->setPalette((std::string)"data/images/ghn/Pal_Training.pal", (std::string)"data/images/ghn/Pal_Template.pal");
         player2Manager->setScale(glm::vec3(-1.f, 1.f, 1.f));

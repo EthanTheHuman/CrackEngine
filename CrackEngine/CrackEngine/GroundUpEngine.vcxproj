@@ -209,8 +209,10 @@
     <ClCompile Include="code\Engine\CrackEngine.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="code\Input\InputManager.cpp" />
+    <ClCompile Include="includes\xml\pugixml.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="code\Graphics\Palette.cpp" />
+    <ClCompile Include="code\sound\SoundManager.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
     <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
@@ -236,7 +238,10 @@
     <ClInclude Include="includes\json.hpp" />
     <ClInclude Include="code\Graphics\Palette.h" />
     <ClInclude Include="code\Input\InputManager.h" />
+    <ClInclude Include="includes\xml\pugiconfig.hpp" />
+    <ClInclude Include="includes\xml\pugixml.hpp" />
     <ClInclude Include="Shader_m.h" />
+    <ClInclude Include="code\sound\SoundManager.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="vendor\imgui\imconfig.h" />
     <ClInclude Include="vendor\imgui\imgui.h" />
@@ -246,6 +251,10 @@
     <ClInclude Include="vendor\imgui\imstb_rectpack.h" />
     <ClInclude Include="vendor\imgui\imstb_textedit.h" />
     <ClInclude Include="vendor\imgui\imstb_truetype.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="data\characters\GohanHurt.xml" />
+    <Xml Include="data\characters\Gohan.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

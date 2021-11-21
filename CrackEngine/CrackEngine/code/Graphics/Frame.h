@@ -1,5 +1,6 @@
 #pragma once
 #include "../../includes/json.hpp"
+#include "../../includes/xml/pugixml.hpp"
 #include "../../shader_m.h"
 #include "../../stb_image.h"
 #include <string>
@@ -9,6 +10,7 @@ class Frame
 {
 public:
 	Frame(json _frameData);
+	Frame(pugi::xml_node _frameData);
 	Frame(int _xScale = 1, int _yScale = 1, int _xPos = 0, int _yPos = 0, std::string _fileName = "", int _frameCount = 1, int _index = 0);
 	int xScale;
 	int yScale;
