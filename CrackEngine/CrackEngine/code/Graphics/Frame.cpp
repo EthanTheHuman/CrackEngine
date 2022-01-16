@@ -74,6 +74,31 @@ Frame::Frame(pugi::xml_node _frameData)
 	{
 		index = _frameData.attribute("index").as_int();
 	}
+	for (pugi::xml_node action : _frameData.child("inputactions").children("inputaction"))
+	{
+		int animIndex = -1;
+		Frame::InputCommand command = Frame::InputCommand::EMPTY;
+		if (action.attribute("animset").as_int() != NULL) animIndex = action.attribute("animset").as_int();
+		if (action.attribute("input").as_string() != NULL)
+		{
+			if ((std::string)(action.attribute("input").as_string()) == (std::string)"FORWARD")
+			{
+				command = Frame::InputCommand::FORWARD;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"NONE")
+			{
+				command = Frame::InputCommand::NONE;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"BACK")
+			{
+				command = Frame::InputCommand::BACK;
+			}
+		}
+		InputAction tempAction;
+		tempAction.animChangeIndex = animIndex;
+		tempAction.inputCommand = command;
+		inputActions.push_back(tempAction);
+	}
 
 	// load textures (we now use a utility function to keep the code more organized)
 	// -----------------------------------------------------------------------------

@@ -2,6 +2,8 @@
 #include "Sprite.h"
 #include "Animation.h"
 #include "Palette.h"
+#include "../Input/InputManager.h"
+#include "../Log.h"
 #include "../../includes/xml/pugixml.hpp"
 #include <iostream>
 #include <vector>
@@ -21,8 +23,8 @@ public:
 	//glm::vec3& setRotation(glm::vec3 _rot) override;
 	//glm::vec3 getScale() override;
 	glm::vec3& setScale(glm::vec3 _scale) override;
+	void processInputs(GLFWwindow* _window, InputManager _inputs);
 
-	AnimManager(Sprite* _sprite, json _characterData);
 	AnimManager(Sprite* _sprite, std::string _characterData);
 	AnimManager(Sprite* _sprite, std::map<Animation, int> _anims);
 	AnimManager(std::string _characterData);
@@ -35,7 +37,7 @@ public:
 	Animation* currentAnim;
 	int frameCount = 0;
 protected:
-	void parseJson(json& _jsonData);
 	void parseXml(const char* _filename);
+	void changeAnimation(int _index);
 };
 

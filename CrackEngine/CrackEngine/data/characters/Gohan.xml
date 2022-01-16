@@ -2,57 +2,189 @@
   characterName="Gohan">
   <anims>
     <anim
-      index = "0"
+      index = "1"
       name = "idle">
       <frames>
         <frame
-          index ="0"
+          index ="1"
           filename = "data/images/ghn/ghn00_09.png"
           stepcount = "8"
           xscale = "-1"
           yscale = "1"
           xpos = "-49"
           ypos = "-7">
+          <inputactions>
+            <inputaction
+              input = "FORWARD"
+              animset ="20"
+              />
+            <inputaction
+              input = "BACK"
+              animset ="21"
+              />
+          </inputactions>
         </frame>
         <frame
-          index ="1"
+          index ="2"
           filename = "data/images/ghn/ghn00_08.png"
           stepcount = "6"
           xscale = "-1"
           xpos = "-49"
           ypos = "-14">
+          <inputactions>
+            <inputaction
+              input = "FORWARD"
+              animset ="20"
+              />
+            <inputaction
+              input = "BACK"
+              animset ="21"
+              />
+          </inputactions>
         </frame>
         <frame
-          index ="2"
+          index ="3"
           filename = "data/images/ghn/ghn00_07.png"
           stepcount = "6"
           xscale = "-1"
           xpos = "-49"
           ypos = "-11">
+          <inputactions>
+            <inputaction
+              input = "FORWARD"
+              animset ="20"
+              />
+            <inputaction
+              input = "BACK"
+              animset ="21"
+              />
+          </inputactions>
         </frame>
         <frame
-          index ="3"
+          index ="4"
           filename = "data/images/ghn/ghn00_06.png"
           stepcount = "8"
           xscale = "-1"
           xpos = "-49"
           ypos = "-10">
+          <inputactions>
+            <inputaction
+              input = "FORWARD"
+              animset ="20"
+              />
+            <inputaction
+              input = "BACK"
+              animset ="21"
+              />
+          </inputactions>
         </frame>
         <frame
-          index ="4"
+          index ="5"
           filename = "data/images/ghn/ghn00_07.png"
           stepcount = "4"
           xscale = "-1"
           xpos = "-49"
           ypos = "-11">
+          <inputactions>
+            <inputaction
+              input = "FORWARD"
+              animset ="20"
+              />
+            <inputaction
+              input = "BACK"
+              animset ="21"
+              />
+          </inputactions>
         </frame>
         <frame
-          index ="5"
+          index ="6"
           filename = "data/images/ghn/ghn00_08.png"
           stepcount = "4"
           xscale = "-1"
           xpos = "-49"
           ypos = "-14">
+          <inputactions>
+            <inputaction
+              input = "FORWARD"
+              animset ="20"
+              />
+            <inputaction
+              input = "BACK"
+              animset ="21"
+              />
+          </inputactions>
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "20"
+      name = "walk forward">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn55_01.png"
+          stepcount = "15"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-49"
+          ypos = "-10">
+          <inputactions>
+            <inputaction
+              input = "NONE"
+              animset ="1"
+              />
+          </inputactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn55_02.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-49"
+          ypos = "-10">
+          <inputactions>
+            <inputaction
+              input = "NONE"
+              animset ="1"
+              />
+          </inputactions>
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "21"
+      name = "walk back">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn56_01.png"
+          stepcount = "15"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-49"
+          ypos = "-10">
+          <inputactions>
+            <inputaction
+              input = "NONE"
+              animset ="1"
+              />
+          </inputactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn56_02.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-49"
+          ypos = "-10">
+          <inputactions>
+            <inputaction
+              input = "NONE"
+              animset ="1"
+              />
+          </inputactions>
         </frame>
       </frames>
     </anim>

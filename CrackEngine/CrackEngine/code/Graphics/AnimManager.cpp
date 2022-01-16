@@ -6,10 +6,86 @@ glm::vec3& AnimManager::setScale(glm::vec3 _scale)
 	return _scale;
 }
 
-AnimManager::AnimManager(Sprite* _sprite, json _characterData)
+void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 {
-	sprite = _sprite;
-	parseJson(_characterData);
+	for (int i = 0; i < currentFrame->inputActions.size(); i++)
+	{
+		Frame::InputAction& inputAction = currentFrame->inputActions[i];
+		if (inputAction.animChangeIndex != NULL)
+		{
+			bool valid = false;
+			switch (inputAction.inputCommand)
+			{
+				case Frame::InputCommand::FORWARD:
+				{
+					valid = true;
+					if (sprite->getScale().x > 0)
+					{
+						if (_inputs.getButton(InputManager::eInputs::EAST) != true) valid = false;
+					}
+					else
+					{
+						if (_inputs.getButton(InputManager::eInputs::WEST) != true) valid = false;
+					}
+					break;
+				}
+				case Frame::InputCommand::BACK:
+				{
+					valid = true;
+					if (sprite->getScale().x > 0)
+					{
+						if (_inputs.getButton(InputManager::eInputs::WEST) != true) valid = false;
+					}
+					else
+					{
+						if (_inputs.getButton(InputManager::eInputs::EAST) != true) valid = false;
+					}
+					break;
+				}
+				case Frame::InputCommand::UP:
+				{
+					valid = true;
+					if (_inputs.getButton(InputManager::eInputs::NORTH) != true) valid = false;
+					if (_inputs.getButton(InputManager::eInputs::NORTHWEST) != true) valid = false;
+					if (_inputs.getButton(InputManager::eInputs::NORTHEAST) != true) valid = false;
+					break;
+				}
+				case Frame::InputCommand::DOWN:
+				{
+					valid = true;
+					if (_inputs.getButton(InputManager::eInputs::SOUTH) != true) valid = false;
+					if (_inputs.getButton(InputManager::eInputs::SOUTHWEST) != true) valid = false;
+					if (_inputs.getButton(InputManager::eInputs::SOUTHEAST) != true) valid = false;
+					break;
+				}
+				case Frame::InputCommand::NONE:
+				{
+					valid = true;
+					if (_inputs.getButton(InputManager::eInputs::EAST) == true || _inputs.getButton(InputManager::eInputs::WEST) == true
+						|| _inputs.getButton(InputManager::eInputs::NORTH) == true || _inputs.getButton(InputManager::eInputs::SOUTH) == true) valid = false;
+					else if (_inputs.getButton(InputManager::eInputs::EAST) == true && _inputs.getButton(InputManager::eInputs::WEST) == true)
+					{
+						if (_inputs.getButton(InputManager::eInputs::NORTH) == true || _inputs.getButton(InputManager::eInputs::SOUTH) == true) valid = false;
+					}
+					else if (_inputs.getButton(InputManager::eInputs::NORTH) == true && _inputs.getButton(InputManager::eInputs::SOUTH) == true)
+					{
+						if (_inputs.getButton(InputManager::eInputs::EAST) == true || _inputs.getButton(InputManager::eInputs::WEST) == true) valid = false;
+					}
+					break;
+				}
+				case Frame::InputCommand::EMPTY:
+				{
+					valid = false;
+					break;
+				}
+			}
+			if (valid == true)
+			{
+				Log::log("Change animation", Log::IMPORTANT);
+				changeAnimation(inputAction.animChangeIndex);
+			}
+		}
+	}
 }
 
 AnimManager::AnimManager(Sprite* _sprite, std::string _characterData)
@@ -20,16 +96,9 @@ AnimManager::AnimManager(Sprite* _sprite, std::string _characterData)
 	if (configfile.is_open())
 	{
 		// Proceed with output
-		json jsonData;
-		configfile >> jsonData;
 
-		parseJson(jsonData);
-		currentAnim = &animList[0];
-		currentFrame = &currentAnim->frameList[0];
+		parseXml(_characterData.c_str());
 		mainPalette = Palette();
-		sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
-		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
-		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 	}
 	else
 	{
@@ -45,26 +114,6 @@ AnimManager::AnimManager(std::string _characterData)
 	sprite->setPosition(glm::vec3(60.f, 20.f, 0.f));
 
 	parseXml(_characterData.c_str());
-	//std::ifstream configfile(_characterData, std::ios::out | std::ios::app | std::ios::binary);
-	//if (configfile.is_open())
-	//{
-	//	// Proceed with output
-	//	json jsonData;
-	//	configfile >> jsonData;
-
-	//	parseJson(jsonData);
-	//	currentAnim = &animList[0];
-	//	currentFrame = &currentAnim->frameList[0];
-	//	sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
-	//	sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
-	//	sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
-	//}
-	//else
-	//{
-	//	// Error opening file
-	//	std::cout << "Unable to open file" << std::endl;
-	//}
-	//configfile.close();
 }
 
 void AnimManager::setPalette(std::string _newColorFileName, std::string _oldColorFileName)
@@ -95,11 +144,12 @@ void AnimManager::init()
 void AnimManager::update()
 {
 	frameCount++;
-	if (frameCount > currentFrame->frameCount)
+	if (frameCount >= currentFrame->frameCount && currentFrame->frameCount != -1)
 	{
+		frameCount = 0;
 		int newIndex = currentFrame->index + 1;
-		if (currentAnim->frameList.find(newIndex) == currentAnim->frameList.end()) {
-			currentFrame = &currentAnim->frameList[0];
+		if (currentAnim->frameList.find(newIndex) == currentAnim->frameList.end() && currentFrame->frameCount) {
+			currentFrame = &currentAnim->frameList[1];
 		}
 		else {
 			currentFrame = &currentAnim->frameList[newIndex];
@@ -107,50 +157,8 @@ void AnimManager::update()
 		sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
 		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
 		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
-		frameCount = 0;
 	}
 	sprite->update();
-}
-
-void AnimManager::parseJson(json& _jsonData)
-{
-	for (const auto& anim : _jsonData["anims"])
-	{
-		if (anim.find("frames") != anim.end())
-		{
-			// frame count
-			std::map<int, Frame> frameList;
-			for (const auto& frame : anim["frames"])
-			{
-				int xScale = 1;
-				if (frame.find("xscale") != frame.end() && frame["xscale"].is_number_integer())
-					xScale = frame["xscale"];
-				int yScale = 1;
-				if (frame.find("yscale") != frame.end() && frame["yscale"].is_number_integer())
-					yScale = frame["yscale"];
-				int xPos = 0;
-				if (frame.find("xpos") != frame.end() && frame["xpos"].is_number_integer())
-					xPos = frame["xpos"];
-				int yPos = 0;
-				if (frame.find("ypos") != frame.end() && frame["ypos"].is_number_integer())
-					yPos = frame["ypos"];
-				std::string spriteFileName = "";
-				if (frame.find("filename") != frame.end() && frame["filename"].is_string())
-					spriteFileName = frame["filename"];
-				int spriteframeCount = 1;
-				if (frame.find("framecount") != frame.end() && frame["framecount"].is_number_integer())
-					spriteframeCount = frame["framecount"];
-				int index = 0;
-				if (frame.find("index") != frame.end() && frame["index"].is_number_integer())
-					index = frame["index"];
-
-				Frame newFrame(xScale, yScale, xPos, yPos, spriteFileName, spriteframeCount, index);
-				frameList.emplace(newFrame.index, newFrame);
-			}
-			Animation newAnim(frameList, anim["index"]);
-			animList[newAnim.index] = newAnim;
-		}
-	}
 }
 
 void AnimManager::parseXml(const char* _filename)
@@ -169,20 +177,23 @@ void AnimManager::parseXml(const char* _filename)
 
 	for (pugi::xml_node anim : doc.child("character").child("anims").children("anim"))
 	{
-		// frame count
-		std::map<int, Frame> frameList;
-		for (pugi::xml_node frame : anim.child("frames").children("frame"))
-		{
-			Frame newFrame(frame);
-			frameList.emplace(newFrame.index, newFrame);
-		}
-		Animation newAnim(frameList, anim.attribute("index").as_int());
+		Animation newAnim(anim);
 		animList[newAnim.index] = newAnim;
 	}
 
-	currentAnim = &animList[0];
+	currentAnim = &animList[1];
+	currentFrame = &currentAnim->frameList[1];
+	sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
+	sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
+	sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
+}
+
+void AnimManager::changeAnimation(int _index)
+{
+	currentAnim = &animList[_index];
 	currentFrame = &currentAnim->frameList[0];
 	sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
 	sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
 	sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
+	frameCount = 0;
 }

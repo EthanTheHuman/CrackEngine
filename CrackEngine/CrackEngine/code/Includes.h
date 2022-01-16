@@ -30,7 +30,6 @@
 #include <thread>
 #include "../includes/json.hpp"
 #include "Config.h"
-#include "Graphics/AnimManager.h"
 //include other libraries
 
 #endif

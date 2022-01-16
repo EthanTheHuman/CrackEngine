@@ -1,0 +1,65 @@
+<character
+  characterName="Gohan">
+  <anims>
+    <anim
+      index = "1"
+      name = "idle">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/jet/jet00_01.png"
+          stepcount = "20"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-45"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/jet/jet00_02.png"
+          stepcount = "10"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-45"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/jet/jet00_03.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-45"
+          ypos = "-14">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/jet/jet00_04.png"
+          stepcount = "15"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-45"
+          ypos = "-15">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/jet/jet00_03.png"
+          stepcount = "15"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-45"
+          ypos = "-14">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/jet/jet00_02.png"
+          stepcount = "15"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-45"
+          ypos = "-13">
+        </frame>
+      </frames>
+    </anim>
+  </anims>
+</character>

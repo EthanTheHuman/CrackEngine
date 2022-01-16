@@ -7,52 +7,52 @@
       <frames>
         <frame
           index ="0"
-          filename = "data/images/ghn/ghn00_09.png"
-          stepcount = "8"
+          filename = "data/images/ghn/ghn01_01.png"
+          stepcount = "20"
           xscale = "-1"
           yscale = "1"
-          xpos = "-49"
-          ypos = "-7">
+          xpos = "-48"
+          ypos = "-15">
         </frame>
         <frame
           index ="1"
-          filename = "data/images/ghn/ghn00_08.png"
+          filename = "data/images/ghn/ghn01_02.png"
           stepcount = "6"
           xscale = "-1"
-          xpos = "-49"
-          ypos = "-14">
+          xpos = "-48"
+          ypos = "-16">
         </frame>
         <frame
           index ="2"
-          filename = "data/images/ghn/ghn00_07.png"
-          stepcount = "6"
+          filename = "data/images/ghn/ghn01_03.png"
+          stepcount = "4"
           xscale = "-1"
-          xpos = "-49"
-          ypos = "-11">
+          xpos = "-48"
+          ypos = "-18">
         </frame>
         <frame
           index ="3"
-          filename = "data/images/ghn/ghn00_06.png"
-          stepcount = "8"
+          filename = "data/images/ghn/ghn01_04.png"
+          stepcount = "3"
           xscale = "-1"
-          xpos = "-49"
-          ypos = "-10">
+          xpos = "-48"
+          ypos = "-19">
         </frame>
         <frame
           index ="4"
-          filename = "data/images/ghn/ghn00_07.png"
-          stepcount = "4"
+          filename = "data/images/ghn/ghn01_03.png"
+          stepcount = "20"
           xscale = "-1"
-          xpos = "-49"
-          ypos = "-11">
+          xpos = "-48"
+          ypos = "-18">
         </frame>
         <frame
           index ="5"
-          filename = "data/images/ghn/ghn00_08.png"
-          stepcount = "4"
+          filename = "data/images/ghn/ghn01_02.png"
+          stepcount = "13"
           xscale = "-1"
-          xpos = "-49"
-          ypos = "-14">
+          xpos = "-48"
+          ypos = "-16">
         </frame>
       </frames>
     </anim>
