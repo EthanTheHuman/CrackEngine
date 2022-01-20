@@ -18,9 +18,38 @@ Animation::Animation(pugi::xml_node _animData)
 		Frame newFrame(frame);
 		frameList.emplace(newFrame.index, newFrame);
 	}
+	frameList = frameList;
 	index = 0;
 	if (_animData.attribute("index").as_int() != NULL) index = _animData.attribute("index").as_int();
-	frameList = frameList;
+	for (pugi::xml_node action : _animData.child("inputactions").children("inputaction"))
+	{
+		int animIndex = -1;
+		Frame::InputCommand command = Frame::InputCommand::EMPTY;
+		if (action.attribute("animset").as_int() != NULL) animIndex = action.attribute("animset").as_int();
+		if (action.attribute("input").as_string() != NULL)
+		{
+			if ((std::string)(action.attribute("input").as_string()) == (std::string)"FORWARD")
+			{
+				command = Frame::InputCommand::FORWARD;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"NONE")
+			{
+				command = Frame::InputCommand::NONE;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"BACK")
+			{
+				command = Frame::InputCommand::BACK;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"DOWN")
+			{
+				command = Frame::InputCommand::DOWN;
+			}
+		}
+		Frame::InputAction tempAction;
+		tempAction.animChangeIndex = animIndex;
+		tempAction.inputCommand = command;
+		inputActions.push_back(tempAction);
+	}
 }
 
 Animation::Animation(std::map<int, Frame> _frameList, int _index)

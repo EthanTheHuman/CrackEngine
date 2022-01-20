@@ -8,24 +8,62 @@ glm::vec3& AnimManager::setScale(glm::vec3 _scale)
 
 void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 {
-	for (int i = 0; i < currentFrame->inputActions.size(); i++)
+	std::vector<Frame::InputAction> actions;
+	actions.reserve(currentFrame->inputActions.size() + currentAnim->inputActions.size());
+	actions.insert(actions.end(), currentFrame->inputActions.begin(), currentFrame->inputActions.end());
+	actions.insert(actions.end(), currentAnim->inputActions.begin(), currentAnim->inputActions.end());
+
+	for (int i = 0; i < actions.size(); i++)
 	{
-		Frame::InputAction& inputAction = currentFrame->inputActions[i];
+		Frame::InputAction& inputAction = actions[i];
 		if (inputAction.animChangeIndex != NULL)
 		{
 			bool valid = false;
 			switch (inputAction.inputCommand)
 			{
+				case Frame::InputCommand::NONE:
+				{
+					valid = true;
+
+					bool h = false;
+					if (_inputs.getButton(InputManager::eInputs::EAST) == true && _inputs.getButton(InputManager::eInputs::WEST) == true)
+					{
+						h = false;
+					}
+					else if (_inputs.getButton(InputManager::eInputs::EAST) == true || _inputs.getButton(InputManager::eInputs::WEST) == true)
+					{
+						h = true;
+					}
+					
+					bool v = false;
+					if (_inputs.getButton(InputManager::eInputs::NORTH) == true && _inputs.getButton(InputManager::eInputs::SOUTH) == true)
+					{
+						v = false;
+					}
+					else if (_inputs.getButton(InputManager::eInputs::NORTH) == true || _inputs.getButton(InputManager::eInputs::SOUTH) == true)
+					{
+						v = true;
+					}
+
+					if (h == true || v == true)
+					{
+						valid = false;
+					}
+
+					break;
+				}
 				case Frame::InputCommand::FORWARD:
 				{
 					valid = true;
 					if (sprite->getScale().x > 0)
 					{
 						if (_inputs.getButton(InputManager::eInputs::EAST) != true) valid = false;
+						if (_inputs.getButton(InputManager::eInputs::WEST) == true) valid = false;
 					}
 					else
 					{
 						if (_inputs.getButton(InputManager::eInputs::WEST) != true) valid = false;
+						if (_inputs.getButton(InputManager::eInputs::EAST) == true) valid = false;
 					}
 					break;
 				}
@@ -35,10 +73,12 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 					if (sprite->getScale().x > 0)
 					{
 						if (_inputs.getButton(InputManager::eInputs::WEST) != true) valid = false;
+						if (_inputs.getButton(InputManager::eInputs::EAST) == true) valid = false;
 					}
 					else
 					{
 						if (_inputs.getButton(InputManager::eInputs::EAST) != true) valid = false;
+						if (_inputs.getButton(InputManager::eInputs::WEST) == true) valid = false;
 					}
 					break;
 				}
@@ -53,24 +93,9 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 				case Frame::InputCommand::DOWN:
 				{
 					valid = true;
-					if (_inputs.getButton(InputManager::eInputs::SOUTH) != true) valid = false;
-					if (_inputs.getButton(InputManager::eInputs::SOUTHWEST) != true) valid = false;
-					if (_inputs.getButton(InputManager::eInputs::SOUTHEAST) != true) valid = false;
-					break;
-				}
-				case Frame::InputCommand::NONE:
-				{
-					valid = true;
-					if (_inputs.getButton(InputManager::eInputs::EAST) == true || _inputs.getButton(InputManager::eInputs::WEST) == true
-						|| _inputs.getButton(InputManager::eInputs::NORTH) == true || _inputs.getButton(InputManager::eInputs::SOUTH) == true) valid = false;
-					else if (_inputs.getButton(InputManager::eInputs::EAST) == true && _inputs.getButton(InputManager::eInputs::WEST) == true)
-					{
-						if (_inputs.getButton(InputManager::eInputs::NORTH) == true || _inputs.getButton(InputManager::eInputs::SOUTH) == true) valid = false;
-					}
-					else if (_inputs.getButton(InputManager::eInputs::NORTH) == true && _inputs.getButton(InputManager::eInputs::SOUTH) == true)
-					{
-						if (_inputs.getButton(InputManager::eInputs::EAST) == true || _inputs.getButton(InputManager::eInputs::WEST) == true) valid = false;
-					}
+					if ((_inputs.getButton(InputManager::eInputs::SOUTH) != true)
+					&& (_inputs.getButton(InputManager::eInputs::SOUTHWEST) != true)
+					&& (_inputs.getButton(InputManager::eInputs::SOUTHEAST) != true)) valid = false;
 					break;
 				}
 				case Frame::InputCommand::EMPTY:
@@ -148,8 +173,19 @@ void AnimManager::update()
 	{
 		frameCount = 0;
 		int newIndex = currentFrame->index + 1;
-		if (currentAnim->frameList.find(newIndex) == currentAnim->frameList.end() && currentFrame->frameCount) {
-			currentFrame = &currentAnim->frameList[1];
+		if (currentFrame->looping == true) loopIndex = currentFrame->index;
+		if (currentAnim->frameList.find(newIndex) == currentAnim->frameList.end() && currentFrame->frameCount != -1) {
+			if (loopIndex != 0)
+			{
+				currentFrame = &currentAnim->frameList[loopIndex];
+				loopIndex = 0;
+			}
+			else
+			{
+				changeAnimation(1);
+				//currentFrame = &currentAnim->frameList[1];
+			}
+			loopIndex = 0;
 		}
 		else {
 			currentFrame = &currentAnim->frameList[newIndex];
@@ -191,9 +227,10 @@ void AnimManager::parseXml(const char* _filename)
 void AnimManager::changeAnimation(int _index)
 {
 	currentAnim = &animList[_index];
-	currentFrame = &currentAnim->frameList[0];
+	currentFrame = &currentAnim->frameList[1];
 	sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
 	sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
 	sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 	frameCount = 0;
+	loopIndex = 0;
 }

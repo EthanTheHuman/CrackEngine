@@ -95,7 +95,7 @@ namespace Crack {
         player1Manager->setPalette((std::string)"data/images/ghn/Pal_Default.pal", (std::string)"data/images/ghn/Pal_Template.pal");
         player1Manager->setPosition(glm::vec3(60.f, 20.f, 0.f));
         playerPos = player1Manager->getPosition();
-        player2Manager = new AnimManager((std::string)"data/characters/GohanHurt.xml");
+        player2Manager = new AnimManager((std::string)"data/characters/Gohan.xml");
         player2Manager->setPosition(glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
         player2Manager->setPalette((std::string)"data/images/ghn/Pal_Training.pal", (std::string)"data/images/ghn/Pal_Template.pal");
         player2Manager->setScale(glm::vec3(-1.f, 1.f, 1.f));
@@ -224,6 +224,8 @@ namespace Crack {
     {
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             glfwSetWindowShouldClose(window, true);
+
+        player1Manager->processInputs(window, Player1Inputs);
 
         if (glfwGetKey(window, GLFW_KEY_F2) == GLFW_PRESS)
         {

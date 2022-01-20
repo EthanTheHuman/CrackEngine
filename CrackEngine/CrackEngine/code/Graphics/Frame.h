@@ -37,6 +37,7 @@ public:
 	int spriteWidth, spriteHeight;
 	int frameCount;
 	int index;
+	bool looping = false;
 	std::vector<InputAction> inputActions;
 
 protected:

@@ -74,6 +74,10 @@ Frame::Frame(pugi::xml_node _frameData)
 	{
 		index = _frameData.attribute("index").as_int();
 	}
+	if (_frameData.attribute("loop").as_bool() != NULL)
+	{
+		looping = _frameData.attribute("loop").as_bool();
+	}
 	for (pugi::xml_node action : _frameData.child("inputactions").children("inputaction"))
 	{
 		int animIndex = -1;
@@ -92,6 +96,10 @@ Frame::Frame(pugi::xml_node _frameData)
 			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"BACK")
 			{
 				command = Frame::InputCommand::BACK;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"DOWN")
+			{
+				command = Frame::InputCommand::DOWN;
 			}
 		}
 		InputAction tempAction;

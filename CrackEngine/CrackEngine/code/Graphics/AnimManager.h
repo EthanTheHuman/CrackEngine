@@ -39,5 +39,7 @@ public:
 protected:
 	void parseXml(const char* _filename);
 	void changeAnimation(int _index);
+
+	int loopIndex = 0;
 };
 

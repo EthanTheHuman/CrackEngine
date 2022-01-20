@@ -7,114 +7,109 @@
       <frames>
         <frame
           index ="1"
+          filename = "data/images/ghn/ghn00_01.png"
+          stepcount = "12"
+          xscale = "-1"
+          xpos = "-38"
+          ypos = "-14">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn00_02.png"
+          stepcount = "8"
+          xscale = "-1"
+          xpos = "-49"
+          ypos = "-14">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn00_03.png"
+          stepcount = "8"
+          xscale = "-1"
+          xpos = "-47"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn00_04.png"
+          stepcount = "8"
+          xscale = "-1"
+          xpos = "-50"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn00_05.png"
+          stepcount = "8"
+          xscale = "-1"
+          xpos = "-48"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn00_06.png"
+          stepcount = "8"
+          xscale = "-1"
+          xpos = "-49"
+          ypos = "-10"
+          loop = "1">
+        </frame>
+        <frame
+          index ="7"
+          filename = "data/images/ghn/ghn00_07.png"
+          stepcount = "4"
+          xscale = "-1"
+          xpos = "-49"
+          ypos = "-11">
+        </frame>
+        <frame
+          index ="8"
+          filename = "data/images/ghn/ghn00_08.png"
+          stepcount = "4"
+          xscale = "-1"
+          xpos = "-49"
+          ypos = "-14">
+        </frame>
+        <frame
+          index ="9"
           filename = "data/images/ghn/ghn00_09.png"
           stepcount = "8"
           xscale = "-1"
           yscale = "1"
           xpos = "-49"
           ypos = "-7">
-          <inputactions>
-            <inputaction
-              input = "FORWARD"
-              animset ="20"
-              />
-            <inputaction
-              input = "BACK"
-              animset ="21"
-              />
-          </inputactions>
         </frame>
         <frame
-          index ="2"
+          index ="10"
           filename = "data/images/ghn/ghn00_08.png"
           stepcount = "6"
           xscale = "-1"
           xpos = "-49"
           ypos = "-14">
-          <inputactions>
-            <inputaction
-              input = "FORWARD"
-              animset ="20"
-              />
-            <inputaction
-              input = "BACK"
-              animset ="21"
-              />
-          </inputactions>
         </frame>
         <frame
-          index ="3"
+          index ="11"
           filename = "data/images/ghn/ghn00_07.png"
           stepcount = "6"
           xscale = "-1"
           xpos = "-49"
           ypos = "-11">
-          <inputactions>
-            <inputaction
-              input = "FORWARD"
-              animset ="20"
-              />
-            <inputaction
-              input = "BACK"
-              animset ="21"
-              />
-          </inputactions>
-        </frame>
-        <frame
-          index ="4"
-          filename = "data/images/ghn/ghn00_06.png"
-          stepcount = "8"
-          xscale = "-1"
-          xpos = "-49"
-          ypos = "-10">
-          <inputactions>
-            <inputaction
-              input = "FORWARD"
-              animset ="20"
-              />
-            <inputaction
-              input = "BACK"
-              animset ="21"
-              />
-          </inputactions>
-        </frame>
-        <frame
-          index ="5"
-          filename = "data/images/ghn/ghn00_07.png"
-          stepcount = "4"
-          xscale = "-1"
-          xpos = "-49"
-          ypos = "-11">
-          <inputactions>
-            <inputaction
-              input = "FORWARD"
-              animset ="20"
-              />
-            <inputaction
-              input = "BACK"
-              animset ="21"
-              />
-          </inputactions>
-        </frame>
-        <frame
-          index ="6"
-          filename = "data/images/ghn/ghn00_08.png"
-          stepcount = "4"
-          xscale = "-1"
-          xpos = "-49"
-          ypos = "-14">
-          <inputactions>
-            <inputaction
-              input = "FORWARD"
-              animset ="20"
-              />
-            <inputaction
-              input = "BACK"
-              animset ="21"
-              />
-          </inputactions>
         </frame>
       </frames>
+      <inputactions>
+        <inputaction
+          input = "FORWARD"
+          animset ="20"
+              />
+        <inputaction
+          input = "BACK"
+          animset ="21"
+              />
+        <inputaction
+          input = "DOWN"
+          animset ="10"
+              />
+      </inputactions>
     </anim>
     <anim
       index = "20"
@@ -128,12 +123,6 @@
           yscale = "1"
           xpos = "-49"
           ypos = "-10">
-          <inputactions>
-            <inputaction
-              input = "NONE"
-              animset ="1"
-              />
-          </inputactions>
         </frame>
         <frame
           index ="2"
@@ -143,14 +132,22 @@
           yscale = "1"
           xpos = "-49"
           ypos = "-10">
-          <inputactions>
-            <inputaction
-              input = "NONE"
-              animset ="1"
-              />
-          </inputactions>
         </frame>
       </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="1"
+              />
+        <inputaction
+          input = "BACK"
+          animset ="21"
+              />
+        <inputaction
+          input = "DOWN"
+          animset ="10"
+              />
+      </inputactions>
     </anim>
     <anim
       index = "21"
@@ -164,12 +161,6 @@
           yscale = "1"
           xpos = "-49"
           ypos = "-10">
-          <inputactions>
-            <inputaction
-              input = "NONE"
-              animset ="1"
-              />
-          </inputactions>
         </frame>
         <frame
           index ="2"
@@ -179,14 +170,87 @@
           yscale = "1"
           xpos = "-49"
           ypos = "-10">
-          <inputactions>
-            <inputaction
-              input = "NONE"
-              animset ="1"
-              />
-          </inputactions>
         </frame>
       </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="1"
+              />
+        <inputaction
+          input = "FORWARD"
+          animset ="20"
+              />
+        <inputaction
+          input = "DOWN"
+          animset ="10"
+              />
+      </inputactions>
+    </anim>
+    <anim
+      index = "10"
+      name = "stand to crouch">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn07_01.png"
+          stepcount = "8"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-16">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn07_02.png"
+          stepcount = "8"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-9">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn07_03.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-48"
+          ypos = "-9">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="12"
+              />
+      </inputactions>
+    </anim>
+    <anim
+      index = "12"
+      name = "crouch to stand">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn07_02.png"
+          stepcount = "8"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-9">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn07_01.png"
+          stepcount = "8"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-16">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
     </anim>
   </anims>
 </character>

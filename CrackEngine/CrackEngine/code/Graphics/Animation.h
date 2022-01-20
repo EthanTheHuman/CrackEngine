@@ -12,5 +12,6 @@ public:
 	Animation(std::map<int, Frame> _frameList, int _index);
 	int index;
 	std::map<int, Frame> frameList;
+	std::vector<Frame::InputAction> inputActions;
 };
 
