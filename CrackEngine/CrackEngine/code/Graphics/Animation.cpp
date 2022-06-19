@@ -50,6 +50,17 @@ Animation::Animation(pugi::xml_node _animData)
 		tempAction.inputCommand = command;
 		inputActions.push_back(tempAction);
 	}
+	for (pugi::xml_node action : _animData.child("animactions").children("animaction"))
+	{
+		int xDelta = 0;
+		if (action.attribute("xdelta").as_int() != NULL) xDelta = action.attribute("xdelta").as_int();
+		int yDelta = 0;
+		if (action.attribute("ydelta").as_int() != NULL) yDelta = action.attribute("ydelta").as_int();
+		Frame::FrameAction tempAction;
+		tempAction.xDelta = xDelta;
+		tempAction.yDelta = yDelta;
+		frameActions.push_back(tempAction);
+	}
 }
 
 Animation::Animation(std::map<int, Frame> _frameList, int _index)

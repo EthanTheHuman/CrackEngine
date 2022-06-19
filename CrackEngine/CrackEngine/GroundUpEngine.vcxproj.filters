@@ -215,5 +215,6 @@
   <ItemGroup>
     <Xml Include="data\characters\GohanHurt.xml" />
     <Xml Include="data\characters\Gohan.xml" />
+    <Xml Include="data\characters\Android18.xml" />
   </ItemGroup>
 </Project>

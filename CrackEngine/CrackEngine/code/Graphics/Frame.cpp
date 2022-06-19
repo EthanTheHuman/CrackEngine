@@ -107,6 +107,17 @@ Frame::Frame(pugi::xml_node _frameData)
 		tempAction.inputCommand = command;
 		inputActions.push_back(tempAction);
 	}
+	for (pugi::xml_node action : _frameData.child("frameactions").children("frameaction"))
+	{
+		int xDelta = 0;
+		if (action.attribute("xdelta").as_int() != NULL) xDelta = action.attribute("animset").as_int();
+		int yDelta = 0;
+		if (action.attribute("ydelta").as_int() != NULL) yDelta = action.attribute("animset").as_int();
+		FrameAction tempAction;
+		tempAction.xDelta = xDelta;
+		tempAction.yDelta = yDelta;
+		frameActions.push_back(tempAction);
+	}
 
 	// load textures (we now use a utility function to keep the code more organized)
 	// -----------------------------------------------------------------------------

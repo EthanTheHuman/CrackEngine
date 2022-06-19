@@ -148,6 +148,12 @@
           animset ="10"
               />
       </inputactions>
+      <animactions>
+        <animaction
+          frequency="always"
+          xdelta="1">
+        </animaction>
+      </animactions>
     </anim>
     <anim
       index = "21"
@@ -172,6 +178,12 @@
           ypos = "-10">
         </frame>
       </frames>
+      <animactions>
+        <animaction
+          frequency="always"
+          xdelta="-1">
+        </animaction>
+      </animactions>
       <inputactions>
         <inputaction
           input = "NONE"

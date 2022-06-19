@@ -13,5 +13,6 @@ public:
 	int index;
 	std::map<int, Frame> frameList;
 	std::vector<Frame::InputAction> inputActions;
+	std::vector<Frame::FrameAction> frameActions;
 };
 

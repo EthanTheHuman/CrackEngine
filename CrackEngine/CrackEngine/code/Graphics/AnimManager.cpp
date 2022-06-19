@@ -113,6 +113,30 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 	}
 }
 
+void AnimManager::processActions()
+{
+	for (int i = 0; i < currentAnim->frameActions.size(); i++)
+	{
+		processAction(currentAnim->frameActions[i]);
+	};
+
+	for (int i = 0; i < currentFrame->frameActions.size(); i++)
+	{
+		processAction(currentFrame->frameActions[i]);
+	};
+}
+
+void AnimManager::processAction(Frame::FrameAction _action)
+{
+	// Moving sideways
+	if (_action.xDelta != 0)
+	{
+		glm::vec3 pos = getPosition();
+		pos.x += _action.xDelta;
+		setPosition(pos);
+	};
+}
+
 AnimManager::AnimManager(Sprite* _sprite, std::string _characterData)
 {
 	sprite = _sprite;
@@ -195,6 +219,7 @@ void AnimManager::update()
 		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 	}
 	sprite->update();
+	processActions();
 }
 
 void AnimManager::parseXml(const char* _filename)

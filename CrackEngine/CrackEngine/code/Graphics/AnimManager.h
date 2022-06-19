@@ -24,6 +24,8 @@ public:
 	//glm::vec3 getScale() override;
 	glm::vec3& setScale(glm::vec3 _scale) override;
 	void processInputs(GLFWwindow* _window, InputManager _inputs);
+	void processActions();
+	void processAction(Frame::FrameAction _action);
 
 	AnimManager(Sprite* _sprite, std::string _characterData);
 	AnimManager(Sprite* _sprite, std::map<Animation, int> _anims);

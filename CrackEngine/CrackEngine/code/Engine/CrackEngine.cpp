@@ -95,9 +95,9 @@ namespace Crack {
         player1Manager->setPalette((std::string)"data/images/ghn/Pal_Default.pal", (std::string)"data/images/ghn/Pal_Template.pal");
         player1Manager->setPosition(glm::vec3(60.f, 20.f, 0.f));
         playerPos = player1Manager->getPosition();
-        player2Manager = new AnimManager((std::string)"data/characters/Gohan.xml");
+        player2Manager = new AnimManager((std::string)"data/characters/Android18.xml");
         player2Manager->setPosition(glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
-        player2Manager->setPalette((std::string)"data/images/ghn/Pal_Training.pal", (std::string)"data/images/ghn/Pal_Template.pal");
+        player2Manager->setPalette((std::string)"data/images/jet/Pal_Default.pal", (std::string)"data/images/jet/Pal_Template.pal");
         player2Manager->setScale(glm::vec3(-1.f, 1.f, 1.f));
         //Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
         Shadow = new Sprite("data/images/Shadow.png");
@@ -139,7 +139,6 @@ namespace Crack {
         {
             it->update();
         }
-        player1Manager->setPosition(playerPos);
         player1Manager->update();
         player2Manager->update();
     }
@@ -248,14 +247,6 @@ namespace Crack {
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         {
             camera.ProcessKeyboard(FORWARD);
-        }
-        if (Player1Inputs.getButton(InputManager::eInputs::WEST))
-        {
-            playerPos.x -= 1;
-        }
-        if (Player1Inputs.getButton(InputManager::eInputs::EAST))
-        {
-            playerPos.x += 1;
         }
     }
 }
