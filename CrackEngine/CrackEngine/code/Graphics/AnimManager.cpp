@@ -18,13 +18,11 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 		Frame::InputAction& inputAction = actions[i];
 		if (inputAction.animChangeIndex != NULL)
 		{
-			bool valid = false;
+			bool valid = true;
 			switch (inputAction.inputCommand)
 			{
 				case Frame::InputCommand::NONE:
 				{
-					valid = true;
-
 					bool h = false;
 					if (_inputs.getButton(InputManager::eInputs::EAST) == true && _inputs.getButton(InputManager::eInputs::WEST) == true)
 					{
@@ -54,7 +52,6 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 				}
 				case Frame::InputCommand::FORWARD:
 				{
-					valid = true;
 					if (sprite->getScale().x > 0)
 					{
 						if (_inputs.getButton(InputManager::eInputs::EAST) != true) valid = false;
@@ -69,7 +66,6 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 				}
 				case Frame::InputCommand::BACK:
 				{
-					valid = true;
 					if (sprite->getScale().x > 0)
 					{
 						if (_inputs.getButton(InputManager::eInputs::WEST) != true) valid = false;
@@ -84,7 +80,6 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 				}
 				case Frame::InputCommand::UP:
 				{
-					valid = true;
 					if (_inputs.getButton(InputManager::eInputs::NORTH) != true) valid = false;
 					if (_inputs.getButton(InputManager::eInputs::NORTHWEST) != true) valid = false;
 					if (_inputs.getButton(InputManager::eInputs::NORTHEAST) != true) valid = false;
@@ -92,15 +87,81 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 				}
 				case Frame::InputCommand::DOWN:
 				{
-					valid = true;
 					if ((_inputs.getButton(InputManager::eInputs::SOUTH) != true)
 					&& (_inputs.getButton(InputManager::eInputs::SOUTHWEST) != true)
 					&& (_inputs.getButton(InputManager::eInputs::SOUTHEAST) != true)) valid = false;
 					break;
 				}
+				case Frame::InputCommand::ANY:
+				{
+					break;
+				}
 				case Frame::InputCommand::EMPTY:
 				{
-					valid = false;
+					break;
+				}
+			}
+			switch (inputAction.inputButton)
+			{
+				case Frame::InputButton::NONE:
+				{
+					if (_inputs.getButton(InputManager::eInputs::A) == true)
+						valid = false;
+					if (_inputs.getButton(InputManager::eInputs::B) == true)
+						valid = false;
+					if (_inputs.getButton(InputManager::eInputs::C) == true)
+						valid = false;
+					if (_inputs.getButton(InputManager::eInputs::X) == true)
+						valid = false;
+					if (_inputs.getButton(InputManager::eInputs::Y) == true)
+						valid = false;
+					if (_inputs.getButton(InputManager::eInputs::Z) == true)
+						valid = false;
+					
+					break;
+				}
+				case Frame::InputButton::A:
+				{
+					if (_inputs.getButton(InputManager::eInputs::A) == false)
+						valid = false;
+					break;
+				}
+				case Frame::InputButton::B:
+				{
+					if (_inputs.getButton(InputManager::eInputs::B) == false)
+						valid = false;
+					break;
+				}
+				case Frame::InputButton::C:
+				{
+					if (_inputs.getButton(InputManager::eInputs::C) == false)
+						valid = false;
+					break;
+				}
+				case Frame::InputButton::X:
+				{
+					if (_inputs.getButton(InputManager::eInputs::X) == false)
+						valid = false;
+					break;
+				}
+				case Frame::InputButton::Y:
+				{
+					if (_inputs.getButton(InputManager::eInputs::Y) == false)
+						valid = false;
+					break;
+				}
+				case Frame::InputButton::Z:
+				{
+					if (_inputs.getButton(InputManager::eInputs::Z) == false)
+						valid = false;
+					break;
+				}
+				case Frame::InputButton::ANY:
+				{
+					break;
+				}
+				case Frame::InputButton::EMPTY:
+				{
 					break;
 				}
 			}

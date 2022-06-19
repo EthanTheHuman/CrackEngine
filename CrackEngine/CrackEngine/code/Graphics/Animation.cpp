@@ -25,6 +25,7 @@ Animation::Animation(pugi::xml_node _animData)
 	{
 		int animIndex = -1;
 		Frame::InputCommand command = Frame::InputCommand::EMPTY;
+		Frame::InputButton button = Frame::InputButton::EMPTY;
 		if (action.attribute("animset").as_int() != NULL) animIndex = action.attribute("animset").as_int();
 		if (action.attribute("input").as_string() != NULL)
 		{
@@ -45,9 +46,45 @@ Animation::Animation(pugi::xml_node _animData)
 				command = Frame::InputCommand::DOWN;
 			}
 		}
+		if (action.attribute("button").as_string() != NULL)
+		{
+			if ((std::string)(action.attribute("button").as_string()) == (std::string)"A")
+			{
+				button = Frame::InputButton::A;
+			}
+			else if ((std::string)(action.attribute("button").as_string()) == (std::string)"B")
+			{
+				button = Frame::InputButton::B;
+			}
+			else if ((std::string)(action.attribute("button").as_string()) == (std::string)"C")
+			{
+				button = Frame::InputButton::C;
+			}
+			else if ((std::string)(action.attribute("button").as_string()) == (std::string)"X")
+			{
+				button = Frame::InputButton::X;
+			}
+			else if ((std::string)(action.attribute("button").as_string()) == (std::string)"Y")
+			{
+				button = Frame::InputButton::Y;
+			}
+			else if ((std::string)(action.attribute("button").as_string()) == (std::string)"Z")
+			{
+				button = Frame::InputButton::Z;
+			}
+			else if ((std::string)(action.attribute("button").as_string()) == (std::string)"ANY")
+			{
+				button = Frame::InputButton::ANY;
+			}
+			else if ((std::string)(action.attribute("button").as_string()) == (std::string)"NONE")
+			{
+				button = Frame::InputButton::NONE;
+			}
+		}
 		Frame::InputAction tempAction;
 		tempAction.animChangeIndex = animIndex;
 		tempAction.inputCommand = command;
+		tempAction.inputButton = button;
 		inputActions.push_back(tempAction);
 	}
 	for (pugi::xml_node action : _animData.child("animactions").children("animaction"))

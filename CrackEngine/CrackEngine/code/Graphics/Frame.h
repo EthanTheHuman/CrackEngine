@@ -10,20 +10,35 @@ using json = nlohmann::json;
 class Frame
 {
 public:
-	enum InputCommand
+	enum class InputCommand
 	{
 		EMPTY = -1,
 		FORWARD = 0,
 		BACK,
 		UP,
 		DOWN,
-		NONE
+		NONE,
+		ANY
+	};
+
+	enum class InputButton
+	{
+		EMPTY = -1,
+		A,
+		B,
+		C,
+		X,
+		Y,
+		Z,
+		NONE,
+		ANY
 	};
 
 	struct InputAction
 	{
 		int animChangeIndex = 0;
 		Frame::InputCommand inputCommand = Frame::InputCommand::NONE;
+		Frame::InputButton inputButton = Frame::InputButton::ANY;
 	};
 
 	struct FrameAction

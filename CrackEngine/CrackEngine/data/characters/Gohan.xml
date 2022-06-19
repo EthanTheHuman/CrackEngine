@@ -109,6 +109,11 @@
           input = "DOWN"
           animset ="10"
               />
+        <inputaction
+          input = "ANY"
+          button= "X"
+          animset ="200"
+              />
       </inputactions>
     </anim>
     <anim
@@ -263,6 +268,81 @@
       </frames>
       <inputactions>
       </inputactions>
+    </anim>
+    <anim
+      index = "200"
+      name = "standing light punch">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn12_01.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-76"
+          ypos = "-14">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn12_02.png"
+          stepcount = "12"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-61"
+          ypos = "-15">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              xdelta="1">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn12_03.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-44"
+          ypos = "-11">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn12_04.png"
+          stepcount = "12"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-44"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn12_05.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "-11">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn12_06.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "-18">
+        </frame>
+        <frame
+          index ="7"
+          filename = "data/images/ghn/ghn12_07.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-48"
+          ypos = "-11">
+        </frame>
+      </frames>
     </anim>
   </anims>
 </character>
