@@ -21,6 +21,7 @@ Animation::Animation(pugi::xml_node _animData)
 	frameList = frameList;
 	index = 0;
 	if (_animData.attribute("index").as_int() != NULL) index = _animData.attribute("index").as_int();
+	if (_animData.attribute("fallback").as_int() != NULL) fallbackindex = _animData.attribute("fallback").as_int();
 	for (pugi::xml_node action : _animData.child("inputactions").children("inputaction"))
 	{
 		int animIndex = -1;

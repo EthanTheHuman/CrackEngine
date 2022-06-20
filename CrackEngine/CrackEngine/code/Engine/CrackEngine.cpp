@@ -68,8 +68,8 @@ namespace Crack {
         glfwSetScrollCallback(window, scroll_callback);
 
         // tell GLFW to capture our mouse
-        //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
         // glad: load all OpenGL function pointers
         // ---------------------------------------
@@ -92,7 +92,7 @@ namespace Crack {
 
         //Sprite Player1("data/images/ghn/ghn00_06.png");
         player1Manager = new AnimManager((std::string)"data/characters/Gohan.xml");
-        player1Manager->setPalette((std::string)"data/images/ghn/Pal_SuperSuperHero.pal", (std::string)"data/images/ghn/Pal_Template.pal");
+        player1Manager->setPalette((std::string)"data/images/ghn/Pal_Training.pal", (std::string)"data/images/ghn/Pal_Template.pal");
         player1Manager->setPosition(glm::vec3(60.f, 20.f, 0.f));
         playerPos = player1Manager->getPosition();
         player2Manager = new AnimManager((std::string)"data/characters/Android18.xml");

@@ -267,7 +267,7 @@ void AnimManager::update()
 			}
 			else
 			{
-				changeAnimation(1);
+				changeAnimation(currentAnim->fallbackindex);
 				//currentFrame = &currentAnim->frameList[1];
 			}
 			loopIndex = 0;

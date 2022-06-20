@@ -14,5 +14,6 @@ public:
 	std::map<int, Frame> frameList;
 	std::vector<Frame::InputAction> inputActions;
 	std::vector<Frame::FrameAction> frameActions;
+	int fallbackindex = 1;
 };
 

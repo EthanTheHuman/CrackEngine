@@ -3,7 +3,8 @@
   <anims>
     <anim
       index = "1"
-      name = "idle">
+      name = "idle"
+      fallback = "1">
       <frames>
         <frame
           index ="1"
@@ -118,7 +119,8 @@
     </anim>
     <anim
       index = "20"
-      name = "walk forward">
+      name = "walk forward"
+      fallback = "1">
       <frames>
         <frame
           index ="1"
@@ -152,6 +154,11 @@
           input = "DOWN"
           animset ="10"
               />
+        <inputaction
+          input = "ANY"
+          button= "X"
+          animset ="200"
+            />
       </inputactions>
       <animactions>
         <animaction
@@ -162,7 +169,8 @@
     </anim>
     <anim
       index = "21"
-      name = "walk back">
+      name = "walk back"
+      fallback = "1">
       <frames>
         <frame
           index ="1"
@@ -202,11 +210,17 @@
           input = "DOWN"
           animset ="10"
               />
+        <inputaction
+          input = "ANY"
+          button= "X"
+          animset ="200"
+            />
       </inputactions>
     </anim>
     <anim
       index = "10"
-      name = "stand to crouch">
+      name = "stand to crouch"
+      fallback = "13">
       <frames>
         <frame
           index ="1"
@@ -226,21 +240,13 @@
           xpos = "-50"
           ypos = "-9">
         </frame>
-        <frame
-          index ="3"
-          filename = "data/images/ghn/ghn07_03.png"
-          stepcount = "-1"
-          xscale = "-1"
-          yscale = "1"
-          xpos = "-48"
-          ypos = "-9">
-        </frame>
       </frames>
       <inputactions>
         <inputaction
-          input = "NONE"
-          animset ="12"
-              />
+          input = "ANY"
+          button= "X"
+          animset ="210"
+            />
       </inputactions>
     </anim>
     <anim
@@ -267,6 +273,38 @@
         </frame>
       </frames>
       <inputactions>
+        <inputaction
+          input = "ANY"
+          button= "X"
+          animset ="200"
+            />
+      </inputactions>
+    </anim>
+    <anim
+      index = "13"
+      name = "crouching"
+      fallback = "13">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn07_03.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-48"
+          ypos = "-9">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="12"
+              />
+        <inputaction
+          input = "ANY"
+          button= "X"
+          animset ="210"
+            />
       </inputactions>
     </anim>
     <anim
@@ -341,6 +379,49 @@
           yscale = "1"
           xpos = "-48"
           ypos = "-11">
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "210"
+      name = "crouching light punch"
+      fallback = "13">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn15_01.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-53"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn15_02.png"
+          stepcount = "2"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn15_03.png"
+          stepcount = "15"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-42"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn15_04.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-13">
         </frame>
       </frames>
     </anim>
