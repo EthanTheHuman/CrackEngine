@@ -107,10 +107,10 @@ void ImGuiUI::render()
         {
             show_fps = !show_fps;
             isPressed = true;
-            if (show_fps)
+            /*if (show_fps)
                 glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
             else
-                glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);*/
         }
     }
     else
