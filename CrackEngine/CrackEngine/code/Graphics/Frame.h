@@ -43,8 +43,12 @@ public:
 
 	struct FrameAction
 	{
-		int xDelta;
-		int yDelta;
+		float xDelta;
+		float yDelta;
+		float xVelocity;
+		float yVelocity;
+		float xAcceleration;
+		float yAcceleration;
 	};
 
 	Frame(json _frameData);

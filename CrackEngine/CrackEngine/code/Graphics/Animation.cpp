@@ -42,6 +42,10 @@ Animation::Animation(pugi::xml_node _animData)
 			{
 				command = Frame::InputCommand::BACK;
 			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"UP")
+			{
+				command = Frame::InputCommand::UP;
+			}
 			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"DOWN")
 			{
 				command = Frame::InputCommand::DOWN;
@@ -90,13 +94,25 @@ Animation::Animation(pugi::xml_node _animData)
 	}
 	for (pugi::xml_node action : _animData.child("animactions").children("animaction"))
 	{
-		int xDelta = 0;
-		if (action.attribute("xdelta").as_int() != NULL) xDelta = action.attribute("xdelta").as_int();
-		int yDelta = 0;
-		if (action.attribute("ydelta").as_int() != NULL) yDelta = action.attribute("ydelta").as_int();
+		float xDelta = 0;
+		if (action.attribute("xdelta").as_float() != NULL) xDelta = action.attribute("xdelta").as_float();
+		float yDelta = 0;
+		if (action.attribute("ydelta").as_float() != NULL) yDelta = action.attribute("ydelta").as_float();
+		float xVelocity = 0;
+		if (action.attribute("xvelocity").as_float() != NULL) xVelocity = action.attribute("xvelocity").as_float();
+		float yVelocity = 0;
+		if (action.attribute("yvelocity").as_float() != NULL) yVelocity = action.attribute("yvelocity").as_float();
+		float xAcceleration = 0;
+		if (action.attribute("xacceleration").as_float() != NULL) xAcceleration = action.attribute("xacceleration").as_float();
+		float yAcceleration = 0;
+		if (action.attribute("yacceleration").as_float() != NULL) yAcceleration = action.attribute("yacceleration").as_float();
 		Frame::FrameAction tempAction;
 		tempAction.xDelta = xDelta;
 		tempAction.yDelta = yDelta;
+		tempAction.xVelocity = xVelocity;
+		tempAction.yVelocity = yVelocity;
+		tempAction.xAcceleration = xAcceleration;
+		tempAction.yAcceleration = yAcceleration;
 		frameActions.push_back(tempAction);
 	}
 }

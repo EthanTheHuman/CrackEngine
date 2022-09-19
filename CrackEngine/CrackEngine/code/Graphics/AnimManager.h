@@ -43,9 +43,11 @@ public:
 protected:
 	void parseXml(const char* _filename);
 	void changeAnimation(int _index);
-	void setVelocity(glm::vec2 _vel);
+	void setVelocity(glm::vec2 _vel, bool _additive);
+	void setAcceleration(glm::vec2 _acc);
 
 	glm::vec2 velocity = glm::vec2(0, 0);
+	glm::vec2 acceleration = glm::vec2(0, 0);
 
 	int loopIndex = 0;
 };

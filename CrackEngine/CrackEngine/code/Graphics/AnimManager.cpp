@@ -80,9 +80,9 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 				}
 				case Frame::InputCommand::UP:
 				{
-					if (_inputs.getButton(InputManager::eInputs::NORTH) != true) valid = false;
-					if (_inputs.getButton(InputManager::eInputs::NORTHWEST) != true) valid = false;
-					if (_inputs.getButton(InputManager::eInputs::NORTHEAST) != true) valid = false;
+					if (_inputs.getButton(InputManager::eInputs::NORTH) != true
+						&& _inputs.getButton(InputManager::eInputs::NORTHWEST) != true
+						&& _inputs.getButton(InputManager::eInputs::NORTHEAST) != true) valid = false;
 					break;
 				}
 				case Frame::InputCommand::DOWN:
@@ -192,10 +192,28 @@ void AnimManager::processAction(Frame::FrameAction _action)
 	// Moving sideways
 	if (_action.xDelta != 0)
 	{
-		glm::vec3 pos = getPosition();
-		pos.x += _action.xDelta;
-		setPosition(pos);
+		setPosition(glm::vec2(_action.xDelta, 0), true);
 	};
+	if (_action.yDelta != 0)
+	{
+		setPosition(glm::vec2(0, _action.yDelta), true);
+	}
+	if (_action.xVelocity != 0)
+	{
+		setVelocity(glm::vec2(_action.xVelocity, velocity.y), false);
+	}
+	if (_action.yVelocity != 0)
+	{
+		setVelocity(glm::vec2(velocity.x, _action.yVelocity), false);
+	}
+	if (_action.xAcceleration != 0)
+	{
+		setAcceleration(glm::vec2(_action.xAcceleration, acceleration.y));
+	}
+	if (_action.yAcceleration != 0)
+	{
+		setAcceleration(glm::vec2(acceleration.x, _action.yAcceleration));
+	}
 }
 
 AnimManager::AnimManager(Sprite* _sprite, std::string _characterData)
@@ -305,6 +323,9 @@ void AnimManager::update()
 		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
 		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 	}
+	setVelocity(acceleration, true);
+	std::cout << "acc: " << acceleration.y << std::endl;
+	std::cout << "vel: " << velocity.y << std::endl;
 	setPosition(velocity, true);
 	sprite->update();
 	processActions();
@@ -346,9 +367,22 @@ void AnimManager::changeAnimation(int _index)
 	sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 	frameCount = 0;
 	loopIndex = 0;
+	setVelocity(glm::vec2(0, 0), false);
+	setAcceleration(glm::vec2(0, 0));
 }
 
-void AnimManager::setVelocity(glm::vec2 _vel)
+void AnimManager::setVelocity(glm::vec2 _vel, bool _additive = false)
 {
-	velocity = _vel;
+	glm::vec2 vel = glm::vec2(0, 0);
+	if (_additive)
+	{
+		vel = velocity;
+	}
+	vel += _vel;
+	velocity = vel;
+}
+
+void AnimManager::setAcceleration(glm::vec2 _acc)
+{
+	acceleration = _acc;
 }

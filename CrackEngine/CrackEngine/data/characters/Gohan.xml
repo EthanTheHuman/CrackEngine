@@ -111,6 +111,10 @@
           animset ="10"
               />
         <inputaction
+          input = "UP"
+          animset ="40"
+              />
+        <inputaction
           input = "ANY"
           button= "X"
           animset ="200"
@@ -163,7 +167,7 @@
       <animactions>
         <animaction
           frequency="always"
-          xdelta="3">
+          xvelocity="3">
         </animaction>
       </animactions>
     </anim>
@@ -194,7 +198,7 @@
       <animactions>
         <animaction
           frequency="always"
-          xdelta="-2">
+          xvelocity="-2">
         </animaction>
       </animactions>
       <inputactions>
@@ -306,6 +310,59 @@
           animset ="210"
             />
       </inputactions>
+    </anim>
+    <anim
+      index = "40"
+      name = "Jumpsquat"
+      fallback = "41">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn06_01.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-53"
+          ypos = "-12">
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "41"
+      name = "Jump Up"
+      fallback = "41">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn06_02.png"
+          stepcount = "1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-53"
+          ypos = "-12">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              yvelocity="3">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn06_02.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-53"
+          ypos = "-12">
+        </frame>
+      </frames>
+      <animactions>
+        <animaction
+          frequency="always"
+          yacceleration="-0.05">
+        </animaction>
+      </animactions>
     </anim>
     <anim
       index = "200"
