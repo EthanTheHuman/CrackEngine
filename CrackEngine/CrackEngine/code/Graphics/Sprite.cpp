@@ -101,7 +101,7 @@ void Sprite::render()
 
     // world transformation
     glm::mat4 model(1.0f);
-    model = glm::translate(model, convertedPosition(position + getLocalPos()));
+    model = glm::translate(model, convertedPosition(glm::round(position) + getLocalPos()));
     model = glm::rotate(model, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
     model = glm::rotate(model, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
     model = glm::rotate(model, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));

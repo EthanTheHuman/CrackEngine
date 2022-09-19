@@ -247,6 +247,31 @@ glm::vec3& AnimManager::setPosition(glm::vec3 _pos)
 	return _pos;
 }
 
+glm::vec3& AnimManager::setPosition(glm::vec3 _pos, bool _additive)
+{
+	glm::vec3 pos = glm::vec3(0, 0, 0);
+	if (_additive)
+	{
+		pos = getPosition();
+	}
+	pos.x += _pos.x;
+	pos.y += _pos.y;
+	pos.z += _pos.z;
+	return setPosition(pos);
+}
+
+glm::vec3& AnimManager::setPosition(glm::vec2 _pos, bool _additive)
+{
+	glm::vec3 pos = glm::vec3(0, 0, 0);
+	if (_additive)
+	{
+		pos = getPosition();
+	}
+	pos.x += _pos.x;
+	pos.y += _pos.y;
+	return setPosition(pos);
+}
+
 void AnimManager::init()
 {
 }
@@ -275,10 +300,12 @@ void AnimManager::update()
 		else {
 			currentFrame = &currentAnim->frameList[newIndex];
 		}
+
 		sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
 		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
 		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 	}
+	setPosition(velocity, true);
 	sprite->update();
 	processActions();
 }
@@ -319,4 +346,9 @@ void AnimManager::changeAnimation(int _index)
 	sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 	frameCount = 0;
 	loopIndex = 0;
+}
+
+void AnimManager::setVelocity(glm::vec2 _vel)
+{
+	velocity = _vel;
 }

@@ -132,6 +132,7 @@ namespace Crack {
 
         return 0;
 	}
+
     void CrackEngine::Step()
     {
         glfwPollEvents();

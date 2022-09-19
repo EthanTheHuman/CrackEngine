@@ -19,6 +19,8 @@ public:
 	void render() override;
 	glm::vec3 getPosition() override;
 	glm::vec3& setPosition(glm::vec3 _pos) override;
+	glm::vec3& setPosition(glm::vec3 _pos, bool _additive);
+	glm::vec3& setPosition(glm::vec2 _pos, bool _additive);
 	//glm::vec3 getRotation() override;
 	//glm::vec3& setRotation(glm::vec3 _rot) override;
 	//glm::vec3 getScale() override;
@@ -41,6 +43,9 @@ public:
 protected:
 	void parseXml(const char* _filename);
 	void changeAnimation(int _index);
+	void setVelocity(glm::vec2 _vel);
+
+	glm::vec2 velocity = glm::vec2(0, 0);
 
 	int loopIndex = 0;
 };
