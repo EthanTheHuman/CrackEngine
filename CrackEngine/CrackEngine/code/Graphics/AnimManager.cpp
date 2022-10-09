@@ -92,12 +92,104 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 					&& (_inputs.getButton(InputManager::eInputs::SOUTHEAST) != true)) valid = false;
 					break;
 				}
+				case Frame::InputCommand::UPFORWARD:
+				{
+					if (sprite->getScale().x > 0)
+					{
+						if (_inputs.getButton(InputManager::eInputs::NORTHEAST) != true) valid = false;
+					}
+					else
+					{
+						if (_inputs.getButton(InputManager::eInputs::NORTHWEST) != true) valid = false;
+					}
+					break;
+				}
+				case Frame::InputCommand::UPBACK:
+				{
+					if (sprite->getScale().x > 0)
+					{
+						if (_inputs.getButton(InputManager::eInputs::NORTHWEST) != true) valid = false;
+					}
+					else
+					{
+						if (_inputs.getButton(InputManager::eInputs::NORTHEAST) != true) valid = false;
+					}
+					break;
+				}
 				case Frame::InputCommand::ANY:
 				{
 					break;
 				}
 				case Frame::InputCommand::EMPTY:
 				{
+					break;
+				}
+				case Frame::InputCommand::DOUBLEFORWARD:
+				{
+					if (sprite->getScale().x > 0)
+					{
+						auto buffer = _inputs.getBuffer(30);
+						if (buffer.size() >= 3)
+						{
+							auto buffer = _inputs.getBuffer(30);
+							if (buffer[0].bEast != true) valid = false;
+							if (buffer[1].bEast != false) valid = false;
+							if (buffer[2].bEast != true) valid = false;
+						}
+						else
+						{
+							valid = false;
+						}
+					}
+					else
+					{
+						auto buffer = _inputs.getBuffer(30);
+						if (buffer.size() >= 3)
+						{
+							auto buffer = _inputs.getBuffer(30);
+							if (buffer[0].bWest != true) valid = false;
+							if (buffer[1].bWest != false) valid = false;
+							if (buffer[2].bWest != true) valid = false;
+						}
+						else
+						{
+							valid = false;
+						}
+					}
+					break;
+				}
+				case Frame::InputCommand::DOUBLEBACK:
+				{
+					if (sprite->getScale().x > 0)
+					{
+						auto buffer = _inputs.getBuffer(30);
+						if (buffer.size() >= 3)
+						{
+							auto buffer = _inputs.getBuffer(30);
+							if (buffer[0].bWest != true) valid = false;
+							if (buffer[1].bWest != false) valid = false;
+							if (buffer[2].bWest != true) valid = false;
+						}
+						else
+						{
+							valid = false;
+						}
+					}
+					else
+					{
+						auto buffer = _inputs.getBuffer(30);
+						if (buffer.size() >= 3)
+						{
+							auto buffer = _inputs.getBuffer(30);
+							if (buffer[0].bEast != true) valid = false;
+							if (buffer[1].bEast != false) valid = false;
+							if (buffer[2].bEast != true) valid = false;
+						}
+						else
+						{
+							valid = false;
+						}
+					}
 					break;
 				}
 			}
@@ -167,8 +259,10 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 			}
 			if (valid == true)
 			{
-				Log::log("Change animation", Log::IMPORTANT);
+				Log::log("Change animation to following index:", Log::LOG);
+				std::cout << inputAction.animChangeIndex << std::endl;
 				changeAnimation(inputAction.animChangeIndex);
+				return;
 			}
 		}
 	}
@@ -189,30 +283,34 @@ void AnimManager::processActions()
 
 void AnimManager::processAction(Frame::FrameAction _action)
 {
-	// Moving sideways
-	if (_action.xDelta != 0)
+	// if action is currently active
+	if (_action.frameActionType == Frame::FrameActionType::ALWAYS || (_action.frameActionType == Frame::FrameActionType::INSTANT && _action.stepCount == frameCount))
 	{
-		setPosition(glm::vec2(_action.xDelta, 0), true);
-	};
-	if (_action.yDelta != 0)
-	{
-		setPosition(glm::vec2(0, _action.yDelta), true);
-	}
-	if (_action.xVelocity != 0)
-	{
-		setVelocity(glm::vec2(_action.xVelocity, velocity.y), false);
-	}
-	if (_action.yVelocity != 0)
-	{
-		setVelocity(glm::vec2(velocity.x, _action.yVelocity), false);
-	}
-	if (_action.xAcceleration != 0)
-	{
-		setAcceleration(glm::vec2(_action.xAcceleration, acceleration.y));
-	}
-	if (_action.yAcceleration != 0)
-	{
-		setAcceleration(glm::vec2(acceleration.x, _action.yAcceleration));
+		// Moving sideways
+		if (_action.xDelta != 0)
+		{
+			setPosition(glm::vec2(_action.xDelta, 0), true);
+		};
+		if (_action.yDelta != 0)
+		{
+			setPosition(glm::vec2(0, _action.yDelta), true);
+		}
+		if (_action.xVelocity != 0)
+		{
+			setVelocity(glm::vec2(_action.xVelocity, velocity.y), false);
+		}
+		if (_action.yVelocity != 0)
+		{
+			setVelocity(glm::vec2(velocity.x, _action.yVelocity), false);
+		}
+		if (_action.xAcceleration != 0)
+		{
+			setAcceleration(glm::vec2(_action.xAcceleration, acceleration.y));
+		}
+		if (_action.yAcceleration != 0)
+		{
+			setAcceleration(glm::vec2(acceleration.x, _action.yAcceleration));
+		}
 	}
 }
 
@@ -236,10 +334,10 @@ AnimManager::AnimManager(Sprite* _sprite, std::string _characterData)
 	configfile.close();
 }
 
-AnimManager::AnimManager(std::string _characterData)
+AnimManager::AnimManager(std::string _characterData, glm::vec3 _position)
 {
 	sprite = new Sprite("");
-	sprite->setPosition(glm::vec3(60.f, 20.f, 0.f));
+	startPosition = sprite->setPosition(_position);
 
 	parseXml(_characterData.c_str());
 }
@@ -323,10 +421,13 @@ void AnimManager::update()
 		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
 		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
 	}
+	// Movement
 	setVelocity(acceleration, true);
-	std::cout << "acc: " << acceleration.y << std::endl;
-	std::cout << "vel: " << velocity.y << std::endl;
 	setPosition(velocity, true);
+	if (checkJumpLand()) {
+		return;
+	}
+	// Updates
 	sprite->update();
 	processActions();
 }
@@ -343,6 +444,14 @@ void AnimManager::parseXml(const char* _filename)
 	else
 	{
 		std::cout << "character anim file loaded at " << _filename << std::endl;
+	}
+	
+	pugi::xml_node character = doc.child("character");
+	// Gather character base information
+	if ((character.attribute("paletteTemplate").as_string() && character.attribute("paletteTemplate").as_string() != "")
+		&& (character.attribute("paletteFile").as_string() && character.attribute("paletteFile").as_string() != ""))
+	{
+		setPalette(character.attribute("paletteFile").as_string(), character.attribute("paletteTemplate").as_string());
 	}
 
 	for (pugi::xml_node anim : doc.child("character").child("anims").children("anim"))
@@ -385,4 +494,19 @@ void AnimManager::setVelocity(glm::vec2 _vel, bool _additive = false)
 void AnimManager::setAcceleration(glm::vec2 _acc)
 {
 	acceleration = _acc;
+}
+
+bool AnimManager::checkJumpLand()
+{
+	if (velocity.y < 0 && getPosition().y < startPosition.y)
+	{
+		glm::vec3 floorPos = getPosition();
+		floorPos.y = startPosition.y;
+		setPosition(floorPos);
+		setVelocity(glm::vec2(0, 0));
+		setAcceleration(glm::vec2(0, 0));
+		changeAnimation(12);
+		return true;
+	}
+	return false;
 }

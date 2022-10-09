@@ -1,5 +1,7 @@
 <character
-  characterName="Gohan">
+  characterName="Gohan"
+  paletteTemplate="data/images/ghn/Pal_Template.pal"
+  paletteFile="data/images/ghn/Pal_Training2.pal">
   <anims>
     <anim
       index = "1"
@@ -99,6 +101,22 @@
       </frames>
       <inputactions>
         <inputaction
+          input = "DOUBLEFORWARD"
+          animset ="100"
+              />
+        <inputaction
+          input = "DOUBLEBACK"
+          animset ="105"
+              />
+        <inputaction
+          input = "UPFORWARD"
+          animset ="42"
+              />
+        <inputaction
+          input = "UPBACK"
+          animset ="44"
+              />
+        <inputaction
           input = "FORWARD"
           animset ="20"
               />
@@ -118,6 +136,16 @@
           input = "ANY"
           button= "X"
           animset ="200"
+              />
+        <inputaction
+          input = "ANY"
+          button= "Y"
+          animset ="201"
+              />
+        <inputaction
+          input = "ANY"
+          button= "Z"
+          animset ="202"
               />
       </inputactions>
     </anim>
@@ -147,6 +175,10 @@
       </frames>
       <inputactions>
         <inputaction
+          input = "DOUBLEFORWARD"
+          animset ="100"
+              />
+        <inputaction
           input = "NONE"
           animset ="1"
               />
@@ -159,10 +191,24 @@
           animset ="10"
               />
         <inputaction
+          input = "UP"
+          animset ="42"
+              />
+        <inputaction
           input = "ANY"
           button= "X"
           animset ="200"
             />
+        <inputaction
+          input = "ANY"
+          button= "Y"
+          animset ="201"
+              />
+        <inputaction
+          input = "ANY"
+          button= "Z"
+          animset ="202"
+              />
       </inputactions>
       <animactions>
         <animaction
@@ -203,6 +249,10 @@
       </animactions>
       <inputactions>
         <inputaction
+          input = "DOUBLEBACK"
+          animset ="105"
+              />
+        <inputaction
           input = "NONE"
           animset ="1"
               />
@@ -219,6 +269,20 @@
           button= "X"
           animset ="200"
             />
+        <inputaction
+          input = "ANY"
+          button= "Y"
+          animset ="201"
+              />
+        <inputaction
+          input = "ANY"
+          button= "Z"
+          animset ="202"
+              />
+        <inputaction
+          input = "UP"
+          animset ="44"
+              />
       </inputactions>
     </anim>
     <anim
@@ -251,6 +315,16 @@
           button= "X"
           animset ="210"
             />
+        <inputaction
+          input = "ANY"
+          button= "Y"
+          animset ="211"
+            />
+        <inputaction
+          input = "ANY"
+          button= "Z"
+          animset ="212"
+            />
       </inputactions>
     </anim>
     <anim
@@ -276,13 +350,6 @@
           ypos = "-16">
         </frame>
       </frames>
-      <inputactions>
-        <inputaction
-          input = "ANY"
-          button= "X"
-          animset ="200"
-            />
-      </inputactions>
     </anim>
     <anim
       index = "13"
@@ -309,6 +376,16 @@
           button= "X"
           animset ="210"
             />
+        <inputaction
+          input = "ANY"
+          button= "Y"
+          animset ="211"
+            />
+        <inputaction
+          input = "ANY"
+          button= "Z"
+          animset ="212"
+            />
       </inputactions>
     </anim>
     <anim
@@ -319,11 +396,11 @@
         <frame
           index ="1"
           filename = "data/images/ghn/ghn06_01.png"
-          stepcount = "4"
+          stepcount = "3"
           xscale = "-1"
           yscale = "1"
-          xpos = "-53"
-          ypos = "-12">
+          xpos = "-45"
+          ypos = "-14">
         </frame>
       </frames>
     </anim>
@@ -338,29 +415,537 @@
           stepcount = "1"
           xscale = "-1"
           yscale = "1"
-          xpos = "-53"
-          ypos = "-12">
+          xpos = "-80"
+          ypos = "-23">
           <frameactions>
             <frameaction
-              frequency="always"
-              yvelocity="3">
+              frequency="instant"
+              stepcount="0"
+              yvelocity="7">
             </frameaction>
           </frameactions>
         </frame>
         <frame
           index ="2"
           filename = "data/images/ghn/ghn06_02.png"
+          stepcount = "9"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-80"
+          ypos = "-23">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn06_03.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "-27">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn06_04.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-19">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn06_05.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-28">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn06_06.png"
           stepcount = "-1"
           xscale = "-1"
           yscale = "1"
-          xpos = "-53"
-          ypos = "-12">
+          xpos = "-39"
+          ypos = "-32">
         </frame>
       </frames>
       <animactions>
         <animaction
           frequency="always"
-          yacceleration="-0.05">
+          yacceleration="-0.3">
+        </animaction>
+      </animactions>
+      <inputactions>
+        <inputaction
+          input = "DOUBLEFORWARD"
+          animset ="102"
+              />
+        <inputaction
+          input = "DOUBLEBACK"
+          animset ="107"
+              />
+      </inputactions>
+    </anim>
+    <anim
+      index = "42"
+      name = "Jumpsquat forward"
+      fallback = "43">
+          <frames>
+            <frame
+              index ="1"
+              filename = "data/images/ghn/ghn06_01.png"
+              stepcount = "6"
+              xscale = "-1"
+              yscale = "1"
+              xpos = "-45"
+              ypos = "-14">
+            </frame>
+          </frames>
+        </anim>
+    <anim
+      index = "43"
+      name = "Jump Forward"
+      fallback = "43">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn06_02.png"
+          stepcount = "1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-80"
+          ypos = "-23">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              yvelocity="7"
+              xvelocity="2">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn06_02.png"
+          stepcount = "9"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-80"
+          ypos = "-23">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn06_03.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "-27">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn06_04.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-19">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn06_05.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-28">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn06_06.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-32">
+        </frame>
+      </frames>
+      <animactions>
+        <animaction
+          frequency="always"
+          yacceleration="-0.3">
+        </animaction>
+      </animactions>
+      <inputactions>
+        <inputaction
+          input = "DOUBLEFORWARD"
+          animset ="102"
+              />
+        <inputaction
+          input = "DOUBLEBACK"
+          animset ="107"
+              />
+      </inputactions>
+    </anim>
+    <anim
+      index = "44"
+      name = "Jumpsquat backwards"
+      fallback = "45">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn06_01.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-45"
+          ypos = "-14">
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "45"
+      name = "Jump Back"
+      fallback = "47">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn06_02.png"
+          stepcount = "1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-80"
+          ypos = "-23">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              yvelocity="7"
+              xvelocity="-2">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn06_02.png"
+          stepcount = "9"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-80"
+          ypos = "-23">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn06_03.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "-27">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn06_04.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-19">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn06_05.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-28">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn06_06.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-32">
+        </frame>
+      </frames>
+      <animactions>
+        <animaction
+          frequency="always"
+          yacceleration="-0.3">
+        </animaction>
+      </animactions>
+      <inputactions>
+        <inputaction
+          input = "DOUBLEFORWARD"
+          animset ="102"
+              />
+        <inputaction
+          input = "DOUBLEBACK"
+          animset ="107"
+              />
+      </inputactions>
+    </anim>
+    <anim
+      index = "47"
+      name = "Jump fall"
+      fallback = "47">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn06_05.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-28">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn06_06.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-32">
+        </frame>
+      </frames>
+      <animactions>
+        <animaction
+          frequency="always"
+          yacceleration="-0.3">
+        </animaction>
+      </animactions>
+    </anim>
+    <anim
+      index = "100"
+      name = "dash forward"
+      fallback = "101">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn08_01.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-56"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn08_02.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "13">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              xdelta="3">
+            </frameaction>
+          </frameactions>
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="101"
+              />
+        <inputaction
+          input = "UP"
+          animset ="42"
+              />
+      </inputactions>
+    </anim>
+    <anim
+      index = "101"
+      name = "dash forward stop"
+      fallback = "1">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn08_04.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-59"
+          ypos = "-9">
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "102"
+      name = "air dash forward"
+      fallback = "47">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn08_01.png"
+          stepcount = "5"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-56"
+          ypos = "-13">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              yvelocity="0.5"
+              xvelocity="7">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn08_02.png"
+          stepcount = "12"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "13">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              xvelocity="7">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn08_01.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-56"
+          ypos = "-13">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              xvelocity="5">
+            </frameaction>
+          </frameactions>
+        </frame>
+      </frames>
+      <animactions>
+        <animaction
+          frequency="always"
+          yacceleration="0">
+        </animaction>
+      </animactions>
+    </anim>
+    <anim
+      index = "105"
+      name = "dash back"
+      fallback = "106">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn09_04.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-56"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn09_02.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-56"
+          ypos = "-13">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              xdelta="-3">
+            </frameaction>
+          </frameactions>
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="106"
+              />
+        <inputaction
+          input = "UP"
+          animset ="44"
+              />
+      </inputactions>
+    </anim>
+    <anim
+      index = "106"
+      name = "dash backwards stop"
+      fallback = "1">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn09_04.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-59"
+          ypos = "-9">
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "107"
+      name = "air dash backwards"
+      fallback = "47">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn09_04.png"
+          stepcount = "5"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-56"
+          ypos = "-13">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              yvelocity="0.5"
+              xvelocity="-4">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn09_02.png"
+          stepcount = "16"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "13">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              xvelocity="-6">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn09_04.png"
+          stepcount = "5"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-56"
+          ypos = "-13">
+          <frameaction
+            frequency="always"
+            xvelocity="-4">
+          </frameaction>
+        </frame>
+      </frames>
+      <animactions>
+        <animaction
+          frequency="always"
+          yacceleration="0">
         </animaction>
       </animactions>
     </anim>
@@ -440,6 +1025,144 @@
       </frames>
     </anim>
     <anim
+      index = "201"
+      name = "standing medium punch">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn13_01.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-100"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn13_02.png"
+          stepcount = "2"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-69"
+          ypos = "-12">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              xdelta="2">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn13_03.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-89"
+          ypos = "-11">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn13_04.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-102"
+          ypos = "-11">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn13_05.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-110"
+          ypos = "-4">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn13_06.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-103"
+          ypos = "-6">
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "202"
+      name = "standing heavy punch">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn29_01.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn29_02.png"
+          stepcount = "8"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-36"
+          ypos = "12">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              xdelta="1">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn29_03.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-76"
+          ypos = "32">
+          <frameactions>
+            <frameaction
+              frequency="always"
+              xdelta="3">
+            </frameaction>
+          </frameactions>
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn29_04.png"
+          stepcount = "11"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-51"
+          ypos = "22">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn29_05.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-51"
+          ypos = "3">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn29_06.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-35"
+          ypos = "-8">
+        </frame>
+      </frames>
+    </anim>
+    <anim
       index = "210"
       name = "crouching light punch"
       fallback = "13">
@@ -474,6 +1197,119 @@
         <frame
           index ="4"
           filename = "data/images/ghn/ghn15_04.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-13">
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "211"
+      name = "crouching medium punch"
+      fallback = "13">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn16_01.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-53"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn16_02.png"
+          stepcount = "1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn16_03.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-42"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn16_04.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn16_05.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn16_06.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-13">
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "212"
+      name = "crouching heavy punch"
+      fallback = "1">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn25_01.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-53"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn25_02.png"
+          stepcount = "1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-12">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn25_03.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-42"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn25_04.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn25_05.png"
           stepcount = "3"
           xscale = "-1"
           yscale = "1"

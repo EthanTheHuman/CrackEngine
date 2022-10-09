@@ -1,5 +1,7 @@
 <character
-  characterName="Gohan">
+  characterName="Gohan"
+  paletteTemplate="data/images/jet/Pal_Template.pal"
+  paletteFile="data/images/jet/Pal_FullColor.pal">
   <anims>
     <anim
       index = "1"

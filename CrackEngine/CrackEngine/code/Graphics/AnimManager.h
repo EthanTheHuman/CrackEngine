@@ -31,7 +31,7 @@ public:
 
 	AnimManager(Sprite* _sprite, std::string _characterData);
 	AnimManager(Sprite* _sprite, std::map<Animation, int> _anims);
-	AnimManager(std::string _characterData);
+	AnimManager(std::string _characterData, glm::vec3 _position = glm::vec3(0, 0, 0));
 	Palette mainPalette = Palette();
 	Sprite* sprite;
 	void setPalette(std::string _newColorFileName, std::string _oldColorFileName);
@@ -45,8 +45,10 @@ protected:
 	void changeAnimation(int _index);
 	void setVelocity(glm::vec2 _vel, bool _additive);
 	void setAcceleration(glm::vec2 _acc);
+	bool checkJumpLand();
 
 	glm::vec2 velocity = glm::vec2(0, 0);
+	glm::vec3 startPosition = glm::vec3(0, 0, 0);
 	glm::vec2 acceleration = glm::vec2(0, 0);
 
 	int loopIndex = 0;

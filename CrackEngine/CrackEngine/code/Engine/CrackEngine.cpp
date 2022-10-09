@@ -102,29 +102,25 @@ namespace Crack {
         imgui.init(window);
 
         //Sprite Player1("data/images/ghn/ghn00_06.png");
-        player1Manager = new AnimManager((std::string)"data/characters/Gohan.xml");
-        player1Manager->setPalette((std::string)"data/images/ghn/Pal_Training.pal", (std::string)"data/images/ghn/Pal_Template.pal");
-        player1Manager->setPosition(glm::vec3(60.f, 20.f, 0.f));
+        player1Manager = new AnimManager((std::string)"data/characters/Gohan.xml", glm::vec3(60.f, 20.f, 0.f));
         playerPos = player1Manager->getPosition();
-        player2Manager = new AnimManager((std::string)"data/characters/Android18.xml");
-        player2Manager->setPosition(glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
-        player2Manager->setPalette((std::string)"data/images/jet/Pal_FullColor.pal", (std::string)"data/images/jet/Pal_Template.pal");
+        player2Manager = new AnimManager((std::string)"data/characters/Android18.xml", glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
         player2Manager->setScale(glm::vec3(-1.f, 1.f, 1.f));
         //Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
         Shadow = new Sprite("data/images/Shadow.png");
         Shadow->setPosition(glm::vec3(-50, 8, 0));
 
-        Sprite SkyBG("data/images/DokkanBGs/City 2/battle_bg_00049_01.png");
+        Sprite SkyBG("data/images/DokkanBGs/Uranai Baba/battle_bg_00012_01.png");
         SkyBG.setPosition(glm::vec3(0, 0.f, 0.f));
-        SkyBG.setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+        SkyBG.setScale(glm::vec3(0.5f, 1, 1));
         stageElements.push_back(SkyBG);
-        Sprite PlainsBG("data/images/DokkanBGs/City 2/battle_bg_00049_02.png");
+        Sprite PlainsBG("data/images/DokkanBGs/Uranai Baba/battle_bg_00012_02.png");
         PlainsBG.setPosition(glm::vec3(0, 0.f, 0.f));
-        PlainsBG.setScale(glm::vec3(0.5, 0.5f, 0.5f));
+        PlainsBG.setScale(glm::vec3(0.5, 1, 1));
         stageElements.push_back(PlainsBG);
-        Sprite GroundBG("data/images/DokkanBGs/City 2/battle_bg_00049_03.png");
+        Sprite GroundBG("data/images/DokkanBGs/Uranai Baba/battle_bg_00012_03.png");
         GroundBG.setPosition(glm::vec3(0, 0.f, 0.f));
-        GroundBG.setPosition(glm::vec3(0.5, 0.5f, 0.5f));
+        GroundBG.setScale(glm::vec3(0.5, 1, 1));
         stageElements.push_back(GroundBG);
 
         // Input manager
@@ -159,12 +155,14 @@ namespace Crack {
         lag += deltaTime;
         // --------------------
 
+        // Every actual frame
         while (lag >= FrameStep)
         {
             for (std::vector<Sprite>::iterator it = stageElements.begin(); it != stageElements.end(); ++it)
             {
                 it->update();
             }
+            Player1Inputs.update();
             player1Manager->update();
             player2Manager->update();
             lag -= FrameStep;

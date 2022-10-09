@@ -78,7 +78,33 @@ Frame::Frame(pugi::xml_node _frameData)
 	{
 		looping = _frameData.attribute("loop").as_bool();
 	}
-	for (pugi::xml_node action : _frameData.child("inputactions").children("inputaction"))
+	inputActions = readInputActionsFromXML(_frameData);
+	frameActions = readFrameActionsFromXML(_frameData);
+
+	// load textures (we now use a utility function to keep the code more organized)
+	// -----------------------------------------------------------------------------
+	spriteImage = loadTexture(spriteFileName.c_str(), &spriteWidth, &spriteHeight);
+}
+
+Frame::Frame(int _xScale, int _yScale, int _xPos, int _yPos, std::string _fileName, int _frameCount, int _index)
+{
+	xScale = _xScale;
+	yScale = _yScale;
+	xPos = _xPos;
+	yPos = _yPos;
+	spriteFileName = _fileName;
+	frameCount = _frameCount;
+	index = _index;
+
+	// load textures (we now use a utility function to keep the code more organized)
+	// -----------------------------------------------------------------------------
+	spriteImage = loadTexture(spriteFileName.c_str(), &spriteWidth, &spriteHeight);
+}
+
+std::vector<Frame::InputAction> Frame::readInputActionsFromXML(pugi::xml_node _data)
+{
+	std::vector<InputAction> returnInputActions;
+	for (pugi::xml_node action : _data.child("inputactions").children("inputaction"))
 	{
 		int animIndex = -1;
 		Frame::InputCommand command = Frame::InputCommand::EMPTY;
@@ -105,6 +131,22 @@ Frame::Frame(pugi::xml_node _frameData)
 			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"DOWN")
 			{
 				command = Frame::InputCommand::DOWN;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"UPFORWARD")
+			{
+				command = Frame::InputCommand::UPFORWARD;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"UPBACK")
+			{
+				command = Frame::InputCommand::UPBACK;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"DOUBLEFORWARD")
+			{
+				command = Frame::InputCommand::DOUBLEFORWARD;
+			}
+			else if ((std::string)(action.attribute("input").as_string()) == (std::string)"DOUBLEBACK")
+			{
+				command = Frame::InputCommand::DOUBLEBACK;
 			}
 		}
 		if (action.attribute("button").as_string() != NULL)
@@ -146,50 +188,61 @@ Frame::Frame(pugi::xml_node _frameData)
 		tempAction.animChangeIndex = animIndex;
 		tempAction.inputCommand = command;
 		tempAction.inputButton = button;
-		inputActions.push_back(tempAction);
+		returnInputActions.push_back(tempAction);
 	}
-	for (pugi::xml_node action : _frameData.child("frameactions").children("frameaction"))
-	{
-		float xDelta = 0;
-		if (action.attribute("xdelta").as_float() != NULL) xDelta = action.attribute("xdelta").as_float();
-		float yDelta = 0;
-		if (action.attribute("ydelta").as_float() != NULL) yDelta = action.attribute("ydelta").as_float();
-		float xVelocity = 0;
-		if (action.attribute("xvelocity").as_float() != NULL) xVelocity = action.attribute("xvelocity").as_float();
-		float yVelocity = 0;
-		if (action.attribute("yvelocity").as_float() != NULL) yVelocity = action.attribute("yvelocity").as_float();
-		float xAcceleration = 0;
-		if (action.attribute("xacceleration").as_float() != NULL) xAcceleration = action.attribute("xacceleration").as_float();
-		float yAcceleration = 0;
-		if (action.attribute("yacceleration").as_float() != NULL) yAcceleration = action.attribute("yacceleration").as_float();
-		FrameAction tempAction;
-		tempAction.xDelta = xDelta;
-		tempAction.yDelta = yDelta;
-		tempAction.xVelocity = xVelocity;
-		tempAction.yVelocity = yVelocity;
-		tempAction.xAcceleration = xAcceleration;
-		tempAction.yAcceleration = yAcceleration;
-		frameActions.push_back(tempAction);
-	}
-
-	// load textures (we now use a utility function to keep the code more organized)
-	// -----------------------------------------------------------------------------
-	spriteImage = loadTexture(spriteFileName.c_str(), &spriteWidth, &spriteHeight);
+	return returnInputActions;
 }
 
-Frame::Frame(int _xScale, int _yScale, int _xPos, int _yPos, std::string _fileName, int _frameCount, int _index)
+std::vector<Frame::FrameAction> Frame::readFrameActionsFromXML(pugi::xml_node _data)
 {
-	xScale = _xScale;
-	yScale = _yScale;
-	xPos = _xPos;
-	yPos = _yPos;
-	spriteFileName = _fileName;
-	frameCount = _frameCount;
-	index = _index;
+	std::vector<Frame::FrameAction> returnActions;
+	for (pugi::xml_node action : _data.child("frameactions").children("frameaction"))
+	{
+		returnActions.push_back(readFrameActionFromXML(action));
+	}
+	for (pugi::xml_node action : _data.child("animactions").children("animaction"))
+	{
+		returnActions.push_back(readFrameActionFromXML(action));
+	}
+	return returnActions;
+}
 
-	// load textures (we now use a utility function to keep the code more organized)
-	// -----------------------------------------------------------------------------
-	spriteImage = loadTexture(spriteFileName.c_str(), &spriteWidth, &spriteHeight);
+Frame::FrameAction Frame::readFrameActionFromXML(pugi::xml_node _data)
+{
+	Frame::FrameActionType frameActionType = Frame::FrameActionType::ALWAYS;
+	int stepCount = -1;
+	// default frequency is always
+	if (_data.attribute("frequency").as_string() != NULL)
+	{
+		// Instant actions happen once and only on a specific frame
+		if (_data.attribute("frequency").as_string() == "instant" && _data.attribute("stepcount").as_int() != NULL)
+		{
+			frameActionType = Frame::FrameActionType::INSTANT;
+			stepCount = _data.attribute("stepcount").as_int();
+		}
+	}
+	float xDelta = 0;
+	if (_data.attribute("xdelta").as_float() != NULL) xDelta = _data.attribute("xdelta").as_float();
+	float yDelta = 0;
+	if (_data.attribute("ydelta").as_float() != NULL) yDelta = _data.attribute("ydelta").as_float();
+	float xVelocity = 0;
+	if (_data.attribute("xvelocity").as_float() != NULL) xVelocity = _data.attribute("xvelocity").as_float();
+	float yVelocity = 0;
+	if (_data.attribute("yvelocity").as_float() != NULL) yVelocity = _data.attribute("yvelocity").as_float();
+	float xAcceleration = 0;
+	if (_data.attribute("xacceleration").as_float() != NULL) xAcceleration = _data.attribute("xacceleration").as_float();
+	float yAcceleration = 0;
+	if (_data.attribute("yacceleration").as_float() != NULL) yAcceleration = _data.attribute("yacceleration").as_float();
+	FrameAction tempAction;
+	tempAction.xDelta = xDelta;
+	tempAction.yDelta = yDelta;
+	tempAction.xVelocity = xVelocity;
+	tempAction.yVelocity = yVelocity;
+	tempAction.xAcceleration = xAcceleration;
+	tempAction.yAcceleration = yAcceleration;
+	tempAction.frameActionType = frameActionType;
+	tempAction.stepCount = stepCount;
+	return tempAction;
 }
 
 unsigned int loadTexture(char const* path, int* _width, int* _height)
