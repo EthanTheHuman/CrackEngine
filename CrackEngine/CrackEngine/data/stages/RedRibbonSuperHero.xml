@@ -1,0 +1,55 @@
+﻿<stage
+  stageName="Red Ribbon Base">
+  <staticElements>
+    <element
+      index="1"
+      filename="data/images/Maps/RedRibbonBase/001.png"
+      xpos="0"
+      ypos="0"
+      zpos="0"
+      xscale="0.5"
+      yscale="0.5"
+      />
+    <element
+      index="2"
+      filename="data/images/Maps/RedRibbonBase/002.png"
+      xpos="0"
+      ypos="0"
+      zpos="0"
+      xscale="0.5"
+      yscale="0.5"
+      />
+    <element
+      index="3"
+      filename="data/images/Maps/RedRibbonBase/003.png"
+      xpos="0"
+      ypos="0"
+      zpos="0"
+      xscale="0.5"
+      yscale="0.5"
+      />
+    <element
+      index="4"
+      filename="data/images/Maps/DirtDesert/003.png"
+      xpos="0"
+      ypos="0"
+      zpos="0"
+      xscale="0.5"
+      yscale="0.5"
+      />
+  </staticElements>
+  <music>
+    <song
+      index="1"
+      name="Awakened Super Hero - Ultimate Gohan"
+      album="Active Skill"
+      artist="Dragon Ball Z: Dokkan Battle"
+      filename="data/sounds/PHYUltimateGohanActive.ogg"/>
+    <song
+      index="2"
+      name="Awakened Super Hero - Ultimate Gohan"
+      album="Intro"
+      artist="Dragon Ball Z: Dokkan Battle"
+      filename="data/sounds/PHYUltimateGohanIntro.ogg"/>
+  </music>
+</stage>

@@ -24,6 +24,6 @@ public:
 protected:
     Shader shader;
     unsigned int VBO, VAO;
-    unsigned int loadTexture(char const* path);
-    unsigned int loadTexture(char const* path, int* _width, int* _height);
+    static unsigned int loadTexture(char const* path);
+    static unsigned int loadTexture(char const* path, int* _width, int* _height);
 };

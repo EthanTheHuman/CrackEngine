@@ -9,8 +9,8 @@
       <frames>
         <frame
           index ="1"
-          filename = "data/images/jet/jet00_01.png"
-          stepcount = "20"
+          filename = "data/images/sanji.png"
+          stepcount = "2000"
           xscale = "-1"
           yscale = "1"
           xpos = "-45"

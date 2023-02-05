@@ -21,5 +21,6 @@ public:
 	static std::string windowName;
 	static unsigned int targetFramestep;
 	static unsigned int pixelsPerUnit;
+	static unsigned int internalHeight;
 };
 

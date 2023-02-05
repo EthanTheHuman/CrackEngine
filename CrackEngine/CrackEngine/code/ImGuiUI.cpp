@@ -1,5 +1,9 @@
 #include "ImGuiUI.h"
 
+ImGuiUI::ImGuiUI()
+{
+}
+
 ImGuiUI::~ImGuiUI()
 {
     // Cleanup
@@ -8,8 +12,9 @@ ImGuiUI::~ImGuiUI()
     ImGui::DestroyContext();
 }
 
-void ImGuiUI::init(GLFWwindow* window)
+void ImGuiUI::init(GLFWwindow* window, unsigned int& _tex)
 {
+    tex = _tex;
     _window = window;
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -137,9 +142,18 @@ void ImGuiUI::render()
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", deltaTime, fps);
         //ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
+
+
+        ImGui::Begin("Render Window");                          // Render game window
+        ImGui::BeginChild("GameRender");
+		ImVec2 wsize = ImGui::GetWindowSize();
+        ImGui::Image((ImTextureID)tex, wsize, ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::End();
+		
     }
 
     // Rendering
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
+

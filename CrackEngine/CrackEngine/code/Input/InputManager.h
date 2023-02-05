@@ -85,6 +85,7 @@ public:
 		bool bBack = false;
 		bool bPause = false;
 		int frameCount = 1;
+		bool bActive = true;
 
 		bool compare(sinputFrame _compareFrame) {
 			if (bNorth == _compareFrame.bNorth
@@ -122,6 +123,7 @@ public:
 	bool getButtonUp(eInputs button);
 	std::vector<sinputFrame> getBuffer(int _frameCount);
 	sInputSnapshot RollbackInputs(int _droppedFrames);
+	void ClearBuffer();
 	void update();
 
 private:

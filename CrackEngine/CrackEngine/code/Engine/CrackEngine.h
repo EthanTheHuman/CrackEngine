@@ -4,8 +4,11 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <thread>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <sndfile/sndfile.h>
+#include <portaudio/portaudio.h>
 #include "../../stb_image.h"
 
 #include <glm/glm.hpp>
@@ -55,6 +58,9 @@ namespace Crack {
 
         unsigned int SCR_WIDTH = 1536;
         unsigned int SCR_HEIGHT = 896;
+        unsigned int GAME_WIDTH = 384;
+        unsigned int GAME_HEIGHT = 224;
+        bool isFullscreen = false;
 
         bool firstMouse = true;
         float lastX = SCR_WIDTH / 2.0f;
@@ -64,5 +70,21 @@ namespace Crack {
 
         Camera camera = (glm::vec3(0.0f, 0.0f, 3.0f));
         glm::vec3 playerPos = glm::vec3(20.0f, 20.0f, 0.0f);
+        //static int playSound(SF_INFO info, float* buffer);
+        static int soundCallback(const void* inputBuffer, void* outputBuffer,
+            unsigned long framesPerBuffer,
+            const PaStreamCallbackTimeInfo* timeInfo,
+            PaStreamCallbackFlags statusFlags,
+            void* userData);
+        SF_INFO sfinfo;
+        float* soundBuffer;
+        unsigned int fbo;
+        unsigned int textureColorbuffer;
+        unsigned int rbo;
+        unsigned int quadVAO;
+        unsigned int quadVBO;
+        unsigned int quadEBO;
+        Shader* frameBufferShader;
+        Shader* backgroundShader;
 	};
 }

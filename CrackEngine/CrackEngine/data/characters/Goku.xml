@@ -1,0 +1,67 @@
+<character
+  characterName="Goku"
+  paletteTemplate="data/images/gkn/Pal_Template.pal"
+  paletteFile="data/images/gkn/Pal_Default.pal">
+  <anims>
+    <anim
+      index = "1"
+      name = "idle">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/gkn/gkn00_0010.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-54"
+          ypos = "-13">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/gkn/gkn00_0015.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-53"
+          ypos = "-11">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/gkn/gkn00_0020.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-10">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/gkn/gkn00_0025.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-48"
+          ypos = "-9">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/gkn/gkn00_0020.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-10">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/gkn/gkn00_0015.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-53"
+          ypos = "-11">
+        </frame>
+      </frames>
+    </anim>
+  </anims>
+</character>

@@ -1,5 +1,6 @@
 {
 	"windowName": "Crack Engine",
 	"targetFramestep": 60,
-	"pixelsPerUnit":  384
+	"pixelsPerUnit": 384,
+	"internalHeight": 224
 }

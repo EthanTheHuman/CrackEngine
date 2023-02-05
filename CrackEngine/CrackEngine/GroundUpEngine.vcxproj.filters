@@ -51,6 +51,10 @@
     <None Include="data\characters\GohanHurt.JSON" />
     <None Include="data\shaders\shad_palette.fs" />
     <None Include="data\shaders\shad_palette.vs" />
+    <None Include="data\shaders\shad_renderbuffer.vs" />
+    <None Include="data\shaders\shad_renderbuffer.fs" />
+    <None Include="data\shaders\shad_renderbackground.fs" />
+    <None Include="data\shaders\shad_renderbackground.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Config.cpp">
@@ -123,6 +127,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\sound\SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\AnimAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -211,10 +221,22 @@
     <ClInclude Include="code\sound\SoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\AnimAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="data\characters\GohanHurt.xml" />
     <Xml Include="data\characters\Gohan.xml" />
     <Xml Include="data\characters\Android18.xml" />
+    <Xml Include="data\characters\Goku.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="data\stages\RedRibbonSuperHero.xml">
+      <Filter>Header Files</Filter>
+    </Xsd>
   </ItemGroup>
 </Project>

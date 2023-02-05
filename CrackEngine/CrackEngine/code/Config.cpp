@@ -12,6 +12,7 @@ unsigned int Config::targetFPS = 0;
 std::string Config::windowName = "Ethan's Engine";
 unsigned int Config::targetFramestep = 60;
 unsigned int Config::pixelsPerUnit = 384;
+unsigned int Config::internalHeight = 224;
 
 void Config::Init()
 {
@@ -53,6 +54,7 @@ void Config::Init()
 		windowName = config["windowName"];
 		targetFramestep = config["targetFramestep"];
 		pixelsPerUnit = config["pixelsPerUnit"];
+		internalHeight = config["internalHeight"];
 	}
 	else
 	{

@@ -14,65 +14,68 @@ InputManager::InputManager(GLFWwindow* _window)
 bool InputManager::getButton(eInputs inputkey)
 {
 	sinputFrame currentFrame = inputFrames[inputFrames.size() - 1];
-	switch (inputkey) {
-	case NORTH:
-		return currentFrame.bNorth;
-		break;
-	case SOUTH:
-		return currentFrame.bSouth;
-		break;
-	case EAST:
-		return currentFrame.bEast;
-		break;
-	case WEST:
-		return currentFrame.bWest;
-		break;
-	case NORTHWEST:
-		return currentFrame.bNorth && currentFrame.bWest;
-		break;
-	case NORTHEAST:
-		return currentFrame.bNorth && currentFrame.bEast;
-		break;
-	case SOUTHWEST:
-		return currentFrame.bSouth && currentFrame.bWest;
-		break;
-	case SOUTHEAST:
-		return currentFrame.bSouth && currentFrame.bEast;
-		break;
-	case A:
-		return currentFrame.bA;
-		break;
-	case B:
-		return currentFrame.bB;
-		break;
-	case C:
-		return currentFrame.bC;
-		break;
-	case X:
-		return currentFrame.bX;
-		break;
-	case Y:
-		return currentFrame.bY;
-		break;
-	case Z:
-		return currentFrame.bZ;
-		break;
-	case S:
-		return currentFrame.bS;
-		break;
-	case CONFIRM:
-		return currentFrame.bConfirm;
-		break;
-	case BACK:
-		return currentFrame.bBack;
-		break;
-	case PAUSE:
-		return currentFrame.bPause;
-		break;
-	default:
-		return false;
-		break;
-	};
+	if (currentFrame.bActive)
+	{
+		switch (inputkey) {
+		case NORTH:
+			return currentFrame.bNorth;
+			break;
+		case SOUTH:
+			return currentFrame.bSouth;
+			break;
+		case EAST:
+			return currentFrame.bEast;
+			break;
+		case WEST:
+			return currentFrame.bWest;
+			break;
+		case NORTHWEST:
+			return currentFrame.bNorth && currentFrame.bWest;
+			break;
+		case NORTHEAST:
+			return currentFrame.bNorth && currentFrame.bEast;
+			break;
+		case SOUTHWEST:
+			return currentFrame.bSouth && currentFrame.bWest;
+			break;
+		case SOUTHEAST:
+			return currentFrame.bSouth && currentFrame.bEast;
+			break;
+		case A:
+			return currentFrame.bA;
+			break;
+		case B:
+			return currentFrame.bB;
+			break;
+		case C:
+			return currentFrame.bC;
+			break;
+		case X:
+			return currentFrame.bX;
+			break;
+		case Y:
+			return currentFrame.bY;
+			break;
+		case Z:
+			return currentFrame.bZ;
+			break;
+		case S:
+			return currentFrame.bS;
+			break;
+		case CONFIRM:
+			return currentFrame.bConfirm;
+			break;
+		case BACK:
+			return currentFrame.bBack;
+			break;
+		case PAUSE:
+			return currentFrame.bPause;
+			break;
+		default:
+			return false;
+			break;
+		};
+	}
 	return false;
 }
 
@@ -92,8 +95,15 @@ std::vector<InputManager::sinputFrame> InputManager::getBuffer(int _frameCount)
 	std::vector<sinputFrame> returnBuffer;
 	for (int i = inputFrames.size() - 1; i >= 0; i--) {
 		if (frameCountDown > inputFrames[i].frameCount) {
-			returnBuffer.push_back(inputFrames[i]);
-			frameCountDown -= inputFrames[i].frameCount;
+			if (inputFrames[i].bActive)
+			{
+				returnBuffer.push_back(inputFrames[i]);
+				frameCountDown -= inputFrames[i].frameCount;
+			}
+			else
+			{
+				return returnBuffer;
+			}
 		}
 		else {
 			return returnBuffer;
@@ -138,6 +148,11 @@ void InputManager::init()
 	firstFrame.frameCount = 0;
 	inputFrames.push_back(firstFrame);
 	return;
+}
+
+void InputManager::ClearBuffer()
+{
+	inputFrames[inputFrames.size() - 1].bActive = false;
 }
 
 void InputManager::update()
