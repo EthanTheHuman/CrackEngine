@@ -12,18 +12,18 @@ In-game content is driven using xml files that can be edited manually or using o
 ### System
 - [ ] Stage definitions (Stage elements, names, thumbnails, music etc.)
 - [ ] Input remapping, support for multiple controllers
-- [-] imGui diagnostics and tools
+- [x] imGui diagnostics and tools (partial)
 - [ ] Data bundling (One file including all images etc.)
 ### Gameplay
-- [-] Command buffer system (double-taps, quarter circles, etc.)
+- [x] Command buffer system (double-taps, quarter circles, etc.) (partial)
 - [x] Velocity / Gravity for jumping
-- [-] Hitbox-Hurtbox creation and colission
+- [x] Hitbox-Hurtbox creation and colission (in-progress)
 - [ ] Projectiles
 - [ ] Grabs
 ### Graphics
 - [ ] Effects and hitsparks spawning
 ### Sound
-- [-] Sound implementation using Fmod (music, sound effects on command)
+- [x] Sound implementation using Fmod (music, sound effects on command) (partial)
 - [ ] Metadata loading (Display current song in menu)
 - [ ] Localisation features
 ### UI
@@ -36,5 +36,5 @@ In-game content is driven using xml files that can be edited manually or using o
 - [x] Dashing
 - [x] Normal Moves
 - [ ] Grabs
-- [-] Specials
+- [x] Specials
 - [ ] Supers
