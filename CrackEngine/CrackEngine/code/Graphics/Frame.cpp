@@ -1,4 +1,15 @@
 #include "Frame.h"
+// anim actions
+#include "../Gameplay/Anim Actions/Act_SetXVel.h"
+#include "../Gameplay/Anim Actions/Act_SetYVel.h"
+#include "../Gameplay/Anim Actions/Act_AddXVel.h"
+#include "../Gameplay/Anim Actions/Act_AddYVel.h"
+#include "../Gameplay/Anim Actions/Act_SetXAccel.h"
+#include "../Gameplay/Anim Actions/Act_SetYAccel.h"
+#include "../Gameplay/Anim Actions/Act_AddXAccel.h"
+#include "../Gameplay/Anim Actions/Act_AddYAccel.h"
+#include "../Gameplay/Anim Actions/Act_MoveDelta.h"
+#include "../Gameplay/Anim Actions/Act_PlaySound.h"
 
 unsigned int loadTexture(char const* path, int* _width, int* _height);
 
@@ -79,7 +90,7 @@ Frame::Frame(pugi::xml_node _frameData)
 		looping = _frameData.attribute("loop").as_bool();
 	}
 	inputActions = readInputActionsFromXML(_frameData);
-	frameActions = readFrameActionsFromXML(_frameData);
+	animActions = readAnimActionsFromXML(_frameData);
 
 	// load textures (we now use a utility function to keep the code more organized)
 	// -----------------------------------------------------------------------------
@@ -193,56 +204,68 @@ std::vector<Frame::InputAction> Frame::readInputActionsFromXML(pugi::xml_node _d
 	return returnInputActions;
 }
 
-std::vector<Frame::FrameAction> Frame::readFrameActionsFromXML(pugi::xml_node _data)
+std::vector<AnimAction*> Frame::readAnimActionsFromXML(pugi::xml_node _xml)
 {
-	std::vector<Frame::FrameAction> returnActions;
-	for (pugi::xml_node action : _data.child("frameactions").children("frameaction"))
+	std::vector<AnimAction*> returnActions;
+	for (pugi::xml_node action : _xml.child("animactions").children("animaction"))
 	{
-		returnActions.push_back(readFrameActionFromXML(action));
-	}
-	for (pugi::xml_node action : _data.child("animactions").children("animaction"))
-	{
-		returnActions.push_back(readFrameActionFromXML(action));
+		AnimAction* newAction = readAnimActionFromXML(action);
+		if (newAction != nullptr)
+		{
+			returnActions.push_back(newAction);
+		}
 	}
 	return returnActions;
 }
 
-Frame::FrameAction Frame::readFrameActionFromXML(pugi::xml_node _data)
+AnimAction* Frame::readAnimActionFromXML(pugi::xml_node _xml)
 {
-	Frame::FrameActionType frameActionType = Frame::FrameActionType::ALWAYS;
-	int stepCount = -1;
-	// default frequency is always
-	if (_data.attribute("frequency").as_string() != NULL)
+	if (_xml.attribute("type").as_string() != NULL)
 	{
-		// Instant actions happen once and only on a specific frame
-		if (_data.attribute("frequency").as_string() == "instant" && _data.attribute("stepcount").as_int() != NULL)
+		std::string type = _xml.attribute("type").as_string();
+		// TODO: All the different animaction types
+		if (type == "setxvel" || type == "setXVel" || type == "SetXVel" || type == "setxVel")
 		{
-			frameActionType = Frame::FrameActionType::INSTANT;
-			stepCount = _data.attribute("stepcount").as_int();
+			return new Act_SetXVel(_xml);
+		}
+		if (type == "setyvel" || type == "setYVel" || type == "SetYVel" || type == "setyVel")
+		{
+			return new Act_SetYVel(_xml);
+		}
+		if (type == "addxvel" || type == "addXVel" || type == "AddXVel" || type == "addxVel")
+		{
+			return new Act_AddXVel(_xml);
+		}
+		if (type == "addyvel" || type == "addYVel" || type == "AddYVel" || type == "addyVel")
+		{
+			return new Act_AddYVel(_xml);
+		}
+		if (type == "setxaccel" || type == "setXAccel" || type == "SetXAccel" || type == "setxAccel")
+		{
+			return new Act_SetXAccel(_xml);
+		}
+		if (type == "setyaccel" || type == "setYAccel" || type == "SetYAccel" || type == "setyAccel")
+		{
+			return new Act_SetYAccel(_xml);
+		}
+		if (type == "addxaccel" || type == "addXAccel" || type == "AddXAccel" || type == "addxAccel")
+		{
+			return new Act_AddXAccel(_xml);
+		}
+		if (type == "addyaccel" || type == "addYAccel" || type == "AddYAccel" || type == "addyAccel")
+		{
+			return new Act_AddYAccel(_xml);
+		}
+		if (type == "moveDelta" || type == "MoveDelta" || type == "movedelta")
+		{
+			return new Act_MoveDelta(_xml);
+		}
+		if (type == "playSound" || type == "sound" || type == "PlaySound" || type == "playsound" || type == "Sound")
+		{
+			return new Act_PlaySound(_xml);
 		}
 	}
-	float xDelta = 0;
-	if (_data.attribute("xdelta").as_float() != NULL) xDelta = _data.attribute("xdelta").as_float();
-	float yDelta = 0;
-	if (_data.attribute("ydelta").as_float() != NULL) yDelta = _data.attribute("ydelta").as_float();
-	float xVelocity = 0;
-	if (_data.attribute("xvelocity").as_float() != NULL) xVelocity = _data.attribute("xvelocity").as_float();
-	float yVelocity = 0;
-	if (_data.attribute("yvelocity").as_float() != NULL) yVelocity = _data.attribute("yvelocity").as_float();
-	float xAcceleration = 0;
-	if (_data.attribute("xacceleration").as_float() != NULL) xAcceleration = _data.attribute("xacceleration").as_float();
-	float yAcceleration = 0;
-	if (_data.attribute("yacceleration").as_float() != NULL) yAcceleration = _data.attribute("yacceleration").as_float();
-	FrameAction tempAction;
-	tempAction.xDelta = xDelta;
-	tempAction.yDelta = yDelta;
-	tempAction.xVelocity = xVelocity;
-	tempAction.yVelocity = yVelocity;
-	tempAction.xAcceleration = xAcceleration;
-	tempAction.yAcceleration = yAcceleration;
-	tempAction.frameActionType = frameActionType;
-	tempAction.stepCount = stepCount;
-	return tempAction;
+	return nullptr;
 }
 
 unsigned int loadTexture(char const* path, int* _width, int* _height)

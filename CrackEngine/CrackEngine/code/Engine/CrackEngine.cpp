@@ -9,11 +9,17 @@ namespace Crack {
     double previous = current;
     double lag = 0.0;
     double deltaTime = 0.0f;
-    double FrameStep = (1000 / config.targetFramestep);
+    double FrameStep = (1000.f / (double)config.targetFramestep);
 
     auto start = std::chrono::steady_clock::now();
     int frames = 0;
     int fps = 0;
+
+
+    SF_INFO CrackEngine::sfinfo;
+    int CrackEngine::numFrames;
+    float* CrackEngine::soundBuffer;
+	
 
 	CrackEngine* CrackEngine::Instance()
 	{
@@ -22,13 +28,13 @@ namespace Crack {
 		}
 		return instance;
 	}
-    CrackEngine::CrackEngine()
+    CrackEngine::CrackEngine() : music(nullptr)
     {
-		
     }
     CrackEngine::~CrackEngine()
 	{
         delete frameBufferShader;
+        delete music;
 		delete instance;
 	}
 	int CrackEngine::Init()
@@ -38,6 +44,7 @@ namespace Crack {
         SCR_HEIGHT = config.SCR_HEIGHT;
         GAME_WIDTH = config.pixelsPerUnit;
         GAME_HEIGHT = config.internalHeight;
+        FrameStep = (1000.f / (double)config.targetFramestep);
 
         // glfw: initialize and configure
         // ------------------------------
@@ -158,10 +165,14 @@ namespace Crack {
         imgui.init(window, textureColorbuffer);
 
         //Sprite Player1("data/images/ghn/ghn00_06.png");
-        player1Manager = new AnimManager((std::string)"data/characters/Gohan.xml", glm::vec3(60.f, 20.f, 0.f));
+        player1Manager = new AnimManager((std::string)"data/characters/Gohan.xml", glm::vec3(((1024.f / 2.f) / 2.f) - 120.f, 20.f, 0.f));
         playerPos = player1Manager->getPosition();
-        player2Manager = new AnimManager((std::string)"data/characters/Goku.xml", glm::vec3((Sprite::pixelsPerUnit - 120), 20.f, 0.f));
+        imgui.addCharacter(player1Manager);
+        player2Manager = new AnimManager((std::string)"data/characters/Goku.xml", glm::vec3(((1024.f / 2.f) / 2.f) + 120.f, 20.f, 0.f));
         player2Manager->setScale(glm::vec3(-1.f, 1.f, 1.f));
+        imgui.addCharacter(player2Manager);
+		// camera.Position = glm::vec3((1024.f / 2.f) - ((float)config.pixelsPerUnit / 2.f), 0.f, 0.f);
+        camera.Position = glm::vec3((1024.f / 2.f) / 2.f, 0.f, 0.f);
         //Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
         Shadow = new Sprite("data/images/Shadow.png");
         Shadow->setPosition(glm::vec3(-50, 8, 0));
@@ -189,50 +200,10 @@ namespace Crack {
         stageElements.push_back(GroundBG2);
 
 		// load the file music.mp3 with sndfile
-		SNDFILE* file = sf_open("data/sounds/PHYUltimateGohanIntro.ogg", SFM_READ, &sfinfo);
-		if (!file)
-		{
-			std::cout << "Error: " << sf_strerror(file) << std::endl;
-		}
-		// read the whole file into a buffer
-		int numFrames = sfinfo.frames;
-		soundBuffer = new float[numFrames * sfinfo.channels];
-		sf_count_t numRead = sf_read_float(file, soundBuffer, numFrames * sfinfo.channels);
-		sf_close(file);
+        delete music;
+		music = new AudioPlayer("data/sounds/PHYUltimateGohanIntro.ogg", true, 0.1f);
+        music->play();
 		
-		// Initialize PortAudio
-		PaError err = Pa_Initialize();
-		if (err != paNoError)
-		{
-			std::cout << "Error: " << Pa_GetErrorText(err) << std::endl;
-		}
-		// Open an audio I/O stream.
-		PaStream* stream;
-		err = Pa_OpenDefaultStream(&stream,
-			0,          // no input channels
-			2,          // stereo output
-			paFloat32,  // 32 bit floating point output
-			sfinfo.samplerate,
-			1024,        // frames per buffer, i.e. the number
-			// of sample frames that PortAudio will
-			// request from the callback. Many apps
-			// may want to use
-			// paFramesPerBufferUnspecified, which
-			// tells PortAudio to pick the best,
-			// possibly changing, buffer size.
-			soundCallback,
-            soundBuffer);
-		if (err != paNoError)
-		{
-			std::cout << "Error: " << Pa_GetErrorText(err) << std::endl;
-		}
-		// Start audio stream
-		err = Pa_StartStream(stream);
-		if (err != paNoError)
-		{
-			std::cout << "Error: " << Pa_GetErrorText(err) << std::endl;
-		}
-
         // Input manager
         Player1Inputs = InputManager(window);
 
@@ -251,20 +222,30 @@ namespace Crack {
 		(void)timeInfo; // Prevent unused variable warnings.
 		(void)statusFlags;
 		(void)inputBuffer;
-		for (i = 0; i < framesPerBuffer; i++)
+		
+	    // check for end of file
+		if (in >= soundBuffer + numFrames * sfinfo.channels)
 		{
-            // log the current sound byte
-			*out++ = *in++;  // left
-			*out++ = *in++;  // right
-            //std::cout << "Hi! Doing sound stuff" << std::endl;
+			for (i = 0; i < framesPerBuffer; i++)
+			{
+				*out++ = 0;  // left
+				*out++ = 0;  // right
+			}
+			return paComplete;
 		}
+		
+        for (i = 0; i < framesPerBuffer; i++)
+        {
+            *out++ = *in++;  // left
+            *out++ = *in++;  // right
+        }
+		
 		return paContinue;
 	}
 
     void CrackEngine::Step()
     {
         glfwPollEvents();
-        processInput(window);    // Temporary, inputs should be done every frame
 
         // per-frame time logic
         // --------------------
@@ -296,6 +277,8 @@ namespace Crack {
             }
             Player1Inputs.update();
             player1Manager->update();
+            player1Manager->processInputs(window, Player1Inputs);
+            processInput(window);    // Temporary, inputs should be done every frame
             player2Manager->update();
             lag -= FrameStep;
         }
@@ -439,9 +422,12 @@ namespace Crack {
     void CrackEngine::processInput(GLFWwindow* window)
     {
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_REPEAT)
+        {
             glfwSetWindowShouldClose(window, true);
+            Pa_Terminate();
+        }
 
-        player1Manager->processInputs(window, Player1Inputs);
+        //player1Manager->processInputs(window, Player1Inputs);
 
         static bool bF2Pressed = false;
         if (glfwGetKey(window, GLFW_KEY_F2) == GLFW_PRESS)

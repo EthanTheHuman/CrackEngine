@@ -64,4 +64,60 @@
       </frames>
     </anim>
   </anims>
+  <palettes>
+    <palette
+      index = "0"
+      name = "Default"
+      author = "EthanTheHuman"
+      filename = "data/images/gkn/Pal_Early.pal">
+    </palette>
+    <palette
+      index = "0"
+      name = "Kaioken"
+      author = "EthanTheHuman"
+      filename = "data/images/gkn/Pal_Kaioken.pal">
+    </palette>
+    <palette
+      index = "0"
+      name = "Super Saiyan God"
+      author = "EthanTheHuman"
+      filename = "data/images/gkn/Pal_SSG.pal">
+    </palette>
+    <palette
+      index = "0"
+      name = "Mid"
+      author = "EthanTheHuman"
+      filename = "data/images/gkn/Pal_Damaged.pal">
+    </palette>
+    <palette
+      index = "0"
+      name = "Late"
+      author = "EthanTheHuman"
+      filename = "data/images/gkn/Pal_Default.pal">
+    </palette>
+    <palette
+      index = "0"
+      name = "Super Saiyan 4 (Z)"
+      author = "EthanTheHuman"
+      filename = "data/images/gkn/Pal_SSJ4Z.pal">
+    </palette>
+    <palette
+      index = "0"
+      name = "Super Saiyan 4 (GT)"
+      author = "EthanTheHuman"
+      filename = "data/images/gkn/Pal_SSJ4GT.pal">
+    </palette>
+    <palette
+      index = "0"
+      name = "Goku Black"
+      author = "EthanTheHuman"
+      filename = "data/images/gkn/Pal_Black.pal">
+    </palette>
+    <palette
+      index = "0"
+      name = "Vegito"
+      author = "EthanTheHuman"
+      filename = "data/images/gkn/Pal_VegitoBase.pal">
+    </palette>
+  </palettes>
 </character>

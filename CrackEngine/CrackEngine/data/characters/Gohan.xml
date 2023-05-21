@@ -212,8 +212,9 @@
       </inputactions>
       <animactions>
         <animaction
+          type="setXVel"
           frequency="always"
-          xvelocity="3">
+          xVel="3">
         </animaction>
       </animactions>
     </anim>
@@ -243,8 +244,9 @@
       </frames>
       <animactions>
         <animaction
+          type="setXVel"
           frequency="always"
-          xvelocity="-2">
+          xVel="-2">
         </animaction>
       </animactions>
       <inputactions>
@@ -325,6 +327,11 @@
           button= "Z"
           animset ="212"
             />
+        <inputaction
+          input = "UP"
+          button= "ANY"
+          animset ="51"
+            />
       </inputactions>
     </anim>
     <anim
@@ -350,6 +357,13 @@
           ypos = "-16">
         </frame>
       </frames>
+      <inputactions>
+        <inputaction
+          input = "UP"
+          button= "ANY"
+          animset ="51"
+            />
+      </inputactions>
     </anim>
     <anim
       index = "13"
@@ -386,7 +400,44 @@
           button= "Z"
           animset ="212"
             />
+        <inputaction
+          input = "UP"
+          button= "ANY"
+          animset ="51"
+            />
       </inputactions>
+    </anim>
+    <anim
+      index = "14"
+      name = "land">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn07_02.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-9">
+          <animactions>
+            <animaction
+              filename="data/sounds/EB/Battle/bat_03.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0"/>
+          </animactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn07_01.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-16">
+        </frame>
+      </frames>
     </anim>
     <anim
       index = "40"
@@ -417,13 +468,13 @@
           yscale = "1"
           xpos = "-80"
           ypos = "-23">
-          <frameactions>
-            <frameaction
-              frequency="instant"
-              stepcount="0"
-              yvelocity="7">
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setYVel"
+              frequency="once"
+              stepCount="0"
+              yVel="7"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -515,8 +566,10 @@
       </frames>
       <animactions>
         <animaction
-          frequency="always"
-          yacceleration="-0.3">
+          type="setYAccel"
+          frequency="once"
+          stepcount="0"
+          yAccel="-0.3">
         </animaction>
       </animactions>
       <inputactions>
@@ -527,6 +580,21 @@
         <inputaction
           input = "DOUBLEBACK"
           animset ="107"
+              />
+        <inputaction
+          input = "ANY"
+          button="X"
+          animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
               />
       </inputactions>
     </anim>
@@ -559,13 +627,18 @@
           yscale = "1"
           xpos = "-80"
           ypos = "-23">
-          <frameactions>
-            <frameaction
-              frequency="always"
-              yvelocity="7"
-              xvelocity="2">
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setXVel"
+              xVel="2"
+              frequency="once"
+              stepCount="0"/>
+            <animaction
+              type="setYVel"
+              yVel="7"
+              frequency="once"
+              stepCount="0"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -657,8 +730,10 @@
       </frames>
       <animactions>
         <animaction
-          frequency="always"
-          yacceleration="-0.3">
+          type="setYAccel"
+          frequency="once"
+          stepcount="0"
+          yAccel="-0.3">
         </animaction>
       </animactions>
       <inputactions>
@@ -669,6 +744,21 @@
         <inputaction
           input = "DOUBLEBACK"
           animset ="107"
+              />
+        <inputaction
+          input = "ANY"
+          button="X"
+          animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
               />
       </inputactions>
     </anim>
@@ -701,13 +791,18 @@
           yscale = "1"
           xpos = "-80"
           ypos = "-23">
-          <frameactions>
-            <frameaction
-              frequency="always"
-              yvelocity="7"
-              xvelocity="-2">
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setXVel"
+              xVel="-2"
+              frequency="once"
+              stepCount="0"/>
+            <animaction
+              type="setYVel"
+              yVel="7"
+              frequency="once"
+              stepCount="0"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -813,8 +908,10 @@
       </frames>
       <animactions>
         <animaction
-          frequency="always"
-          yacceleration="-0.3">
+          type="setYAccel"
+          frequency="once"
+          stepcount="0"
+          yAccel="-0.3">
         </animaction>
       </animactions>
       <inputactions>
@@ -826,12 +923,29 @@
           input = "DOUBLEBACK"
           animset ="107"
               />
+        <inputaction
+          input = "ANY"
+          button="X"
+          animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
+              />
       </inputactions>
     </anim>
     <anim
       index = "47"
       name = "Jump fall"
-      fallback = "47">
+      fallback = "47"
+      keepVelocity="true"
+      keepAcceleration="true">
       <frames>
         <frame
           index ="1"
@@ -852,17 +966,21 @@
           ypos = "-32">
         </frame>
       </frames>
-      <animactions>
-        <animaction
-          frequency="always"
-          yacceleration="-0.3">
-        </animaction>
-      </animactions>
       <inputactions>
         <inputaction
           input = "ANY"
           button= "X"
           animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
               />
       </inputactions>
     </anim>
@@ -874,19 +992,18 @@
         <frame
           index ="1"
           filename = "data/images/ghn/ghn06_02.png"
-          stepcount = "2"
+          stepcount = "200"
           xscale = "-1"
           yscale = "1"
           xpos = "-80"
           ypos = "-23">
-          <frameactions>
-            <frameaction
-              frequency="instant"
-              stepcount="0"
-              yvelocity="7"
-            >
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setYVel"
+              frequency="once"
+              stepCount="0"
+              yVel="7"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -936,8 +1053,10 @@
       </frames>
       <animactions>
         <animaction
-          frequency="always"
-          yacceleration="-0.3">
+          type="setYAccel"
+          frequency="once"
+          stepcount="0"
+          yAccel="-0.3">
         </animaction>
       </animactions>
       <inputactions>
@@ -948,6 +1067,21 @@
         <inputaction
           input = "DOUBLEBACK"
           animset ="107"
+              />
+        <inputaction
+          input = "ANY"
+          button="X"
+          animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
               />
       </inputactions>
     </anim>
@@ -964,15 +1098,18 @@
           yscale = "1"
           xpos = "-80"
           ypos = "-23">
-          <frameactions>
-            <frameaction
-              frequency="instant"
-              stepcount="0"
-              yvelocity="7"
-              xvelocity="2"
-            >
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setYVel"
+              frequency="once"
+              stepCount="0"
+              yVel="7"/>
+            <animaction
+              type="setXVel"
+              frequency="once"
+              stepCount="0"
+              xVel="2"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -1022,8 +1159,10 @@
       </frames>
       <animactions>
         <animaction
-          frequency="always"
-          yacceleration="-0.3">
+          type="setYAccel"
+          frequency="once"
+          stepcount="0"
+          yAccel="-0.3">
         </animaction>
       </animactions>
       <inputactions>
@@ -1034,6 +1173,21 @@
         <inputaction
           input = "DOUBLEBACK"
           animset ="107"
+              />
+        <inputaction
+          input = "ANY"
+          button="X"
+          animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
               />
       </inputactions>
     </anim>
@@ -1050,15 +1204,18 @@
           yscale = "1"
           xpos = "-80"
           ypos = "-23">
-          <frameactions>
-            <frameaction
-              frequency="instant"
-              stepcount="0"
-              yvelocity="7"
-              xvelocity="-2"
-            >
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setYVel"
+              frequency="once"
+              stepCount="0"
+              yVel="7"/>
+            <animaction
+              type="setXVel"
+              frequency="once"
+              stepCount="0"
+              xVel="-2"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -1108,8 +1265,10 @@
       </frames>
       <animactions>
         <animaction
-          frequency="always"
-          yacceleration="-0.3">
+          type="setYAccel"
+          frequency="once"
+          stepcount="0"
+          yAccel="-0.3">
         </animaction>
       </animactions>
       <inputactions>
@@ -1120,6 +1279,180 @@
         <inputaction
           input = "DOUBLEBACK"
           animset ="107"
+              />
+        <inputaction
+          input = "ANY"
+          button="X"
+          animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
+              />
+      </inputactions>
+    </anim>
+    <anim
+      index = "51"
+      name = "Super Jumpsquat"
+      fallback = "52">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn06_01.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-45"
+          ypos = "-14">
+        </frame>
+      </frames>
+    </anim>
+    <anim
+      index = "52"
+      name = "Superjump Up"
+      fallback = "52">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn06_02.png"
+          stepcount = "1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-80"
+          ypos = "-23">
+          <animactions>
+            <animaction
+              type="setYVel"
+              frequency="once"
+              stepCount="0"
+              yVel="10"/>
+          </animactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn06_02.png"
+          stepcount = "9"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-80"
+          ypos = "-23">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn06_03.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "-27">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn06_04.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-41"
+          ypos = "-19">
+          <inputactions>
+            <inputaction
+              input = "UPFORWARD"
+              animset ="49"
+              />
+            <inputaction
+              input = "UPBACK"
+              animset ="50"
+              />
+            <inputaction
+              input = "UP"
+              animset ="48"
+              />
+          </inputactions>
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn06_05.png"
+          stepcount = "6"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-28">
+          <inputactions>
+            <inputaction
+              input = "UPFORWARD"
+              animset ="49"
+              />
+            <inputaction
+              input = "UPBACK"
+              animset ="50"
+              />
+            <inputaction
+              input = "UP"
+              animset ="48"
+              />
+          </inputactions>
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn06_06.png"
+          stepcount = "-1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-39"
+          ypos = "-32">
+          <inputactions>
+            <inputaction
+              input = "UPFORWARD"
+              animset ="49"
+              />
+            <inputaction
+              input = "UPBACK"
+              animset ="50"
+              />
+            <inputaction
+              input = "UP"
+              animset ="48"
+              />
+          </inputactions>
+        </frame>
+      </frames>
+      <animactions>
+        <animaction
+          type="setYAccel"
+          frequency="once"
+          stepcount="0"
+          yAccel="-0.3">
+        </animaction>
+      </animactions>
+      <inputactions>
+        <inputaction
+          input = "DOUBLEFORWARD"
+          animset ="102"
+              />
+        <inputaction
+          input = "DOUBLEBACK"
+          animset ="107"
+              />
+        <inputaction
+          input = "ANY"
+          button="X"
+          animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
               />
       </inputactions>
     </anim>
@@ -1145,12 +1478,19 @@
           yscale = "1"
           xpos = "-57"
           ypos = "13">
-          <frameactions>
-            <frameaction
-              frequency="always"
-              xdelta="3">
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setXVel"
+              frequency="once"
+              stepCount="0"
+              xVel="4.5"/>
+            <animaction
+              filename="data/sounds/SSW2/Gameplay/WAVE_SE_0B.wav"
+              type="sound"
+              frequency="once"
+              volume="0.1f"
+              stepCount="0"/>
+          </animactions>
         </frame>
       </frames>
       <inputactions>
@@ -1188,56 +1528,93 @@
         <frame
           index ="1"
           filename = "data/images/ghn/ghn08_01.png"
-          stepcount = "5"
+          stepcount = "3"
           xscale = "-1"
           yscale = "1"
           xpos = "-56"
           ypos = "-13">
-          <frameactions>
-            <frameaction
-              frequency="always"
-              yvelocity="0.5"
-              xvelocity="7">
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setYVel"
+              frequency="once"
+              stepCount="0"
+              yVel="0.5"/>
+            <animaction
+              type="setXVel"
+              frequency="once"
+              stepCount="0"
+              xVel="5"/>
+            <animaction
+              filename="data/sounds/SSW2/Gameplay/WAVE_SE_0F.wav"
+              type="sound"
+              frequency="once"
+              volume="0.1f"
+              stepCount="0"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
           filename = "data/images/ghn/ghn08_02.png"
-          stepcount = "12"
+          stepcount = "10"
           xscale = "-1"
           yscale = "1"
           xpos = "-57"
           ypos = "13">
-          <frameactions>
-            <frameaction
-              frequency="always"
-              xvelocity="7">
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setXVel"
+              frequency="once"
+              stepCount="0"
+              xVel="6"/>
+          </animactions>
         </frame>
         <frame
           index ="3"
           filename = "data/images/ghn/ghn08_01.png"
-          stepcount = "4"
+          stepcount = "2"
           xscale = "-1"
           yscale = "1"
           xpos = "-56"
           ypos = "-13">
-          <frameactions>
-            <frameaction
-              frequency="always"
-              xvelocity="5">
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setXVel"
+              frequency="once"
+              stepCount="0"
+              xVel="5"/>
+            <animaction
+              type="setYAccel"
+              frequency="once"
+              stepcount="0"
+              yAccel="-0.3"/>
+          </animactions>
         </frame>
       </frames>
       <animactions>
         <animaction
-          frequency="always"
-          yacceleration="0">
+          type="setYAccel"
+          frequency="once"
+          stepcount="0"
+          yAccel="0">
         </animaction>
       </animactions>
+      <inputactions>
+        <inputaction
+          input = "ANY"
+          button="X"
+          animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
+              />
+      </inputactions>
     </anim>
     <anim
       index = "105"
@@ -1252,6 +1629,14 @@
           yscale = "1"
           xpos = "-56"
           ypos = "-13">
+          <animactions>
+            <animaction
+              filename="data/sounds/SSW2/Gameplay/WAVE_SE_0B.wav"
+              type="sound"
+              frequency="once"
+              volume="0.1f"
+              stepCount="0"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -1261,12 +1646,12 @@
           yscale = "1"
           xpos = "-56"
           ypos = "-13">
-          <frameactions>
-            <frameaction
+          <animactions>
+            <animaction
+              type="moveDelta"
               frequency="always"
-              xdelta="-3">
-            </frameaction>
-          </frameactions>
+              xDelta="-3"/>
+          </animactions>
         </frame>
       </frames>
       <inputactions>
@@ -1304,54 +1689,104 @@
         <frame
           index ="1"
           filename = "data/images/ghn/ghn09_04.png"
-          stepcount = "5"
+          stepcount = "3"
           xscale = "-1"
           yscale = "1"
           xpos = "-56"
           ypos = "-13">
-          <frameactions>
-            <frameaction
-              frequency="always"
-              yvelocity="0.5"
-              xvelocity="-4">
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setYVel"
+              frequency="once"
+              stepCount="0"
+              yVel="0.5"/>
+            <animaction
+              type="setXVel"
+              frequency="once"
+              stepCount="0"
+              xVel="-4"/>
+            <animaction
+              filename="data/sounds/SSW2/Gameplay/WAVE_SE_0F.wav"
+              type="sound"
+              frequency="once"
+              volume="0.1f"
+              stepCount="0"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
           filename = "data/images/ghn/ghn09_02.png"
-          stepcount = "16"
+          stepcount = "8"
           xscale = "-1"
           yscale = "1"
           xpos = "-57"
           ypos = "13">
-          <frameactions>
-            <frameaction
-              frequency="always"
-              xvelocity="-6">
-            </frameaction>
-          </frameactions>
+          <animactions>
+            <animaction
+              type="setXVel"
+              frequency="once"
+              stepCount="0"
+              xVel="-5"/>
+          </animactions>
         </frame>
         <frame
           index ="3"
           filename = "data/images/ghn/ghn09_04.png"
-          stepcount = "5"
+          stepcount = "2"
           xscale = "-1"
           yscale = "1"
           xpos = "-56"
           ypos = "-13">
-          <frameaction
-            frequency="always"
-            xvelocity="-4">
-          </frameaction>
+          <animactions>
+            <animaction
+              type="setXVel"
+              frequency="once"
+              stepCount="0"
+              xVel="-4"/>
+          </animactions>
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn09_04.png"
+          stepcount = "1"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-56"
+          ypos = "-13">
+          <animactions>
+            <animaction
+              type="setYAccel"
+              frequency="once"
+              stepcount="0"
+              yAccel="-0.3"/>
+          </animactions>
         </frame>
       </frames>
       <animactions>
         <animaction
-          frequency="always"
-          yacceleration="0">
+          type="setYAccel"
+          frequency="once"
+          stepcount="0"
+          yAccel="0">
         </animaction>
       </animactions>
+      <inputactions>
+        <inputaction
+          input = "ANY"
+          button="X"
+          animset ="601"
+              />
+        <inputaction
+          input = "ANY"
+          button="Y"
+          animset ="602"
+              />
+        <inputaction
+          input = "ANY"
+          button="Z"
+          animset ="603"
+              />
+      </inputactions>
     </anim>
     <anim
       index = "200"
@@ -1374,12 +1809,12 @@
           yscale = "1"
           xpos = "-61"
           ypos = "-15">
-          <frameactions>
-            <frameaction
+          <animactions>
+            <animaction
+              type="moveDelta"
               frequency="always"
-              xdelta="1">
-            </frameaction>
-          </frameactions>
+              xDelta="1"/>
+          </animactions>
         </frame>
         <frame
           index ="3"
@@ -1389,6 +1824,15 @@
           yscale = "1"
           xpos = "-44"
           ypos = "-11">
+          <animactions>
+            <animaction
+              filename="data/sounds/EB/Battle/bat_14.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0">
+            </animaction>
+          </animactions>
         </frame>
         <frame
           index ="4"
@@ -1440,6 +1884,20 @@
           yscale = "1"
           xpos = "-100"
           ypos = "-13">
+          <animactions>
+            <animaction
+              filename="data/sounds/SSW2/Gameplay/WAVE_SE_07.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0"/>
+            <animaction
+              filename="data/sounds/SSW2/GHN/WAVE_GHO_03.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -1449,12 +1907,12 @@
           yscale = "1"
           xpos = "-69"
           ypos = "-12">
-          <frameactions>
-            <frameaction
+          <animactions>
+            <animaction
+              type="moveDelta"
               frequency="always"
-              xdelta="2">
-            </frameaction>
-          </frameactions>
+              xDelta="2"/>
+          </animactions>
         </frame>
         <frame
           index ="3"
@@ -1506,6 +1964,14 @@
           yscale = "1"
           xpos = "-57"
           ypos = "-13">
+          <animactions>
+            <animaction
+              filename="data/sounds/SSW2/GHN/WAVE_GHO_00.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="3"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -1515,12 +1981,18 @@
           yscale = "1"
           xpos = "-36"
           ypos = "12">
-          <frameactions>
-            <frameaction
+          <animactions>
+            <animaction
+              type="moveDelta"
               frequency="always"
-              xdelta="1">
-            </frameaction>
-          </frameactions>
+              xDelta="1"/>
+            <animaction
+              filename="data/sounds/EB/Battle/bat_15.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="4"/>
+          </animactions>
         </frame>
         <frame
           index ="3"
@@ -1530,12 +2002,12 @@
           yscale = "1"
           xpos = "-76"
           ypos = "32">
-          <frameactions>
-            <frameaction
+          <animactions>
+            <animaction
+              type="moveDelta"
               frequency="always"
-              xdelta="3">
-            </frameaction>
-          </frameactions>
+              xDelta="3"/>
+          </animactions>
         </frame>
         <frame
           index ="4"
@@ -1588,6 +2060,15 @@
           yscale = "1"
           xpos = "-39"
           ypos = "-12">
+          <animactions>
+            <animaction
+              filename="data/sounds/EB/Battle/bat_14.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0">
+            </animaction>
+          </animactions>
         </frame>
         <frame
           index ="3"
@@ -1631,6 +2112,18 @@
           yscale = "1"
           xpos = "-100"
           ypos = "-12">
+          <animactions>
+            <animaction
+              type="moveDelta"
+              frequency="always"
+              xDelta="2"/>
+            <animaction
+              filename="data/sounds/SSW2/Gameplay/WAVE_SE_07.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0"/>
+          </animactions>
         </frame>
         <frame
           index ="3"
@@ -1640,6 +2133,12 @@
           yscale = "1"
           xpos = "-101"
           ypos = "-10">
+          <animactions>
+            <animaction
+              type="moveDelta"
+              frequency="always"
+              xDelta="1"/>
+          </animactions>
         </frame>
         <frame
           index ="4"
@@ -1683,6 +2182,20 @@
           yscale = "1"
           xpos = "-53"
           ypos = "-12">
+          <animactions>
+            <animaction
+              filename="data/sounds/EB/Battle/bat_15.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="2"/>
+            <animaction
+              filename="data/sounds/SSW2/GHN/WAVE_GHO1_01.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="1"/>
+          </animactions>
         </frame>
         <frame
           index ="2"
@@ -1725,7 +2238,9 @@
     <anim
       index = "601"
       name = "Jumping light punch"
-      fallback = "47">
+      fallback = "47"
+      keepAcceleration="true"
+      keepVelocity="true">
       <frames>
         <frame
           index ="1"
@@ -1733,43 +2248,283 @@
           stepcount = "3"
           xscale = "-1"
           yscale = "1"
-          xpos = "-53"
-          ypos = "-12">
+          xpos = "-39"
+          ypos = "-10">
         </frame>
         <frame
           index ="2"
           filename = "data/images/ghn/ghn17_02.png"
-          stepcount = "3"
+          stepcount = "4"
           xscale = "-1"
           yscale = "1"
-          xpos = "-39"
-          ypos = "-12">
+          xpos = "-43"
+          ypos = "-2">
+          <animactions>
+            <animaction
+              filename="data/sounds/EB/Battle/bat_14.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0">
+            </animaction>
+          </animactions>
         </frame>
         <frame
           index ="3"
           filename = "data/images/ghn/ghn17_03.png"
-          stepcount = "6"
+          stepcount = "2"
           xscale = "-1"
           yscale = "1"
-          xpos = "-42"
-          ypos = "-13">
+          xpos = "-52"
+          ypos = "-14">
         </frame>
         <frame
           index ="4"
           filename = "data/images/ghn/ghn17_04.png"
-          stepcount = "6"
+          stepcount = "2"
           xscale = "-1"
           yscale = "1"
-          xpos = "-41"
-          ypos = "-13">
+          xpos = "-56"
+          ypos = "-15">
         </frame>
       </frames>
       <animactions>
         <animaction
-          frequency="always"
-          yacceleration="-0.3">
-        </animaction>
+          type="setYAccel"
+          frequency="once"
+          stepCount="0"
+          yAccel="-0.3"/>
+      </animactions>
+    </anim>
+    <anim
+      index = "602"
+      name = "Jumping Medium punch"
+      fallback = "47"
+      keepAcceleration="true"
+      keepVelocity="true">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn18_01.png"
+          stepcount = "5"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-38"
+          ypos = "20">
+          <animactions>
+            <animaction
+              filename="data/sounds/SSW2/Gameplay/WAVE_SE_07.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0"/>
+            <animaction
+              filename="data/sounds/SSW2/GHN/WAVE_GHO_03.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0"/>
+          </animactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn18_02.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-56"
+          ypos = "26">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn18_03.png"
+          stepcount = "10"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-45"
+          ypos = "27">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn18_04.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-57"
+          ypos = "20">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn18_05.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-61"
+          ypos = "-12">
+        </frame>
+      </frames>
+      <animactions>
+        <animaction
+          type="setYAccel"
+          frequency="once"
+          stepCount="0"
+          yAccel="-0.3"/>
+      </animactions>
+    </anim>
+    <anim
+      index = "603"
+      name = "Jumping Heavy punch"
+      fallback = "47"
+      keepAcceleration="true"
+      keepVelocity="true">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn32_01.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-63"
+          ypos = "5">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn32_02.png"
+          stepcount = "4"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-72"
+          ypos = "4">
+          <animactions>
+            <animaction
+              filename="data/sounds/EB/Battle/bat_15.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0"/>
+            <animaction
+              filename="data/sounds/SSW2/GHN/WAVE_GHO7_00.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0"/>
+          </animactions>
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ghn/ghn32_03.png"
+          stepcount = "2"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-83"
+          ypos = "3">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ghn/ghn32_035.png"
+          stepcount = "8"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-83"
+          ypos = "3">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ghn/ghn32_04.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-75"
+          ypos = "12">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ghn/ghn32_05.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-72"
+          ypos = "5">
+        </frame>
+        <frame
+          index ="7"
+          filename = "data/images/ghn/ghn32_06.png"
+          stepcount = "3"
+          xscale = "-1"
+          yscale = "1"
+          xpos = "-54"
+          ypos = "-5">
+        </frame>
+      </frames>
+      <animactions>
+        <animaction
+          type="setYAccel"
+          frequency="once"
+          stepCount="0"
+          yAccel="-0.3"/>
       </animactions>
     </anim>
   </anims>
+  <palettes>
+    <palette
+      index = "1"
+      name = "Ultimate Gohan"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Default.pal">
+    </palette>
+    <palette
+      index = "2"
+      name = "Super Saiyan"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_SSJ.pal">
+    </palette>
+    <palette
+      index = "3"
+      name = "Training Gear"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Training2.pal">
+    </palette>
+    <palette
+      index = "4"
+      name = "Training Gear (Super Saiyan)"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Training.pal">
+    </palette>
+    <palette
+      index = "5"
+      name = "Super Super Hero (Super Saiyan)"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_SuperSuperHero4.pal">
+    </palette>
+    <palette
+      index = "6"
+      name = "Gohan Beast"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Beast1.pal">
+    </palette>
+    <palette
+      index = "7"
+      name = "The Gold Fighter"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_GoldFighter.pal">
+    </palette>
+    <palette
+      index = "8"
+      name = "Great Saiyaman"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Saiyaman.pal">
+    </palette>
+    <palette
+      index = "8"
+      name = "Saiyaman Costume (No Cape)"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Saiyaman3.pal">
+    </palette>
+    <palette
+      index = "9"
+      name = "Kai"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Kai.pal">
+    </palette>
+  </palettes>
 </character>

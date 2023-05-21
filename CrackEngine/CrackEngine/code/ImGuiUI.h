@@ -6,6 +6,8 @@
 #include "../vendor/imgui/imgui_impl_glfw.h"
 #include "../vendor/imgui/imgui_impl_opengl3.h"
 
+class AnimManager;
+
 class ImGuiUI
 {
 	GLFWwindow* _window;
@@ -14,6 +16,7 @@ public:
 	~ImGuiUI();
 	void init(GLFWwindow* window, unsigned int& _tex);
 	void render();
+	void addCharacter(AnimManager* _character);
 
 	// Our state
 	bool isPressed = false;
@@ -27,5 +30,6 @@ public:
 	float fps = 0.f;
 	
 private:
+	std::vector<AnimManager*> characters;
 };
 

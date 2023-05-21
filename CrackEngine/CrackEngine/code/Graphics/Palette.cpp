@@ -14,6 +14,53 @@ Palette::Palette()
 
 Palette::Palette(std::string _fileName, std::string _baseFileName)
 {
+	init(_fileName, _baseFileName);
+}
+
+Palette::Palette(pugi::xml_node _data, std::string _baseFileName)
+{
+	paletteName = _data.attribute("name").as_string();
+	paletteAuthor = _data.attribute("author").as_string();
+	init(_data.attribute("filename").as_string(), _baseFileName);
+}
+
+int Palette::generatePalMap()
+{
+	GLfloat colorArray[256][2][4] = { {1.f,1.f,1.f,1.f} };
+	for (int i = 0; i < paletteCount; i++)
+	{
+		colorArray[i][0][0] = baseColors[i].x;
+		colorArray[i][0][1] = baseColors[i].y;
+		colorArray[i][0][2] = baseColors[i].z;
+		colorArray[i][0][3] = 1;
+		colorArray[i][1][0] = convertedColors[i].x;
+		colorArray[i][1][1] = convertedColors[i].y;
+		colorArray[i][1][2] = convertedColors[i].z;
+		colorArray[i][1][3] = convertedColors[i].w;
+	}
+
+	//---------------------------
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	glGenTextures(1, &paletteTexIndex);
+	glBindTexture(GL_TEXTURE_2D, paletteTexIndex);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 256, 0, GL_RGBA, GL_FLOAT, colorArray);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return paletteTexIndex;
+}
+
+void Palette::init(std::string _fileName, std::string _baseFileName)
+{
+	paletteFileName = _fileName;
 	baseColors = std::vector<glm::vec3>();
 	convertedColors = std::vector<glm::vec4>();
 	paletteCount = 0;
@@ -128,38 +175,4 @@ Palette::Palette(std::string _fileName, std::string _baseFileName)
 	{
 		std::cout << "Could not load palette file at " + _baseFileName << std::endl;
 	}
-}
-
-int Palette::generatePalMap()
-{
-	GLfloat colorArray[256][2][4] = { {1.f,1.f,1.f,1.f} };
-	for (int i = 0; i < paletteCount; i++)
-	{
-		colorArray[i][0][0] = baseColors[i].x;
-		colorArray[i][0][1] = baseColors[i].y;
-		colorArray[i][0][2] = baseColors[i].z;
-		colorArray[i][0][3] = 1;
-		colorArray[i][1][0] = convertedColors[i].x;
-		colorArray[i][1][1] = convertedColors[i].y;
-		colorArray[i][1][2] = convertedColors[i].z;
-		colorArray[i][1][3] = convertedColors[i].w;
-	}
-
-	//---------------------------
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	glGenTextures(1, &paletteTexIndex);
-	glBindTexture(GL_TEXTURE_2D, paletteTexIndex);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 256, 0, GL_RGBA, GL_FLOAT, colorArray);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	return paletteTexIndex;
 }

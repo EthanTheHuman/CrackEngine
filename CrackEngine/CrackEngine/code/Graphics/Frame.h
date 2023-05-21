@@ -7,6 +7,10 @@
 #include "../Log.h"
 using json = nlohmann::json;
 
+// Forward declare anim actions
+class AnimAction;
+class Act_SetXVel;
+
 class Frame
 {
 public:
@@ -44,24 +48,6 @@ public:
 		Frame::InputCommand inputCommand = Frame::InputCommand::NONE;
 		Frame::InputButton inputButton = Frame::InputButton::ANY;
 	};
-	
-	enum class FrameActionType
-	{
-		ALWAYS = 0,
-		INSTANT
-	};
-
-	struct FrameAction
-	{
-		FrameActionType frameActionType = FrameActionType::ALWAYS;
-		float xDelta;
-		float yDelta;
-		float xVelocity;
-		float yVelocity;
-		float xAcceleration;
-		float yAcceleration;
-		int stepCount = 0;
-	};
 
 	Frame(json _frameData);
 	Frame(pugi::xml_node _frameData);
@@ -76,14 +62,11 @@ public:
 	int index;
 	bool looping = false;
 	std::vector<InputAction> inputActions;
-	std::vector<FrameAction> frameActions;
 	static std::vector<Frame::InputAction> readInputActionsFromXML(pugi::xml_node _data);
-	static std::vector<Frame::FrameAction> readFrameActionsFromXML(pugi::xml_node _data);
+	std::vector<AnimAction*> animActions;
+	std::vector<AnimAction*> readAnimActionsFromXML(pugi::xml_node _xml);
+	AnimAction* readAnimActionFromXML(pugi::xml_node _xml);
 
 protected:
 	std::string spriteFileName;
-private:
-	static Frame::FrameAction readFrameActionFromXML(pugi::xml_node _data);
-	// texture coordinates
-	// texture width and height
 };

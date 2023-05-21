@@ -172,8 +172,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="config.json" />
-    <None Include="data\characters\Gohan.JSON" />
-    <None Include="data\characters\GohanHurt.JSON" />
     <None Include="data\shaders\shad_ambient.fs" />
     <None Include="data\shaders\shad_ambient.vs" />
     <None Include="data\shaders\shad_basic_lighting.fs" />
@@ -202,6 +200,16 @@
     <None Include="libpng16.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_PlaySound.cpp" />
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_MoveDelta.cpp" />
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_AddYAccel.cpp" />
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_AddXAccel.cpp" />
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_SetYAccel.cpp" />
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_SetXAccel.cpp" />
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_AddYVel.cpp" />
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_AddXVel.cpp" />
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_SetYVel.cpp" />
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_SetXVel.cpp" />
     <ClCompile Include="code\Gameplay\AnimAction.cpp" />
     <ClCompile Include="code\Graphics\AnimManager.cpp" />
     <ClCompile Include="code\Graphics\Animation.cpp" />
@@ -230,10 +238,21 @@
     <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_PlaySound.h" />
+    <ClInclude Include="code\sound\AudioPlayer.h" />
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_MoveDelta.h" />
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_AddYAccel.h" />
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_AddXAccel.h" />
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_SetYAccel.h" />
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_SetXAccel.h" />
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_AddYVel.h" />
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_AddXVel.h" />
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_SetYVel.h" />
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_SetXVel.h" />
     <ClInclude Include="code\Gameplay\AnimAction.h" />
     <ClInclude Include="code\Graphics\AnimManager.h" />
     <ClInclude Include="code\Graphics\Animation.h" />
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="code\Graphics\Camera.h" />
     <ClInclude Include="code\Config.h" />
     <ClInclude Include="code\GameObject.h" />
     <ClInclude Include="code\ImGuiUI.h" />
@@ -263,7 +282,6 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="data\characters\Android18.xml" />
-    <Xml Include="data\characters\GohanHurt.xml" />
     <Xml Include="data\characters\Gohan.xml" />
     <Xml Include="data\characters\Goku.xml" />
   </ItemGroup>

@@ -17,7 +17,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "../Shader_m.h"
-#include "../Camera.h"
+#include "./Graphics/Camera.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/Model.h"
 

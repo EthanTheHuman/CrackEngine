@@ -47,8 +47,6 @@
     <None Include="config.json" />
     <None Include="imgui.ini" />
     <None Include="libpng16.dll" />
-    <None Include="data\characters\Gohan.JSON" />
-    <None Include="data\characters\GohanHurt.JSON" />
     <None Include="data\shaders\shad_palette.fs" />
     <None Include="data\shaders\shad_palette.vs" />
     <None Include="data\shaders\shad_renderbuffer.vs" />
@@ -135,6 +133,36 @@
     <ClCompile Include="code\Gameplay\AnimAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_SetXVel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_SetYVel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_AddXVel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_AddYVel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_SetXAccel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_SetYAccel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_AddXAccel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_AddYAccel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_MoveDelta.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Anim Actions\Act_PlaySound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Config.h">
@@ -185,7 +213,7 @@
     <ClInclude Include="vendor\imgui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="code\Graphics\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shader_m.h">
@@ -227,9 +255,41 @@
     <ClInclude Include="code\Gameplay\AnimAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_SetXVel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_SetYVel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_AddXVel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_AddYVel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_SetXAccel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_SetYAccel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_AddXAccel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_AddYAccel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_MoveDelta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\sound\AudioPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Anim Actions\Act_PlaySound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="data\characters\GohanHurt.xml" />
     <Xml Include="data\characters\Gohan.xml" />
     <Xml Include="data\characters\Android18.xml" />
     <Xml Include="data\characters\Goku.xml" />

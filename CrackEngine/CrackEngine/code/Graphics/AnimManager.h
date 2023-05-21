@@ -10,6 +10,10 @@
 #include <string>
 #include <map>
 
+// forward declare AnimAction classes
+class AnimAction;
+class Act_SetXVel;
+
 class AnimManager :
 	public GameObject
 {
@@ -27,23 +31,31 @@ public:
 	glm::vec3& setScale(glm::vec3 _scale) override;
 	void processInputs(GLFWwindow* _window, InputManager _inputs);
 	void processActions();
-	void processAction(Frame::FrameAction _action);
 
 	AnimManager(Sprite* _sprite, std::string _characterData);
 	AnimManager(Sprite* _sprite, std::map<Animation, int> _anims);
 	AnimManager(std::string _characterData, glm::vec3 _position = glm::vec3(0, 0, 0));
+	Palette getPalette();
 	Palette mainPalette = Palette();
 	Sprite* sprite;
 	void setPalette(std::string _newColorFileName, std::string _oldColorFileName);
+	void setPalette(int _index);
 
 	std::map<int, Animation> animList;
 	Frame* currentFrame;
 	Animation* currentAnim;
 	int frameCount = 0;
+	std::vector<Palette> paletteList;
+	int paletteIndex;
+	std::string characterName;
+	void setVelocity(glm::vec2 _vel, bool _additive);
+	void setxVelocity(float _vel, bool _additive);
+	void setyVelocity(float _vel, bool _additive);
+	void setxAcceleration(float _accel, bool _additive);
+	void setyAcceleration(float _accel, bool _additive);
 protected:
 	void parseXml(const char* _filename);
 	void changeAnimation(int _index);
-	void setVelocity(glm::vec2 _vel, bool _additive);
 	void setAcceleration(glm::vec2 _acc);
 	bool checkJumpLand();
 

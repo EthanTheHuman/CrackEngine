@@ -26,6 +26,8 @@ void main()
                 {
                     FragColor.xyz = texture(Texture1, vec2(0.9, (i/256.f))).xyz;
                     FragColor.w *= texture(Texture1, vec2(0.9, (i/256.f))).w;
+                    FragColor = FragColor * vec4(ambient, 1.0);
+                    return;
                 }
         }
     }

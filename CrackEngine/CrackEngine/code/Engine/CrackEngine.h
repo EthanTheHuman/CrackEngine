@@ -7,8 +7,6 @@
 #include <thread>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <sndfile/sndfile.h>
-#include <portaudio/portaudio.h>
 #include "../../stb_image.h"
 
 #include <glm/glm.hpp>
@@ -16,7 +14,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "../../Shader_m.h"
-#include "../../Camera.h"
+#include "../Graphics/Camera.h"
 #include "../Graphics/Sprite.h"
 #include "../Graphics/Model.h"
 
@@ -27,6 +25,7 @@
 #include "../Config.h"
 #include "../Graphics/AnimManager.h"
 #include "../Input/InputManager.h"
+#include "../sound/AudioPlayer.h"
 
 namespace Crack {
 
@@ -76,8 +75,9 @@ namespace Crack {
             const PaStreamCallbackTimeInfo* timeInfo,
             PaStreamCallbackFlags statusFlags,
             void* userData);
-        SF_INFO sfinfo;
-        float* soundBuffer;
+		static SF_INFO sfinfo;
+        static int numFrames;
+        static float* soundBuffer;
         unsigned int fbo;
         unsigned int textureColorbuffer;
         unsigned int rbo;
@@ -86,5 +86,6 @@ namespace Crack {
         unsigned int quadEBO;
         Shader* frameBufferShader;
         Shader* backgroundShader;
+		AudioPlayer* music;
 	};
 }

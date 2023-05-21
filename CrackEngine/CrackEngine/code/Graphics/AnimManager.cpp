@@ -1,4 +1,5 @@
 #include "AnimManager.h"
+#include "../Gameplay/Anim Actions/Act_SetXVel.h"
 
 glm::vec3& AnimManager::setScale(glm::vec3 _scale)
 {
@@ -259,8 +260,8 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 			}
 			if (valid == true)
 			{
-				Log::log("Change animation to following index:", Log::LOG);
-				std::cout << inputAction.animChangeIndex << std::endl;
+				/*Log::log("Change animation to following index:", Log::LOG);
+				std::cout << inputAction.animChangeIndex << std::endl;*/
 				changeAnimation(inputAction.animChangeIndex);
 				return;
 			}
@@ -270,47 +271,14 @@ void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
 
 void AnimManager::processActions()
 {
-	for (int i = 0; i < currentAnim->frameActions.size(); i++)
+	// update all the animations
+	for (int i = 0; i < currentAnim->animActions.size(); i++)
 	{
-		processAction(currentAnim->frameActions[i]);
-	};
-
-	for (int i = 0; i < currentFrame->frameActions.size(); i++)
+		currentAnim->animActions[i]->execute(frameCount, this);
+	}
+	for (int i = 0; i < currentFrame->animActions.size(); i++)
 	{
-		processAction(currentFrame->frameActions[i]);
-	};
-}
-
-void AnimManager::processAction(Frame::FrameAction _action)
-{
-	// if action is currently active
-	if (_action.frameActionType == Frame::FrameActionType::ALWAYS || (_action.frameActionType == Frame::FrameActionType::INSTANT && _action.stepCount == frameCount))
-	{
-		// Moving sideways
-		if (_action.xDelta != 0)
-		{
-			setPosition(glm::vec2(_action.xDelta, 0), true);
-		};
-		if (_action.yDelta != 0)
-		{
-			setPosition(glm::vec2(0, _action.yDelta), true);
-		}
-		if (_action.xVelocity != 0)
-		{
-			setVelocity(glm::vec2(_action.xVelocity, velocity.y), false);
-		}
-		if (_action.yVelocity != 0)
-		{
-			setVelocity(glm::vec2(velocity.x, _action.yVelocity), false);
-		}
-		if (_action.xAcceleration != 0)
-		{
-			setAcceleration(glm::vec2(_action.xAcceleration, acceleration.y));
-		}
-		if (_action.yAcceleration != 0)
-		{
-			setAcceleration(glm::vec2(acceleration.x, _action.yAcceleration));
-		}
+		currentFrame->animActions[i]->execute(frameCount, this);
 	}
 }
 
@@ -324,7 +292,6 @@ AnimManager::AnimManager(Sprite* _sprite, std::string _characterData)
 		// Proceed with output
 
 		parseXml(_characterData.c_str());
-		mainPalette = Palette();
 	}
 	else
 	{
@@ -342,9 +309,25 @@ AnimManager::AnimManager(std::string _characterData, glm::vec3 _position)
 	parseXml(_characterData.c_str());
 }
 
+Palette AnimManager::getPalette() {
+	// Get palette from sprite
+	return sprite->mainPalette;
+}
+
 void AnimManager::setPalette(std::string _newColorFileName, std::string _oldColorFileName)
 {
 	sprite->mainPalette = Palette(_newColorFileName, _oldColorFileName);
+	mainPalette = sprite->mainPalette;
+}
+
+void AnimManager::setPalette(int _index)
+{
+	if (_index >= 0 && _index < paletteList.size())
+	{
+		paletteIndex = _index;
+		mainPalette = paletteList[paletteIndex];
+		sprite->mainPalette = mainPalette;
+	}
 }
 
 void AnimManager::render()
@@ -394,7 +377,7 @@ void AnimManager::init()
 
 void AnimManager::update()
 {
-	frameCount++;
+	++frameCount;
 	if (frameCount >= currentFrame->frameCount && currentFrame->frameCount != -1)
 	{
 		frameCount = 0;
@@ -448,11 +431,22 @@ void AnimManager::parseXml(const char* _filename)
 	
 	pugi::xml_node character = doc.child("character");
 	// Gather character base information
+	characterName = character.attribute("characterName").as_string();
 	if ((character.attribute("paletteTemplate").as_string() && character.attribute("paletteTemplate").as_string() != "")
 		&& (character.attribute("paletteFile").as_string() && character.attribute("paletteFile").as_string() != ""))
 	{
 		setPalette(character.attribute("paletteFile").as_string(), character.attribute("paletteTemplate").as_string());
+		for (pugi::xml_node pal : doc.child("character").child("palettes").children("palette"))
+		{
+			Palette newPal(pal, character.attribute("paletteTemplate").as_string());
+			paletteList.push_back(newPal);
+		}
+		if (paletteList.size() > 0)
+		{
+			setPalette(0);
+		}
 	}
+	
 
 	for (pugi::xml_node anim : doc.child("character").child("anims").children("anim"))
 	{
@@ -474,10 +468,16 @@ void AnimManager::changeAnimation(int _index)
 	sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
 	sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
 	sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
-	frameCount = 0;
+	frameCount = -1;
 	loopIndex = 0;
-	setVelocity(glm::vec2(0, 0), false);
-	setAcceleration(glm::vec2(0, 0));
+	if (currentAnim->keepVelocity == false)
+	{
+		setVelocity(glm::vec2(0, 0), false);
+	}
+	if (currentAnim->keepAcceleration == false)
+	{
+		setAcceleration(glm::vec2(0, 0));
+	}
 }
 
 void AnimManager::setVelocity(glm::vec2 _vel, bool _additive = false)
@@ -489,6 +489,50 @@ void AnimManager::setVelocity(glm::vec2 _vel, bool _additive = false)
 	}
 	vel += _vel;
 	velocity = vel;
+}
+
+void AnimManager::setxVelocity(float _vel, bool _additive)
+{
+	if (_additive)
+	{
+		velocity.x += _vel;
+		return;
+	}
+	velocity.x = _vel;
+	return;
+}
+
+void AnimManager::setyVelocity(float _vel, bool _additive)
+{
+	if (_additive)
+	{
+		velocity.y += _vel;
+		return;
+	}
+	velocity.y = _vel;
+	return;
+}
+
+void AnimManager::setxAcceleration(float _accel, bool _additive)
+{
+	if (_additive)
+	{
+		acceleration.x += _accel;
+		return;
+	}
+	acceleration.x = _accel;
+	return;
+}
+
+void AnimManager::setyAcceleration(float _accel, bool _additive)
+{
+	if (_additive)
+	{
+		acceleration.y += _accel;
+		return;
+	}
+	acceleration.y = _accel;
+	return;
 }
 
 void AnimManager::setAcceleration(glm::vec2 _acc)
@@ -505,7 +549,7 @@ bool AnimManager::checkJumpLand()
 		setPosition(floorPos);
 		setVelocity(glm::vec2(0, 0));
 		setAcceleration(glm::vec2(0, 0));
-		changeAnimation(12);
+		changeAnimation(14);
 		return true;
 	}
 	return false;

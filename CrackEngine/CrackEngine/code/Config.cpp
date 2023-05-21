@@ -41,7 +41,7 @@ void Config::Init()
 	}
 	configfile.close();
 
-	// Read config.json
+	// Read projectSettings.json
 	std::ifstream projectsettingsfile("data/config/ProjectSettings.json", std::ios::out | std::ios::app | std::ios::binary);
 	if (projectsettingsfile.is_open())
 	{
@@ -53,6 +53,7 @@ void Config::Init()
 		std::cout << config.dump() << std::endl;
 		windowName = config["windowName"];
 		targetFramestep = config["targetFramestep"];
+		std::cout << "targetFramestep: " << targetFramestep << std::endl;
 		pixelsPerUnit = config["pixelsPerUnit"];
 		internalHeight = config["internalHeight"];
 	}
