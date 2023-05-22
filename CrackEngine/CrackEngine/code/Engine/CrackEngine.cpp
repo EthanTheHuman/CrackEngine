@@ -93,6 +93,7 @@ namespace Crack {
         glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetScrollCallback(window, scroll_callback);
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
         // tell GLFW to capture our mouse
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -291,7 +292,7 @@ namespace Crack {
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
         glViewport(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.f, 0.f, 0.f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         Model::cameraPos = camera.Position;
@@ -323,15 +324,41 @@ namespace Crack {
         // swap to main window
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-		glClearColor(1.f, 0.1f, 0.1f, 1.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		// draw background behind the framebuffer
+		// Resize the background to cover the screen but keep the aspect ratio, clipping the sides where necessary
         backgroundShader->use();
+        {
+            float ratio = (float)SCR_WIDTH / (float)SCR_HEIGHT;
+            float bgRatio = (float)GAME_WIDTH / (float)GAME_HEIGHT;
+            float bgWidth = 1;
+            float bgHeight = 1;
+            if (ratio > bgRatio)
+            {
+				// Get the increase of width compared to the image aspect ratio
+                bgHeight = 1 * (ratio / bgRatio);
+                if (bgHeight < 1)
+                {
+                    bgHeight = 1;
+                }
+            }
+            else
+            {
+                bgWidth = 1 * (bgRatio / ratio);
+                if (bgWidth < 1)
+                {
+                    bgWidth = 1;
+                }
+            }
+            backgroundShader->setFloat("gameWidth", bgWidth);
+            backgroundShader->setFloat("gameHeight", bgHeight);
+        }
         backgroundShader->setFloat("xs", GAME_WIDTH);
         backgroundShader->setFloat("ys", GAME_HEIGHT);
-        backgroundShader->setFloat("r", 7);
-		backgroundShader->setVec4("tint", glm::vec4(1.2f, 0.f, 0.f, 1.0f));
+        backgroundShader->setFloat("r", 20);
+		backgroundShader->setVec4("tint", glm::vec4(0.6f, 0.6f, 0.6f, 1.f));
         glBindVertexArray(quadVAO);
         glDisable(GL_DEPTH_TEST);
         glActiveTexture(GL_TEXTURE0);

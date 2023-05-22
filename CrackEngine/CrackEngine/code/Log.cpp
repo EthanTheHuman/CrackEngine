@@ -20,7 +20,7 @@ void Log::log(std::string _input, logMode _mode)
 				std::cout << "WARNING: " << _input << std::endl;
 				break;
 			}
-		case logMode::ERROR:
+		case logMode::ANERROR:
 			{
 				std::cout << "ERROR: " << _input << std::endl;
 				break;

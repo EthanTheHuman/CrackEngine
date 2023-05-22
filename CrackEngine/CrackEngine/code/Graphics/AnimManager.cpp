@@ -463,6 +463,10 @@ void AnimManager::parseXml(const char* _filename)
 
 void AnimManager::changeAnimation(int _index)
 {
+	if (_index == -1)
+	{
+		delete this;
+	}
 	currentAnim = &animList[_index];
 	currentFrame = &currentAnim->frameList[1];
 	sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);

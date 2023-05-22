@@ -363,6 +363,11 @@
           button= "ANY"
           animset ="51"
             />
+        <inputaction
+          input = "DOWN"
+          button= "ANY"
+          animset ="13"
+            />
       </inputactions>
     </anim>
     <anim
