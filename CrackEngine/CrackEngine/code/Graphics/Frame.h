@@ -4,7 +4,9 @@
 #include "../../shader_m.h"
 #include "../../stb_image.h"
 #include <string>
+#include <vector>
 #include "../Log.h"
+#include "../Engine/CrkBox.h"
 using json = nlohmann::json;
 
 // Forward declare anim actions
@@ -66,7 +68,8 @@ public:
 	std::vector<AnimAction*> animActions;
 	std::vector<AnimAction*> readAnimActionsFromXML(pugi::xml_node _xml);
 	AnimAction* readAnimActionFromXML(pugi::xml_node _xml);
-
+	std::vector<CrkBox*> hitboxes;
+	CrkBox* hitbox;
 protected:
 	std::string spriteFileName;
 };

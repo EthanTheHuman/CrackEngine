@@ -202,7 +202,8 @@ namespace Crack {
 
 		// load the file music.mp3 with sndfile
         delete music;
-		music = new AudioPlayer("data/sounds/PHYUltimateGohanIntro.ogg", true, 0.1f);
+        std::string fileName = AudioPlayer::randomFileFromDirectory("data/sounds/");
+		music = new AudioPlayer(fileName, true, 1.f);
         music->play();
 		
         // Input manager

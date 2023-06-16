@@ -53,6 +53,8 @@
     <None Include="data\shaders\shad_renderbuffer.fs" />
     <None Include="data\shaders\shad_renderbackground.fs" />
     <None Include="data\shaders\shad_renderbackground.vs" />
+    <None Include="portaudio_x64.dll" />
+    <None Include="sndfile.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Config.cpp">
@@ -161,6 +163,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\Gameplay\Anim Actions\Act_PlaySound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Engine\Rectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Engine\CrkBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -286,6 +294,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\Gameplay\Anim Actions\Act_PlaySound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Engine\Rectangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Engine\CrkBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

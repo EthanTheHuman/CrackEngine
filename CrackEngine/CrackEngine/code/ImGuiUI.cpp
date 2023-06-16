@@ -124,6 +124,7 @@ void ImGuiUI::render()
     {
         ShowFPSWindow();
         ShowGameView();
+        ShowConsoleWindow();
 		
         for (int i = 0; i < characters.size(); i++)
         {
@@ -283,7 +284,9 @@ void ImGuiUI::ShowAnimManagerEditorWindow()
     static int frameNo = frameKeys[0];
     static float spriteXPos = 0;
     static float spriteYPos = 0;
-    static Frame* currentFrame = RefreshAnimManagerCharacterInfo(character, animNo, frameNo, spriteXPos, spriteYPos);
+	static CrkBox* currentRectangle = nullptr;
+    static ImVector<ImVec2> points;
+    static Frame* currentFrame = RefreshAnimManagerCharacterInfo(character, animNo, frameNo, spriteXPos, spriteYPos, &points, currentRectangle);
 	
     if (ImGui::SliderInt("Character Number", &characterNo, 0, characters.size() - 1))
     {
@@ -295,7 +298,7 @@ void ImGuiUI::ShowAnimManagerEditorWindow()
 		animNo = animKeys[0];
 		frameKeys = RefreshAnimManagerFrameKeysList(character, animNo);
 		frameNo = frameKeys[0];
-        currentFrame = RefreshAnimManagerCharacterInfo(character, animNo, frameNo, spriteXPos, spriteYPos);
+        currentFrame = RefreshAnimManagerCharacterInfo(character, animNo, frameNo, spriteXPos, spriteYPos, &points, currentRectangle);
     }
 
     std::string animLabel = "Animation: " + std::to_string(animNo);
@@ -306,14 +309,14 @@ void ImGuiUI::ShowAnimManagerEditorWindow()
         frameSliderIndex = 0;
 		frameKeys = RefreshAnimManagerFrameKeysList(character, animNo);
 		frameNo = frameKeys[0];
-		currentFrame = RefreshAnimManagerCharacterInfo(character, animNo, frameNo, spriteXPos, spriteYPos);
+		currentFrame = RefreshAnimManagerCharacterInfo(character, animNo, frameNo, spriteXPos, spriteYPos, &points, currentRectangle);
     }
 
     std::string frameLabel = "Frame: " + std::to_string(frameNo) + " X: " + std::to_string((int)spriteXPos) + " Y: " + std::to_string((int)spriteYPos);
     ImGui::Text(frameLabel.c_str());
     if (ImGui::SliderInt("Frame", &frameSliderIndex, 0, frameKeys.size() - 1)) {
         frameNo = frameKeys[frameSliderIndex];
-        currentFrame = RefreshAnimManagerCharacterInfo(character, animNo, frameNo, spriteXPos, spriteYPos);
+        currentFrame = RefreshAnimManagerCharacterInfo(character, animNo, frameNo, spriteXPos, spriteYPos, &points, currentRectangle);
     }
 
     ImGui::DragFloat("Cursor Size", &sz, 0.2f, 2.0f, 72.0f, "%.0f");
@@ -343,7 +346,6 @@ void ImGuiUI::ShowAnimManagerEditorWindow()
         pushboxColTrans.w *= boxTransparency;
         const ImU32 pbcoltrans = ImColor(pushboxColTrans);
 
-        static ImVector<ImVec2> points;
         static bool adding_line = false;
         ImGui::Text("Hitbox Wizard");
         if (ImGui::Button("Clear")) points.clear();
@@ -381,14 +383,34 @@ void ImGuiUI::ShowAnimManagerEditorWindow()
         ImGui::InvisibleButton("canvas", canvas_size);
         // Get the mouse pos relative to the OriginPos
         ImVec2 origin_pos = ImVec2(canvas_pos.x + originPos.x, canvas_pos.y + originPos.y);
-        ImVec2 mouse_pos_from_origin = ImVec2((int)((ImGui::GetIO().MousePos.x - origin_pos.x) / canvasScale), (int)((ImGui::GetIO().MousePos.y - origin_pos.y) / canvasScale));
+        //ImVec2 mouse_pos_from_origin = ImVec2((int)((ImGui::GetIO().MousePos.x - origin_pos.x) / canvasScale), (int)((ImGui::GetIO().MousePos.y - origin_pos.y) / canvasScale));
+        ImVec2 mouse_pos_from_origin = ImVec2((int)((ImGui::GetIO().MousePos.x - origin_pos.x) / canvasScale), (int)((origin_pos.y - ImGui::GetIO().MousePos.y) / canvasScale));
         ImVec2 mouse_pos_in_canvas = ImVec2((int)((ImGui::GetIO().MousePos.x - canvas_pos.x) / canvasScale), (int)((ImGui::GetIO().MousePos.y - canvas_pos.y) / canvasScale));
         if (adding_line)
         {
             adding_preview = true;
             points.push_back(mouse_pos_from_origin);
             if (!ImGui::IsMouseDown(0))
+            {
                 adding_line = adding_preview = false;
+                float up = (int)std::max(mouse_pos_from_origin.y, points[points.Size - 2].y);
+                float down = (int)std::min(mouse_pos_from_origin.y, points[points.Size - 2].y);
+                float left = (int)std::min(mouse_pos_from_origin.x, points[points.Size - 2].x);
+                float right = (int)std::max(mouse_pos_from_origin.x, points[points.Size - 2].x);
+                CrkBox* newRectangle = new CrkBox(
+                    up,
+                    down,
+                    left,
+                    right);
+                currentFrame->hitbox = newRectangle;
+                currentFrame->hitboxes.push_back(newRectangle);
+                currentRectangle = newRectangle;
+                consoleMessages.push_back("Added a hitbox: ");
+				consoleMessages.push_back("Up: " + std::to_string(up));
+                consoleMessages.push_back("Down: " + std::to_string(down));
+                consoleMessages.push_back("Left: " + std::to_string(left));
+                consoleMessages.push_back("Right: " + std::to_string(right));
+            }
         }
         if (ImGui::IsItemHovered())
         {
@@ -413,12 +435,15 @@ void ImGuiUI::ShowAnimManagerEditorWindow()
         currentFrame->yPos = (int)spriteYPos;
         // Get the sprite in a position relative to the origin
         ImVec2 characterMin = ImVec2(
-            origin_pos.x + ((currentFrame->xPos * currentFrame->xScale) * canvasScale),
-            origin_pos.y - ((currentFrame->yPos * currentFrame->yScale) * canvasScale) - ((currentFrame->spriteHeight * currentFrame->yScale) * canvasScale)
+            origin_pos.x + ((currentFrame->xPos + currentFrame->spriteWidth) * canvasScale),
+            //origin_pos.y - ((currentFrame->yPos * currentFrame->yScale) * canvasScale) - ((currentFrame->spriteHeight * currentFrame->yScale) * canvasScale)
+			// Bring the origin to the bottom, and then move it
+            origin_pos.y - ((currentFrame->spriteHeight * currentFrame->yScale) * canvasScale) - ((currentFrame->yPos * currentFrame->yScale) * canvasScale)
         );
         ImVec2 characterMax = characterMin;
-        characterMax.x += ((currentFrame->spriteWidth * currentFrame->xScale) * canvasScale);
-        characterMax.y += ((currentFrame->spriteHeight * currentFrame->yScale) * canvasScale);
+		characterMax.x += ((currentFrame->spriteWidth * currentFrame->xScale) * canvasScale);
+        //characterMax.y += ((currentFrame->spriteHeight * currentFrame->yScale) * canvasScale);
+		characterMax.y += ((currentFrame->spriteHeight * canvasScale));
         // The origin is scaled and compared to the origin
         draw_list->AddImage((void*)currentFrame->spriteImage, characterMin, characterMax, ImVec2(0, 0), ImVec2(1, 1), IM_COL32(255, 255, 255, 255));
         // draw origin
@@ -435,12 +460,36 @@ void ImGuiUI::ShowAnimManagerEditorWindow()
         }
         for (int i = 0; i < points.Size - 1; i += 2)
         {
-            draw_list->AddRectFilled(ImVec2(origin_pos.x + (points[i].x * canvasScale), origin_pos.y + (points[i].y * canvasScale)), ImVec2(origin_pos.x + (points[i + 1].x * canvasScale), origin_pos.y + (points[i + 1].y * canvasScale)), hbcoltrans, 0.0f, ImDrawCornerFlags_All);
-            draw_list->AddRect(ImVec2(origin_pos.x + (points[i].x * canvasScale), origin_pos.y + (points[i].y * canvasScale)), ImVec2(origin_pos.x + (points[i + 1].x * canvasScale), origin_pos.y + (points[i + 1].y * canvasScale)), hbcol, 0.0f, ImDrawCornerFlags_All, thickness);
+            draw_list->AddRectFilled(ImVec2(origin_pos.x + (points[i].x * canvasScale), origin_pos.y - (points[i].y * canvasScale)), ImVec2(origin_pos.x + (points[i + 1].x * canvasScale), origin_pos.y - (points[i + 1].y * canvasScale)), hbcoltrans, 0.0f, ImDrawCornerFlags_All);
+            draw_list->AddRect(ImVec2(origin_pos.x + (points[i].x * canvasScale), origin_pos.y - (points[i].y * canvasScale)), ImVec2(origin_pos.x + (points[i + 1].x * canvasScale), origin_pos.y - (points[i + 1].y * canvasScale)), hbcol, 0.0f, ImDrawCornerFlags_All, thickness);
+        }
+        if (currentFrame->hitbox != nullptr)
+        {
+            draw_list->AddRectFilled(ImVec2(origin_pos.x + (currentFrame->hitbox->left *canvasScale), origin_pos.y - (currentFrame->hitbox->up * canvasScale)), ImVec2(origin_pos.x + (currentFrame->hitbox->right * canvasScale), origin_pos.y - (currentFrame->hitbox->down * canvasScale)), htbcoltrans, 0.0f, ImDrawCornerFlags_All);
+            draw_list->AddRect(ImVec2(origin_pos.x + (currentFrame->hitbox->left * canvasScale), origin_pos.y - (currentFrame->hitbox->up * canvasScale)), ImVec2(origin_pos.x + (currentFrame->hitbox->right * canvasScale), origin_pos.y - (currentFrame->hitbox->down * canvasScale)), htbcol, 0.0f, ImDrawCornerFlags_All, thickness);
+        }
+        if (currentFrame->hitboxes.size() > 0)
+        {
+            for (int i = 0; i < currentFrame->hitboxes.size(); i++)
+            {
+                CrkBox* box = currentFrame->hitboxes[i];
+                draw_list->AddRectFilled(ImVec2(origin_pos.x + (box->left * canvasScale), origin_pos.y - (box->up * canvasScale)), ImVec2(origin_pos.x + (box->right * canvasScale), origin_pos.y - (box->down * canvasScale)), htbcoltrans, 0.0f, ImDrawCornerFlags_All);
+                draw_list->AddRect(ImVec2(origin_pos.x + (box->left * canvasScale), origin_pos.y - (box->up * canvasScale)), ImVec2(origin_pos.x + (box->right * canvasScale), origin_pos.y - (box->down * canvasScale)), htbcol, 0.0f, ImDrawCornerFlags_All, thickness);
+            }
         }
         draw_list->PopClipRect();
         if (adding_preview)
             points.pop_back();
+    }
+    ImGui::End();
+}
+
+void ImGuiUI::ShowConsoleWindow()
+{
+    ImGui::Begin("Console");
+    for (int i = 0; i < consoleMessages.size(); i++)
+    {
+        ImGui::Text(consoleMessages[i].c_str());
     }
     ImGui::End();
 }
@@ -475,11 +524,13 @@ void ImGuiUI::ProcessAnimManagerInputs(ImVec2& _originPos, float& _spriteXPos, f
     }
 }
 
-Frame* ImGuiUI::RefreshAnimManagerCharacterInfo(AnimManager* _character, int _animIndex, int _frameIndex, float& spriteXPos, float& spriteYPos)
+Frame* ImGuiUI::RefreshAnimManagerCharacterInfo(AnimManager* _character, int _animIndex, int _frameIndex, float& spriteXPos, float& spriteYPos, ImVector<ImVec2>* _points, CrkBox* _rect)
 {
 	Frame* _frame = &_character->animList[_animIndex].frameList[_frameIndex];
     spriteXPos = _frame->xPos;
     spriteYPos = _frame->yPos;
+    _rect = _frame->hitbox;
+    _points->clear();
     return _frame;
 }
 

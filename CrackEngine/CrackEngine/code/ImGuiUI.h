@@ -1,6 +1,7 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <string>
 #include <vector>
 #include "../vendor/imgui/imgui.h"
 #include "../vendor/imgui/imgui_impl_glfw.h"
@@ -8,6 +9,7 @@
 
 class AnimManager;
 class Frame;
+class CrkBox;
 
 class ImGuiUI
 {
@@ -29,6 +31,7 @@ public:
 
 	float deltaTime = 0.f;
 	float fps = 0.f;
+	std::vector<std::string> consoleMessages;
 	
 private:
 	std::vector<AnimManager*> characters;
@@ -40,10 +43,11 @@ private:
 	void ShowGameView();
 	void ShowCharacterView(AnimManager* _character);
 	void ShowAnimManagerEditorWindow();
+	void ShowConsoleWindow();
 
 	// Animation Manager Editor functions
 	void ProcessAnimManagerInputs(ImVec2& _originPos, float& _spriteXPos, float& _spriteYPos, float& _canvasScale);
-	Frame* RefreshAnimManagerCharacterInfo(AnimManager* _character, int _animIndex, int _frameIndex, float& spriteXPos, float& spriteYPos);
+	Frame* RefreshAnimManagerCharacterInfo(AnimManager* _character, int _animIndex, int _frameIndex, float& spriteXPos, float& spriteYPos, ImVector<ImVec2>* _points, CrkBox* _rect);
 	void RefreshAnimManagerKeysLists(std::vector<int>& _animKeys, std::vector<int>& _frameKeys, AnimManager* _character, int _animIndex);
 	std::vector<int> RefreshAnimManagerAnimKeysList(AnimManager* _character);
 	std::vector<int> RefreshAnimManagerFrameKeysList(AnimManager* _character, int _animIndex);

@@ -198,6 +198,8 @@
     <None Include="data\shaders\shad_specular_map.vs" />
     <None Include="imgui.ini" />
     <None Include="libpng16.dll" />
+    <None Include="portaudio_x64.dll" />
+    <None Include="sndfile.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Gameplay\Anim Actions\Act_PlaySound.cpp" />
@@ -221,12 +223,14 @@
     <ClCompile Include="code\Graphics\Sprite.cpp" />
     <ClCompile Include="code\Graphics\Frame.cpp" />
     <ClCompile Include="code\Engine\CrackEngine.cpp" />
+    <ClCompile Include="code\Engine\CrkBox.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="code\Input\InputManager.cpp" />
     <ClCompile Include="includes\xml\pugixml.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="code\Graphics\Palette.cpp" />
     <ClCompile Include="code\sound\SoundManager.cpp" />
+    <ClCompile Include="code\Engine\Rectangle.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
@@ -262,11 +266,13 @@
     <ClInclude Include="code\Graphics\Sprite.h" />
     <ClInclude Include="code\Graphics\Frame.h" />
     <ClInclude Include="code\Engine\CrackEngine.h" />
+    <ClInclude Include="code\Engine\CrkBox.h" />
     <ClInclude Include="includes\json.hpp" />
     <ClInclude Include="code\Graphics\Palette.h" />
     <ClInclude Include="code\Input\InputManager.h" />
     <ClInclude Include="includes\xml\pugiconfig.hpp" />
     <ClInclude Include="includes\xml\pugixml.hpp" />
+    <ClInclude Include="code\Engine\Rectangle.h" />
     <ClInclude Include="Shader_m.h" />
     <ClInclude Include="code\sound\SoundManager.h" />
     <ClInclude Include="Stage.h" />
