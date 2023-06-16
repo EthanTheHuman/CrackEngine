@@ -1,0 +1,450 @@
+<character
+  characterName="Gohan"
+  paletteTemplate="data/images/ghn/Pal_Template.pal"
+  paletteFile="data/images/ghn/Pal_SSJ.pal">
+  <anims>
+    <anim
+      index = "1"
+      name = "down idle"
+      fallback = "1">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/GHNLOG/Down1.png"
+          stepcount = "400"
+          xscale = "1"
+          xpos = "-7"
+          ypos = "-1">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/GHNLOG/Down2.png"
+          stepcount = "3"
+          xscale = "1"
+          xpos = "-7"
+          ypos = "-1">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "DOWN"
+          animset ="5"/>
+        <inputaction
+          input = "UP"
+          animset ="8"/>
+        <inputaction
+          input = "BACK"
+          animset ="6"/>
+        <inputaction
+          input = "FORWARD"
+          animset ="7"/>
+      </inputactions>
+    </anim>
+    <anim
+      index = "2"
+      name = "left idle"
+      fallback = "2">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/GHNLOG/Right1.png"
+          stepcount = "400"
+          xscale = "-1"
+          xpos = "-5"
+          ypos = "-3">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/GHNLOG/Right2.png"
+          stepcount = "3"
+          xscale = "-1"
+          xpos = "-5"
+          ypos = "-3">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "DOWN"
+          animset ="5"/>
+        <inputaction
+          input = "UP"
+          animset ="8"/>
+        <inputaction
+          input = "BACK"
+          animset ="6"/>
+        <inputaction
+          input = "FORWARD"
+          animset ="7"/>
+      </inputactions>
+    </anim>
+    <anim
+      index = "3"
+      name = "right idle"
+      fallback = "3">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/GHNLOG/Right1.png"
+          stepcount = "400"
+          xscale = "1"
+          xpos = "-9"
+          ypos = "-3">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/GHNLOG/Right2.png"
+          stepcount = "3"
+          xscale = "1"
+          xpos = "-9"
+          ypos = "-3">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "DOWN"
+          animset ="5"/>
+        <inputaction
+          input = "UP"
+          animset ="8"/>
+        <inputaction
+          input = "BACK"
+          animset ="6"/>
+        <inputaction
+          input = "FORWARD"
+          animset ="7"/>
+      </inputactions>
+    </anim>
+    <anim
+      index = "4"
+      name = "up idle"
+      fallback = "4">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/GHNLOG/Up1.png"
+          stepcount = "400"
+          xscale = "1"
+          xpos = "-7"
+          ypos = "-1">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "DOWN"
+          animset ="5"/>
+        <inputaction
+          input = "UP"
+          animset ="8"/>
+        <inputaction
+          input = "BACK"
+          animset ="6"/>
+        <inputaction
+          input = "FORWARD"
+          animset ="7"/>
+      </inputactions>
+    </anim>
+    <anim
+      index = "5"
+      name = "down walk"
+      fallback = "1">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/GHNLOG/DownWalk1.png"
+          stepcount = "16"
+          xscale = "1"
+          xpos = "-6"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/GHNLOG/DownWalk2.png"
+          stepcount = "10"
+          xscale = "1"
+          xpos = "-8"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/GHNLOG/DownWalk3.png"
+          stepcount = "16"
+          xscale = "1"
+          xpos = "-8"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/GHNLOG/DownWalk4.png"
+          stepcount = "10"
+          xscale = "1"
+          xpos = "-8"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="1"
+              />
+      </inputactions>
+      <animactions>
+        <animaction
+          type="setYVel"
+          frequency="once"
+          stepCount="0"
+          yVel="-1"/>
+      </animactions>
+    </anim>
+    <anim
+      index = "6"
+      name = "left walk"
+      fallback = "2">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/GHNLOG/RightWalk1.png"
+          stepcount = "16"
+          xscale = "-1"
+          xpos = "-6"
+          ypos = "-1">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/GHNLOG/RightWalk2.png"
+          stepcount = "10"
+          xscale = "-1"
+          xpos = "-5"
+          ypos = "-2">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/GHNLOG/RightWalk3.png"
+          stepcount = "16"
+          xscale = "-1"
+          xpos = "-6"
+          ypos = "-1">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/GHNLOG/RightWalk4.png"
+          stepcount = "0"
+          xscale = "-1"
+          xpos = "-23"
+          ypos = "-1">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="2"
+              />
+      </inputactions>
+      <animactions>
+        <animaction
+          type="setXVel"
+          frequency="once"
+          stepCount="0"
+          xVel="-1"/>
+      </animactions>
+    </anim>
+    <anim
+      index = "7"
+      name = "right walk"
+      fallback = "3">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/GHNLOG/RightWalk1.png"
+          stepcount = "16"
+          xscale = "1"
+          xpos = "-10"
+          ypos = "-1">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/GHNLOG/RightWalk2.png"
+          stepcount = "10"
+          xscale = "1"
+          xpos = "-9"
+          ypos = "-2">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/GHNLOG/RightWalk3.png"
+          stepcount = "16"
+          xscale = "1"
+          xpos = "-10"
+          ypos = "-1">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/GHNLOG/RightWalk4.png"
+          stepcount = "10"
+          xscale = "1"
+          xpos = "-9"
+          ypos = "-2">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="3"
+              />
+      </inputactions>
+      <animactions>
+        <animaction
+          type="setXVel"
+          frequency="once"
+          stepCount="0"
+          xVel="1"/>
+      </animactions>
+    </anim>
+    <anim
+      index = "8"
+      name = "up walk"
+      fallback = "4">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/GHNLOG/UpWalk1.png"
+          stepcount = "16"
+          xscale = "1"
+          xpos = "-7"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/GHNLOG/UpWalk2.png"
+          stepcount = "10"
+          xscale = "1"
+          xpos = "-7"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/GHNLOG/UpWalk3.png"
+          stepcount = "16"
+          xscale = "1"
+          xpos = "-7"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/GHNLOG/UpWalk4.png"
+          stepcount = "10"
+          xscale = "1"
+          xpos = "-7"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+        <inputaction
+          input = "NONE"
+          animset ="4"
+              />
+      </inputactions>
+      <animactions>
+        <animaction
+          type="setYVel"
+          frequency="once"
+          stepCount="0"
+          yVel="1"/>
+      </animactions>
+    </anim>
+    <anim
+      index = "14"
+      name = "land"
+      fallback = "1">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ghn/ghn07_02.png"
+          stepcount = "3"
+          xscale = "1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-9">
+          <animactions>
+            <animaction
+              filename="data/sounds/EB/Battle/bat_03.wav"
+              type="sound"
+              frequency="once"
+              volume="0.2f"
+              stepCount="0"/>
+          </animactions>
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ghn/ghn07_01.png"
+          stepcount = "3"
+          xscale = "1"
+          yscale = "1"
+          xpos = "-50"
+          ypos = "-16">
+        </frame>
+      </frames>
+    </anim>
+  </anims>
+  <palettes>
+    <palette
+      index = "1"
+      name = "Ultimate Gohan"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Default.pal">
+    </palette>
+    <palette
+      index = "2"
+      name = "Super Saiyan"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_SSJ.pal">
+    </palette>
+    <palette
+      index = "3"
+      name = "Training Gear"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Training2.pal">
+    </palette>
+    <palette
+      index = "4"
+      name = "Training Gear (Super Saiyan)"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Training.pal">
+    </palette>
+    <palette
+      index = "5"
+      name = "Super Super Hero (Super Saiyan)"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_SuperSuperHero4.pal">
+    </palette>
+    <palette
+      index = "6"
+      name = "Gohan Beast"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Beast1.pal">
+    </palette>
+    <palette
+      index = "7"
+      name = "The Gold Fighter"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_GoldFighter.pal">
+    </palette>
+    <palette
+      index = "8"
+      name = "Great Saiyaman"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Saiyaman.pal">
+    </palette>
+    <palette
+      index = "8"
+      name = "Saiyaman Costume (No Cape)"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Saiyaman3.pal">
+    </palette>
+    <palette
+      index = "9"
+      name = "Kai"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Kai.pal">
+    </palette>
+  </palettes>
+</character>

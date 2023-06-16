@@ -289,6 +289,7 @@
   <ItemGroup>
     <Xml Include="data\characters\Android18.xml" />
     <Xml Include="data\characters\Gohan.xml" />
+    <Xml Include="data\characters\GohanLOG.xml" />
     <Xml Include="data\characters\Goku.xml" />
   </ItemGroup>
   <ItemGroup>

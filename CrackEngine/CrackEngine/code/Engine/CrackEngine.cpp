@@ -166,7 +166,7 @@ namespace Crack {
         imgui.init(window, textureColorbuffer);
 
         //Sprite Player1("data/images/ghn/ghn00_06.png");
-        player1Manager = new AnimManager((std::string)"data/characters/Gohan.xml", glm::vec3(((1024.f / 2.f) / 2.f) - 120.f, 20.f, 0.f));
+        player1Manager = new AnimManager((std::string)"data/characters/GohanLOG.xml", glm::vec3(((1024.f / 2.f) / 2.f) - 120.f, 20.f, 0.f));
         playerPos = player1Manager->getPosition();
         imgui.addCharacter(player1Manager);
         player2Manager = new AnimManager((std::string)"data/characters/Goku.xml", glm::vec3(((1024.f / 2.f) / 2.f) + 120.f, 20.f, 0.f));
@@ -202,8 +202,10 @@ namespace Crack {
 
 		// load the file music.mp3 with sndfile
         delete music;
-        std::string fileName = AudioPlayer::randomFileFromDirectory("data/sounds/");
-		music = new AudioPlayer(fileName, true, 1.f);
+        std::string fileName = AudioPlayer::randomFileFromDirectory("data/sounds/music/AGHN");
+        imgui.consoleMessages.push_back("Now Playing:");
+        imgui.consoleMessages.push_back(fileName);
+		music = new AudioPlayer(fileName, true, 0.1f);
         music->play();
 		
         // Input manager

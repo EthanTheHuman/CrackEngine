@@ -431,18 +431,25 @@ void ImGuiUI::ShowAnimManagerEditorWindow()
         // TODO: Character image origin is based on top left in imgui, ours is based on bottom left, do some conversion
 
         ImGui::Text("Left-click and drag to add lines,\nRight-click to undo");
+		// TODO: Perfect if xscale = -1, but if xscale = 1 then it is too far to the right
         currentFrame->xPos = (int)spriteXPos;
         currentFrame->yPos = (int)spriteYPos;
         // Get the sprite in a position relative to the origin
         ImVec2 characterMin = ImVec2(
-            origin_pos.x + ((currentFrame->xPos + currentFrame->spriteWidth) * canvasScale),
+            origin_pos.x + ((currentFrame->xPos) * canvasScale),
             //origin_pos.y - ((currentFrame->yPos * currentFrame->yScale) * canvasScale) - ((currentFrame->spriteHeight * currentFrame->yScale) * canvasScale)
 			// Bring the origin to the bottom, and then move it
             origin_pos.y - ((currentFrame->spriteHeight * currentFrame->yScale) * canvasScale) - ((currentFrame->yPos * currentFrame->yScale) * canvasScale)
         );
         ImVec2 characterMax = characterMin;
-		characterMax.x += ((currentFrame->spriteWidth * currentFrame->xScale) * canvasScale);
-        //characterMax.y += ((currentFrame->spriteHeight * currentFrame->yScale) * canvasScale);
+        if (currentFrame->xScale < 0)
+        {
+			characterMin.x -= (currentFrame->spriteWidth * currentFrame->xScale) * canvasScale;
+		}
+		else
+		{
+			characterMax.x += (currentFrame->spriteWidth * currentFrame->xScale) * canvasScale;
+        }
 		characterMax.y += ((currentFrame->spriteHeight * canvasScale));
         // The origin is scaled and compared to the origin
         draw_list->AddImage((void*)currentFrame->spriteImage, characterMin, characterMax, ImVec2(0, 0), ImVec2(1, 1), IM_COL32(255, 255, 255, 255));
@@ -504,7 +511,7 @@ void ImGuiUI::ProcessAnimManagerInputs(ImVec2& _originPos, float& _spriteXPos, f
     }
     if (ImGui::IsMouseDragging(2))
     {
-        _spriteXPos -= (ImGui::GetIO().MouseDelta.x / _canvasScale);
+        _spriteXPos += (ImGui::GetIO().MouseDelta.x / _canvasScale);
         _spriteYPos -= (ImGui::GetIO().MouseDelta.y / _canvasScale);
     }
     // If the user zooms with the mouse wheel
