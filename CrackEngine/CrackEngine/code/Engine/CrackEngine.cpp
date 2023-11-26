@@ -10,8 +10,7 @@ namespace Crack {
     double lag = 0.0;
     double deltaTime = 0.0f;
     double FrameStep = (1000.f / (double)config.targetFramestep);
-
-    auto start = std::chrono::steady_clock::now();
+	
     int frames = 0;
     int fps = 0;
 
@@ -63,9 +62,6 @@ namespace Crack {
 #ifdef __APPLE__
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-		// get window icon
-        GLFWimage images[1];
-        images[0].pixels = stbi_load("data/icon.png", &images[0].width, &images[0].height, 0, 4); //rgba channels 
 
         // glfw window creation
         // --------------------
@@ -79,9 +75,6 @@ namespace Crack {
         }
         else
             window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, config.windowName.c_str(), NULL, NULL);
-
-        glfwSetWindowIcon(window, 1, images);
-        stbi_image_free(images[0].pixels);
 
         if (window == NULL)
         {
@@ -106,6 +99,17 @@ namespace Crack {
             std::cout << "Failed to initialize GLAD" << std::endl;
             return -1;
         }
+        // Set clear color to black
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+        // Clear the screen with the set color
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // get window icon
+        GLFWimage images[1];
+        images[0].pixels = stbi_load("data/icon.png", &images[0].width, &images[0].height, 0, 4); //rgba channels 
+        glfwSetWindowIcon(window, 1, images);
+        stbi_image_free(images[0].pixels);
 
         // configure global opengl state
         // -----------------------------
@@ -166,12 +170,14 @@ namespace Crack {
         imgui.init(window, textureColorbuffer);
 
         //Sprite Player1("data/images/ghn/ghn00_06.png");
-        player1Manager = new AnimManager((std::string)"data/characters/GohanLOG.xml", glm::vec3(((1024.f / 2.f) / 2.f) - 120.f, 20.f, 0.f));
+        player1Manager = new AnimManager((std::string)"data/characters/RedPiece.xml", glm::vec3(((1024.f / 2.f) / 2.f) - 120.f, 20.f, 0.f));
         playerPos = player1Manager->getPosition();
         imgui.addCharacter(player1Manager);
-        player2Manager = new AnimManager((std::string)"data/characters/Goku.xml", glm::vec3(((1024.f / 2.f) / 2.f) + 120.f, 20.f, 0.f));
-        player2Manager->setScale(glm::vec3(-1.f, 1.f, 1.f));
+        player2Manager = new AnimManager((std::string)"data/characters/RedPiece.xml", glm::vec3(((1024.f / 2.f) / 2.f) - 120.f + 16.f, 20.f, 0.f));
+        //player2Manager->setScale(glm::vec3(-1.f, 1.f, 1.f));
         imgui.addCharacter(player2Manager);
+        columnsBoard = new ColumnsBoard(&Player1Inputs);
+        columnsBoard->init();
 		// camera.Position = glm::vec3((1024.f / 2.f) - ((float)config.pixelsPerUnit / 2.f), 0.f, 0.f);
         camera.Position = glm::vec3((1024.f / 2.f) / 2.f, 0.f, 0.f);
         //Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
@@ -179,25 +185,25 @@ namespace Crack {
         Shadow->setPosition(glm::vec3(-50, 8, 0));
 
         Sprite SkyBG("data/images/Maps/RedRibbonBase/001.png");
-        SkyBG.setPosition(glm::vec3(0, 0.f, 0.f));
-        SkyBG.setScale(glm::vec3(0.5, 0.5, 1));
+        SkyBG.setPosition(glm::vec3(-640, 0.f, 0.f));
+        SkyBG.setScale(glm::vec3(2, 2, 1));
         stageElements.push_back(SkyBG);
         Sprite PlainsBG("data/images/Maps/RedRibbonBase/002.png");
-        PlainsBG.setPosition(glm::vec3(0, 0.f, 0.f));
-        PlainsBG.setScale(glm::vec3(0.5, 0.5, 1));
+        PlainsBG.setPosition(glm::vec3(-640, 0.f, 0.f));
+        PlainsBG.setScale(glm::vec3(2, 2, 1));
         stageElements.push_back(PlainsBG);
         Sprite GroundBG("data/images/Maps/RedRibbonBase/003.png");
-        GroundBG.setPosition(glm::vec3(0, 0.f, 0.f));
-        GroundBG.setScale(glm::vec3(0.5, 0.5, 1));
+        GroundBG.setPosition(glm::vec3(-640, 0.f, 0.f));
+        GroundBG.setScale(glm::vec3(2, 2, 1));
         stageElements.push_back(GroundBG);
-        /*Sprite ScreenBG("data/images/Maps/DirtDesert/003.png");
+        Sprite ScreenBG("data/images/Maps/DirtDesert/003.png");
         ScreenBG.setPosition(glm::vec3(214, 121, 0.f));
         ScreenBG.setScale(glm::vec3(0.1, -0.1, 1));
         ScreenBG.setImage(textureColorbuffer);
-        stageElements.push_back(ScreenBG);*/
+        stageElements.push_back(ScreenBG);
         Sprite GroundBG2("data/images/Maps/DirtDesert/003.png");
-        GroundBG2.setPosition(glm::vec3(0, 0.f, 0.f));
-        GroundBG2.setScale(glm::vec3(0.5, 0.5, 1));
+        GroundBG2.setPosition(glm::vec3(-640, 0.f, 0.f));
+        GroundBG2.setScale(glm::vec3(2, 2, 1));
         stageElements.push_back(GroundBG2);
 
 		// load the file music.mp3 with sndfile
@@ -254,6 +260,7 @@ namespace Crack {
         // per-frame time logic
         // --------------------
         auto now = std::chrono::steady_clock::now();
+        static auto start = now;
         auto diff = now - start;
         auto end = now + std::chrono::microseconds((int)((1000.f / config.targetFPS) * 1000));
         frames++;
@@ -272,6 +279,8 @@ namespace Crack {
         lag += deltaTime;
         // --------------------
 
+		// wait until the window is fully loaded
+
         // Every actual frame
         while (lag >= FrameStep)
         {
@@ -284,6 +293,7 @@ namespace Crack {
             player1Manager->processInputs(window, Player1Inputs);
             processInput(window);    // Temporary, inputs should be done every frame
             player2Manager->update();
+            columnsBoard->update();
             lag -= FrameStep;
         }
 
@@ -317,6 +327,7 @@ namespace Crack {
         Shadow->render();
         player1Manager->render();
         player2Manager->render();
+        columnsBoard->render();
 
 		// get window size
         int width, height;
@@ -408,7 +419,7 @@ namespace Crack {
 
     bool CrackEngine::GetWindowShouldClose()
     {
-        return glfwWindowShouldClose(window);
+        return glfwWindowShouldClose(window) && glfwGetWindowAttrib(window, GLFW_VISIBLE);
     }
 
     // glfw: whenever the window size changed (by OS or user resize) this callback function executes

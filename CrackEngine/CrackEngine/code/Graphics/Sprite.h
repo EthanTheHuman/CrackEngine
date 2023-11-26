@@ -26,7 +26,7 @@ public:
     glm::vec3& setScale(glm::vec3 _scale);
     glm::vec3& setPosition(glm::vec3 _scale);
     glm::vec3 getPosition();
-    static unsigned int pixelsPerUnit;
+    static unsigned int* pixelsPerUnit;
     unsigned int spriteImage;
     int spriteWidth, spriteHeight;
     ScaleType scaleType = ScaleType::Scale;

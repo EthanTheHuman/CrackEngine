@@ -4,7 +4,7 @@ Sprite::Sprite()
 {
 }
 
-unsigned int Sprite::pixelsPerUnit = Config::pixelsPerUnit;
+unsigned int* Sprite::pixelsPerUnit = &Config::pixelsPerUnit;
 
 Sprite::Sprite(char const* _filename)
 {
@@ -184,13 +184,13 @@ glm::vec3 Sprite::convertedScale(glm::vec3 _scale)
     switch (scaleType)
     {
     case ScaleType::Fill:
-        newScale.x = (float)(_scale.x) / (float)pixelsPerUnit;
-        newScale.y = (float)(_scale.y) / (float)pixelsPerUnit;
+        newScale.x = (float)(_scale.x) / (float)*pixelsPerUnit;
+        newScale.y = (float)(_scale.y) / (float)*pixelsPerUnit;
         newScale.z = (float)_scale.z;
         break;
     case ScaleType::Scale:
-        newScale.x = (float)(_scale.x * spriteWidth) / (float)pixelsPerUnit;
-        newScale.y = (float)(_scale.y * spriteHeight) / (float)pixelsPerUnit;
+        newScale.x = (float)(_scale.x * spriteWidth) / (float)*pixelsPerUnit;
+        newScale.y = (float)(_scale.y * spriteHeight) / (float)*pixelsPerUnit;
         newScale.z = (float)_scale.z;
         break;
     case ScaleType::Absolute:
@@ -204,9 +204,9 @@ glm::vec3 Sprite::convertedScale(glm::vec3 _scale)
 glm::vec3 Sprite::convertedPosition(glm::vec3 _pos)
 {
     glm::vec3 newPos;
-    newPos.x = ((float)_pos.x + ((spriteWidth * scale.x) / 2.f)) / (float)pixelsPerUnit;
-    newPos.y = ((float)_pos.y + ((spriteHeight * scale.y) / 2.f)) / (float)pixelsPerUnit;
-    newPos.z = (float)_pos.z / (float)pixelsPerUnit;
+    newPos.x = ((float)_pos.x + ((spriteWidth * scale.x) / 2.f)) / (float)*pixelsPerUnit;
+    newPos.y = ((float)_pos.y + ((spriteHeight * scale.y) / 2.f)) / (float)*pixelsPerUnit;
+    newPos.z = (float)_pos.z / (float)*pixelsPerUnit;
     return newPos;
 }
 

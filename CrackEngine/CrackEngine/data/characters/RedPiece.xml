@@ -1,0 +1,276 @@
+<character
+  characterName="Gohan"
+  paletteTemplate="data/images/ghn/Pal_Template.pal"
+  paletteFile="data/images/ghn/Pal_SSJ.pal">
+  <anims>
+    <anim
+      index = "1"
+      name = "Empty"
+      fallback = "1">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/Columns/Empty.png"
+          stepcount = "-1"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0"/>
+      </frames>
+    </anim>
+    <anim
+      index = "2"
+      name = "Green"
+      fallback = "2">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/Columns/Green.png"
+          stepcount = "-1"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
+    </anim>
+    <anim
+      index = "3"
+      name = "Orange"
+      fallback = "3">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/Columns/Orange.png"
+          stepcount = "-1"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
+    </anim>
+    <anim
+      index = "4"
+      name = "Red"
+      fallback = "4">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/Columns/Red.png"
+          stepcount = "-1"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
+    </anim>
+    <anim
+      index = "5"
+      name = "Blue"
+      fallback = "5">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/Columns/Blue.png"
+          stepcount = "-1"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
+    </anim>
+    <anim
+      index = "6"
+      name = "Purple"
+      fallback = "6">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/Columns/Purple.png"
+          stepcount = "-1"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
+    </anim>
+    <anim
+      index = "7"
+      name = "Teal"
+      fallback = "7">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/Columns/Teal.png"
+          stepcount = "-1"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
+    </anim>
+    <anim
+      index = "3000"
+      name = "Red"
+      fallback = "3">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/ppl_pokemon/panel14.png"
+          stepcount = "8"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="2"
+          filename = "data/images/ppl_pokemon/panel11.png"
+          stepcount = "4"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="3"
+          filename = "data/images/ppl_pokemon/panel12.png"
+          stepcount = "4"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="4"
+          filename = "data/images/ppl_pokemon/panel13.png"
+          stepcount = "8"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="5"
+          filename = "data/images/ppl_pokemon/panel12.png"
+          stepcount = "4"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+        <frame
+          index ="6"
+          filename = "data/images/ppl_pokemon/panel11.png"
+          stepcount = "6"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
+    </anim>
+    <anim
+      index = "101"
+      name = "BG"
+      fallback = "101">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/Columns/bg.png"
+          stepcount = "-1"
+          xscale = "1"
+          xpos = "0"
+          ypos = "0">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
+    </anim>
+    <anim
+      index = "102"
+      name = "FG"
+      fallback = "102">
+      <frames>
+        <frame
+          index ="1"
+          filename = "data/images/Columns/fg.png"
+          stepcount = "-1"
+          xscale = "1"
+          xpos = "-20"
+          ypos = "-20">
+        </frame>
+      </frames>
+      <inputactions>
+      </inputactions>
+    </anim>
+  </anims>
+  <palettes>
+    <palette
+      index = "1"
+      name = "Ultimate Gohan"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Default.pal">
+    </palette>
+    <palette
+      index = "2"
+      name = "Super Saiyan"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_SSJ.pal">
+    </palette>
+    <palette
+      index = "3"
+      name = "Training Gear"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Training2.pal">
+    </palette>
+    <palette
+      index = "4"
+      name = "Training Gear (Super Saiyan)"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Training.pal">
+    </palette>
+    <palette
+      index = "5"
+      name = "Super Super Hero (Super Saiyan)"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_SuperSuperHero4.pal">
+    </palette>
+    <palette
+      index = "6"
+      name = "Gohan Beast"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Beast1.pal">
+    </palette>
+    <palette
+      index = "7"
+      name = "The Gold Fighter"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_GoldFighter.pal">
+    </palette>
+    <palette
+      index = "8"
+      name = "Great Saiyaman"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Saiyaman.pal">
+    </palette>
+    <palette
+      index = "8"
+      name = "Saiyaman Costume (No Cape)"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Saiyaman3.pal">
+    </palette>
+    <palette
+      index = "9"
+      name = "Kai"
+      author = "EthanTheHuman"
+      filename = "data/images/ghn/Pal_Kai.pal">
+    </palette>
+  </palettes>
+</character>

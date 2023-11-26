@@ -26,6 +26,7 @@
 #include "../Graphics/AnimManager.h"
 #include "../Input/InputManager.h"
 #include "../sound/AudioPlayer.h"
+#include "../Gameplay/Columns/ColumnsBoard.h"
 
 namespace Crack {
 
@@ -52,6 +53,7 @@ namespace Crack {
         ImGuiUI imgui;
         AnimManager* player1Manager;
         AnimManager* player2Manager;
+        ColumnsBoard* columnsBoard;
         Sprite* Shadow;
         std::vector<Sprite> stageElements;
 

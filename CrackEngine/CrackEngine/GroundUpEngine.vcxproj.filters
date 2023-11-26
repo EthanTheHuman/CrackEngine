@@ -171,6 +171,12 @@
     <ClCompile Include="code\Engine\CrkBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="code\Gameplay\Columns\ColumnsBoard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Gameplay\Columns\ColumnsActivePiece.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Config.h">
@@ -302,11 +308,19 @@
     <ClInclude Include="code\Engine\CrkBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="code\Gameplay\Columns\ColumnsBoard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Columns\ColumnsActivePiece.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="data\characters\Gohan.xml" />
     <Xml Include="data\characters\Android18.xml" />
     <Xml Include="data\characters\Goku.xml" />
+    <Xml Include="data\characters\GohanLOG.xml" />
+    <Xml Include="data\characters\RedPiece.xml" />
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data\stages\RedRibbonSuperHero.xml">

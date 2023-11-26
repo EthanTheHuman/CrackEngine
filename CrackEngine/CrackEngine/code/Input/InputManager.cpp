@@ -79,8 +79,71 @@ bool InputManager::getButton(eInputs inputkey)
 	return false;
 }
 
-bool InputManager::getButtonDown(eInputs)
+bool InputManager::getButtonDown(eInputs inputkey)
 {
+	sinputFrame currentFrame = inputFrames[inputFrames.size() - 1];
+	if (currentFrame.bActive && currentFrame.frameCount == 1)
+	{
+		switch (inputkey) {
+		case NORTH:
+			return currentFrame.bNorth;
+			break;
+		case SOUTH:
+			return currentFrame.bSouth;
+			break;
+		case EAST:
+			return currentFrame.bEast;
+			break;
+		case WEST:
+			return currentFrame.bWest;
+			break;
+		case NORTHWEST:
+			return currentFrame.bNorth && currentFrame.bWest;
+			break;
+		case NORTHEAST:
+			return currentFrame.bNorth && currentFrame.bEast;
+			break;
+		case SOUTHWEST:
+			return currentFrame.bSouth && currentFrame.bWest;
+			break;
+		case SOUTHEAST:
+			return currentFrame.bSouth && currentFrame.bEast;
+			break;
+		case A:
+			return currentFrame.bA;
+			break;
+		case B:
+			return currentFrame.bB;
+			break;
+		case C:
+			return currentFrame.bC;
+			break;
+		case X:
+			return currentFrame.bX;
+			break;
+		case Y:
+			return currentFrame.bY;
+			break;
+		case Z:
+			return currentFrame.bZ;
+			break;
+		case S:
+			return currentFrame.bS;
+			break;
+		case CONFIRM:
+			return currentFrame.bConfirm;
+			break;
+		case BACK:
+			return currentFrame.bBack;
+			break;
+		case PAUSE:
+			return currentFrame.bPause;
+			break;
+		default:
+			return false;
+			break;
+		};
+	}
 	return false;
 }
 

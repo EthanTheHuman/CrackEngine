@@ -64,7 +64,7 @@ public:
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
     glm::mat4 GetViewMatrix()
     {
-        int pixelRatio = Sprite::pixelsPerUnit;
+        int pixelRatio = *Sprite::pixelsPerUnit;
         glm::vec3 pixelPos = glm::vec3((Position.x / pixelRatio) - 0.5f, Position.y / pixelRatio, Position.z / pixelRatio);
         return glm::lookAt(pixelPos, pixelPos + Front, Up);
     }
@@ -119,7 +119,7 @@ public:
 
     glm::vec3 ConvertPixelsToUnits(glm::vec3 _pixelPos)
     {
-		int pixelRatio = Sprite::pixelsPerUnit;
+		int pixelRatio = *Sprite::pixelsPerUnit;
 		glm::vec3 unitPos = glm::vec3(_pixelPos.x / pixelRatio, _pixelPos.y / pixelRatio, _pixelPos.z / pixelRatio);
 		return unitPos;
     }

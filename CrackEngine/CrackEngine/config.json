@@ -1,7 +1,7 @@
 {
-	"screenWidth": 1536,
-	"screenHeight": 896,
-	"vsync": false,
+	"screenWidth": 1280,
+	"screenHeight": 720,
+	"vsync": true,
 	"fullscreen": false,
 	"resizableWindow": true,
 	"targetFPS": 0

@@ -53,9 +53,9 @@ public:
 	void setyVelocity(float _vel, bool _additive);
 	void setxAcceleration(float _accel, bool _additive);
 	void setyAcceleration(float _accel, bool _additive);
+	void changeAnimation(int _index);
 protected:
 	void parseXml(const char* _filename);
-	void changeAnimation(int _index);
 	void setAcceleration(glm::vec2 _acc);
 	bool checkJumpLand();
 

@@ -152,6 +152,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -213,6 +214,7 @@
     <ClCompile Include="code\Gameplay\Anim Actions\Act_SetYVel.cpp" />
     <ClCompile Include="code\Gameplay\Anim Actions\Act_SetXVel.cpp" />
     <ClCompile Include="code\Gameplay\AnimAction.cpp" />
+    <ClCompile Include="code\Gameplay\Columns\ColumnsActivePiece.cpp" />
     <ClCompile Include="code\Graphics\AnimManager.cpp" />
     <ClCompile Include="code\Graphics\Animation.cpp" />
     <ClCompile Include="code\Config.cpp" />
@@ -231,6 +233,7 @@
     <ClCompile Include="code\Graphics\Palette.cpp" />
     <ClCompile Include="code\sound\SoundManager.cpp" />
     <ClCompile Include="code\Engine\Rectangle.cpp" />
+    <ClCompile Include="code\Gameplay\Columns\ColumnsBoard.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
@@ -243,6 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Gameplay\Anim Actions\Act_PlaySound.h" />
+    <ClInclude Include="code\Gameplay\Columns\ColumnsActivePiece.h" />
     <ClInclude Include="code\sound\AudioPlayer.h" />
     <ClInclude Include="code\Gameplay\Anim Actions\Act_MoveDelta.h" />
     <ClInclude Include="code\Gameplay\Anim Actions\Act_AddYAccel.h" />
@@ -273,6 +277,7 @@
     <ClInclude Include="includes\xml\pugiconfig.hpp" />
     <ClInclude Include="includes\xml\pugixml.hpp" />
     <ClInclude Include="code\Engine\Rectangle.h" />
+    <ClInclude Include="code\Gameplay\Columns\ColumnsBoard.h" />
     <ClInclude Include="Shader_m.h" />
     <ClInclude Include="code\sound\SoundManager.h" />
     <ClInclude Include="Stage.h" />
@@ -291,6 +296,7 @@
     <Xml Include="data\characters\Gohan.xml" />
     <Xml Include="data\characters\GohanLOG.xml" />
     <Xml Include="data\characters\Goku.xml" />
+    <Xml Include="data\characters\RedPiece.xml" />
   </ItemGroup>
   <ItemGroup>
     <Xsd Include="data\stages\RedRibbonSuperHero.xml">

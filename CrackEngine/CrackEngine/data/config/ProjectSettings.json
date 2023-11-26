@@ -1,6 +1,6 @@
 {
-	"windowName": "Crack Engine",
+	"windowName": "Project Labrynth",
 	"targetFramestep": 60,
-	"pixelsPerUnit": 384,
-	"internalHeight": 224
+	"pixelsPerUnit": 1280,
+	"internalHeight": 720
 }
