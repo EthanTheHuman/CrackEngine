@@ -1,5 +1,6 @@
 #pragma once
 #include "../../CrackEngine/code/Graphics/AnimManager.h"
+#include <vector>
 
 class ColumnsActivePiece;
 class InputManager;
@@ -40,7 +41,7 @@ public:
 	AnimManager* background;
 	AnimManager* foreground;
 	GridValue playBoardValues[13][6];
-	GridValue activeBlocks[3];
+	bool playBoardActiveValues[13][6];
 
 	ColumnsBoard();
 	ColumnsBoard(InputManager* _controls);
@@ -49,6 +50,7 @@ public:
 	void init();
 	void initializeBoard();
 	void initializeGraphics();
+	void initializeBag();
 	void render();
 	void updateBlockMovements();
 	void handleCollisions();
@@ -69,6 +71,8 @@ private:
 	float left = -200.f;
 	float bottom = 100.f;
 	int frameCount = 0;
+	int bagIndex = 0;
+	std::vector<GridValue> randomBag;
 
 	void resetPanelSprite(int x, int y);
 	void spawnNewBlocks();

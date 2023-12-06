@@ -1,6 +1,8 @@
 #include "ColumnsBoard.h"
 #include "ColumnsActivePiece.h"
 #include "../../Input/InputManager.h"
+#include <algorithm>
+#include <random>
 
 const int BOARD_WIDTH = 6;
 const int BOARD_HEIGHT = 13;
@@ -78,7 +80,9 @@ void ColumnsBoard::update() {
         case GameState::CLEAR:
             // Handle clearing logic
             if (isClearingFinished()) {
-                transitionTo(GameState::POSTCLEAR);
+                if (isFallingFinished()) {
+                    transitionTo(GameState::POSTCLEAR);
+                }
             }
             break;
         case GameState::POSTCLEAR:
@@ -87,7 +91,8 @@ void ColumnsBoard::update() {
                 if (checkForDamage()) {
                     transitionTo(GameState::DAMAGE);
                 }
-                else {
+                else
+                {
                     transitionTo(GameState::PLACE);
                 }
             }
@@ -101,8 +106,8 @@ void ColumnsBoard::update() {
         case GameState::PLACE:
             // Handle placement logic where the player guides the active piece
             if (isPiecePlaced()) {
-                spawnNewBlocks();
                 transitionTo(GameState::FALLING);
+                spawnNewBlocks();
             }
             break;
         }
@@ -146,6 +151,14 @@ void ColumnsBoard::render() {
 void ColumnsBoard::transitionTo(GameState newState)
 {
     state = newState;
+
+    for (int i = 0; i < BOARD_HEIGHT; i++)
+    {
+        for (int j = 0; j < BOARD_WIDTH; j++)
+        {
+            playBoardActiveValues[i][j] = false;
+        }
+    }
 }
 
 bool ColumnsBoard::isFallingFinished()
@@ -160,6 +173,11 @@ bool ColumnsBoard::isFallingFinished()
             {
                 if (playBoardValues[i - 1][j] == GridValue::EMPTY)
                 {
+                    if (playBoardActiveValues[i][j] == true)
+                    {
+                        playBoardActiveValues[i][j] = false;
+                        playBoardActiveValues[i - 1][j] = true;
+                    }
                     playBoardValues[i - 1][j] = playBoardValues[i][j];
                     playBoardValues[i][j] = GridValue::EMPTY;
                     resetPanelSprite(i, j);
@@ -174,18 +192,41 @@ bool ColumnsBoard::isFallingFinished()
 
 bool ColumnsBoard::canMoveLeft()
 {
-    bool finished = true;
-    // From the bottom, scroll up and move blocks down
+    bool finished = false;
+    // Find if the active blocks are on the left edge
+
+    // Find if the active blocks have anything to the left
+    for (int i = 0; i < BOARD_HEIGHT; i++)
+    {
+        if (playBoardActiveValues[i][0] == true)
+        {
+            return false;
+        }
+        for (int j = 1; j < BOARD_WIDTH; j++)
+        {
+            if (playBoardActiveValues[i][j] == true)
+            {
+                if (playBoardValues[i][j - 1] != GridValue::EMPTY)
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    // move everything left
     for (int i = 0; i < BOARD_HEIGHT; i++)
     {
         for (int j = 1; j < BOARD_WIDTH; j++)
         {
-            if (playBoardValues[i][j] != GridValue::EMPTY)
+            if (playBoardActiveValues[i][j] == true)
             {
                 if (playBoardValues[i][j - 1] == GridValue::EMPTY)
                 {
                     playBoardValues[i][j - 1] = playBoardValues[i][j];
+                    playBoardActiveValues[i][j - 1] = true;
                     playBoardValues[i][j] = GridValue::EMPTY;
+                    playBoardActiveValues[i][j] = false;
                     resetPanelSprite(i, j);
                     resetPanelSprite(i, j - 1);
                     finished = false;
@@ -198,18 +239,38 @@ bool ColumnsBoard::canMoveLeft()
 
 bool ColumnsBoard::canMoveRight()
 {
-    bool finished = true;
-    // From the bottom, scroll up and move blocks down
+    bool finished = false;
+    // Find if the active blocks are on the right edge
+    // Find if the active blocks have anything to the right
+    for (int i = 0; i < BOARD_HEIGHT; i++)
+    {
+        if (playBoardActiveValues[i][BOARD_WIDTH - 1] == true)
+        {
+            return false;
+        }
+        for (int j = 0; j < BOARD_WIDTH - 1; j++)
+        {
+            if (playBoardActiveValues[i][j] == true)
+            {
+                if (playBoardValues[i][j + 1] != GridValue::EMPTY)
+                {
+                    return false;
+                }
+            }
+        }
+    }
     for (int i = 0; i < BOARD_HEIGHT; i++)
     {
         for (int j = 0; j < BOARD_WIDTH - 1; j++)
         {
-            if (playBoardValues[i][j] != GridValue::EMPTY)
+            if (playBoardActiveValues[i][j] == true)
             {
                 if (playBoardValues[i][j + 1] == GridValue::EMPTY)
                 {
                     playBoardValues[i][j + 1] = playBoardValues[i][j];
+                    playBoardActiveValues[i][j + 1] = true;
                     playBoardValues[i][j] = GridValue::EMPTY;
+                    playBoardActiveValues[i][j] = false;
                     resetPanelSprite(i, j);
                     resetPanelSprite(i, j + 1);
                     finished = false;
@@ -319,6 +380,7 @@ bool ColumnsBoard::isPiecePlaced()
 
 void ColumnsBoard::init() {
     // Initial setup
+    initializeBag();
     initializeBoard();
     initializeGraphics();
 }
@@ -332,6 +394,7 @@ void ColumnsBoard::initializeBoard() {
 		{
             playBoardGraphics[i][j] = new AnimManager((std::string)"data/characters/RedPiece.xml", glm::vec3(left + (spriteWidth * j), bottom + (spriteWidth * i), 0.f));
             playBoardValues[i][j] = GridValue::EMPTY;
+            playBoardActiveValues[i][j] = false;
 		}
 	}
     spawnNewBlocks();
@@ -343,6 +406,26 @@ void ColumnsBoard::initializeGraphics() {
     foreground = new AnimManager((std::string)"data/characters/RedPiece.xml", glm::vec3(left, bottom, 0.f));
     foreground->changeAnimation(102);
     // Setup initial graphics state
+}
+
+void ColumnsBoard::initializeBag()
+{
+    // Setup initial bag state
+    randomBag.clear();
+    for (int i = 0; i < 64; i++)
+    {
+        randomBag.push_back(GridValue::GREEN);
+        randomBag.push_back(GridValue::ORANGE);
+        randomBag.push_back(GridValue::RED);
+        randomBag.push_back(GridValue::BLUE);
+        randomBag.push_back(GridValue::PURPLE);
+        randomBag.push_back(GridValue::TEAL);
+	}
+    // randomise the bag
+    // obtain a time-based seed:
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine rng(seed);
+    std::shuffle(std::begin(randomBag), std::end(randomBag), rng);
 }
 
 void ColumnsBoard::resetPanelSprite(int x, int y) {
@@ -383,10 +466,14 @@ void ColumnsBoard::resetPanelSprite(int x, int y) {
 void ColumnsBoard::spawnNewBlocks() {
     // Logic
 	// Spawn new blocks
-	playBoardValues[12][3] = GridValue::GREEN;
-	resetPanelSprite(12, 3);
-	playBoardValues[11][3] = GridValue::GREEN;
-	resetPanelSprite(11, 3);
-	playBoardValues[10][3] = GridValue::GREEN;
-	resetPanelSprite(10, 3);
+    for (int i = 0; i < 3; i++) {
+        if (bagIndex >= randomBag.size())
+        {
+            bagIndex = 0;
+        }
+        playBoardValues[12 - i][3] = randomBag[bagIndex];
+        playBoardActiveValues[12 - i][3] = true;
+        resetPanelSprite(12 - i, 3);
+        bagIndex++;
+    }
 }
