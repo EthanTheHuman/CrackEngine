@@ -8,6 +8,8 @@ const int BOARD_WIDTH = 6;
 const int BOARD_HEIGHT = 13;
 const int FRAME_DROP_RATE = 30;
 const int FRAME_DROP_RATE_DROP = 5;
+const int LOCK_DELAY = 25;
+int lockDelayCount = 0;
 
 ColumnsBoard::ColumnsBoard() {
     state = GameState::FALLING;
@@ -169,7 +171,7 @@ bool ColumnsBoard::isFallingFinished()
     {
         for (int j = 0; j < BOARD_WIDTH; j++)
         {
-            if (playBoardValues[i][j] != GridValue::EMPTY)
+            if (playBoardActiveValues[i][j] == true && playBoardValues[i][j])
             {
                 if (playBoardValues[i - 1][j] == GridValue::EMPTY)
                 {
@@ -183,6 +185,20 @@ bool ColumnsBoard::isFallingFinished()
                     resetPanelSprite(i, j);
                     resetPanelSprite(i - 1, j);
                     finished = false;
+                }
+                else
+                {
+                    else if (playBoardActiveValues[i - 1][j] == false)
+                    {
+                        if (lockDelayCount >= LOCK_DELAY)
+                        {
+                            lockDelayCount = 0;
+                            finished = true;
+                        } else {
+                            lockDelayCount++;
+                            finished = false; 
+                        }   
+                    }
                 }
             }
         }
