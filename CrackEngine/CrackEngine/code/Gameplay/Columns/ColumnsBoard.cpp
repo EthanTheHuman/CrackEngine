@@ -70,20 +70,6 @@ void ColumnsBoard::update() {
             }
             break;
         }
-    }
-    
-    if (frameCount >= FRAME_DROP_RATE) {
-        frameCount = 0;
-        switch (state) {
-
-        case GameState::FALLING:
-        {
-            // Handle falling logic
-            if (isFallingFinished()) {
-                transitionTo(GameState::CLEAR);
-            }
-            break;
-        }
         case GameState::CLEAR:
             // Handle clearing logic
             if (isClearingFinished()) {
@@ -115,6 +101,20 @@ void ColumnsBoard::update() {
                 spawnNewBlocks();
             }
             break;
+    }
+    
+    if (frameCount >= FRAME_DROP_RATE) {
+        frameCount = 0;
+        switch (state) {
+
+        case GameState::FALLING:
+        {
+            // Handle falling logic
+            if (isFallingFinished()) {
+                transitionTo(GameState::CLEAR);
+            }
+            break;
+        }
         }
 	}
 }
