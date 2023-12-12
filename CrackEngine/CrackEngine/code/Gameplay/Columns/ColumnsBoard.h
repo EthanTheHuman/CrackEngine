@@ -60,6 +60,7 @@ public:
 	bool canMoveLeft();
 	bool canMoveRight();
 	bool isClearingFinished();
+	bool isClearFallFinished();
 	bool isPostClearFinished();
 	bool checkForDamage();
 	bool isDamageHandled();

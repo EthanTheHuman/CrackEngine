@@ -6,10 +6,12 @@
 
 const int BOARD_WIDTH = 6;
 const int BOARD_HEIGHT = 13;
-const int FRAME_DROP_RATE = 30;
-const int FRAME_DROP_RATE_DROP = 5;
+const int FRAME_DROP_RATE = 32;
+const int FRAME_DROP_RATE_DROP = 16;
 const int LOCK_DELAY = 25;
 int lockDelayCount = 0;
+const int SPAWN_DELAY = 15;
+int spawnDelayCount = 0;
 
 ColumnsBoard::ColumnsBoard() {
     state = GameState::FALLING;
@@ -62,20 +64,21 @@ void ColumnsBoard::update() {
                 transitionTo(GameState::CLEAR);
                 break;
             }
+            if (controls->getButton(controls->SOUTH) == true)
+            {
+                frameCount += FRAME_DROP_RATE_DROP;
+            }
             break;
         }
     }
     
-    if (frameCount % FRAME_DROP_RATE == 0) {
+    if (frameCount >= FRAME_DROP_RATE) {
+        frameCount = 0;
         switch (state) {
 
         case GameState::FALLING:
         {
             // Handle falling logic
-            if (controls->getButton(controls->SOUTH) == true)
-            {
-                frameCount = FRAME_DROP_RATE - FRAME_DROP_RATE_DROP;
-            }
             if (isFallingFinished()) {
                 transitionTo(GameState::CLEAR);
             }
@@ -84,9 +87,7 @@ void ColumnsBoard::update() {
         case GameState::CLEAR:
             // Handle clearing logic
             if (isClearingFinished()) {
-                if (isFallingFinished()) {
-                    transitionTo(GameState::POSTCLEAR);
-                }
+                transitionTo(GameState::POSTCLEAR);
             }
             break;
         case GameState::POSTCLEAR:
@@ -303,9 +304,14 @@ bool ColumnsBoard::canMoveRight()
 
 bool ColumnsBoard::isClearingFinished()
 {
+    // drop pieces down
+    if (isClearFallFinished() == false)
+    {
+        return false;
+    }
+
     // look for 3 of the same color in any direction
     bool finished = true;
-
     // Scan horizontally
     for (int i = 0; i < 13; i++) {
         for (int j = 0; j < 4; j++) {
@@ -374,12 +380,47 @@ bool ColumnsBoard::isClearingFinished()
             }
         }
     }
+
+    return finished;
+}
+
+bool ColumnsBoard::isClearFallFinished()
+{
+    bool finished = true;
+    // From the bottom, scroll up and move blocks down
+    for (int i = 1; i < BOARD_HEIGHT; i++)
+    {
+        for (int j = 0; j < BOARD_WIDTH; j++)
+        {
+            if (playBoardValues[i][j] != GridValue::EMPTY)
+            {
+                lockDelayCount = 0;
+                if (playBoardValues[i - 1][j] == GridValue::EMPTY)
+                {
+                    playBoardValues[i - 1][j] = playBoardValues[i][j];
+                    playBoardValues[i][j] = GridValue::EMPTY;
+                    resetPanelSprite(i, j);
+                    resetPanelSprite(i - 1, j);
+                    finished = false;
+                }
+            }
+        }
+    }
     return finished;
 }
 
 bool ColumnsBoard::isPostClearFinished()
 {
-    return true;
+    if (spawnDelayCount < SPAWN_DELAY)
+    {
+        spawnDelayCount++;
+        return false;
+    }
+    else
+    {
+        spawnDelayCount = 0;
+        return true;
+    }
 }
 
 bool ColumnsBoard::checkForDamage()
