@@ -49,11 +49,13 @@ void ColumnsBoard::update() {
                 if (canMoveRight())
                 {
                     frameCount = 0;
+                    lockDelayCount = LOCK_DELAY;
                 }
                 // move right
             }
             if (controls->getButtonDown(controls->NORTH) == true)
             {
+                lockDelayCount = LOCK_DELAY;
                 while (!isFallingFinished()) {
                     // do nothing
                 }
@@ -171,8 +173,9 @@ bool ColumnsBoard::isFallingFinished()
     {
         for (int j = 0; j < BOARD_WIDTH; j++)
         {
-            if (playBoardActiveValues[i][j] == true && playBoardValues[i][j])
+            if (playBoardActiveValues[i][j] == true)
             {
+                lockDelayCount = 0;
                 if (playBoardValues[i - 1][j] == GridValue::EMPTY)
                 {
                     if (playBoardActiveValues[i][j] == true)
