@@ -38,10 +38,12 @@ void ColumnsBoard::update() {
     switch (state) {
     case GameState::FALLING:
         {
+            bool input = false;
             if (controls->getButtonDown(controls->WEST) == true)
             {
                 if (canMoveLeft())
                 {
+                    input = true;
                     frameCount = 0;
                 }
                 // move left
@@ -50,6 +52,7 @@ void ColumnsBoard::update() {
             {
                 if (canMoveRight())
                 {
+                    input = true;
                     frameCount = 0;
                     lockDelayCount = LOCK_DELAY;
                 }
@@ -58,7 +61,9 @@ void ColumnsBoard::update() {
             if (controls->getButtonDown(controls->NORTH) == true)
             {
                 lockDelayCount = LOCK_DELAY;
+                input = true;
                 while (!isFallingFinished()) {
+                    frameCount = FRAME_DROP_RATE;
                     // do nothing
                 }
                 transitionTo(GameState::CLEAR);
@@ -67,6 +72,13 @@ void ColumnsBoard::update() {
             if (controls->getButton(controls->SOUTH) == true)
             {
                 frameCount += FRAME_DROP_RATE_DROP;
+            }
+            if (input == false)
+            {
+                // Handle falling logic
+                if (isFallingFinished()) {
+                    transitionTo(GameState::CLEAR);
+                }
             }
             break;
         }
@@ -102,21 +114,6 @@ void ColumnsBoard::update() {
             }
             break;
     }
-    
-    if (frameCount >= FRAME_DROP_RATE) {
-        frameCount = 0;
-        switch (state) {
-
-        case GameState::FALLING:
-        {
-            // Handle falling logic
-            if (isFallingFinished()) {
-                transitionTo(GameState::CLEAR);
-            }
-            break;
-        }
-        }
-	}
 }
 
 void ColumnsBoard::updateBlockMovements() {
@@ -176,35 +173,38 @@ bool ColumnsBoard::isFallingFinished()
         {
             if (playBoardActiveValues[i][j] == true)
             {
-                lockDelayCount = 0;
                 if (playBoardValues[i - 1][j] == GridValue::EMPTY)
                 {
-                    if (playBoardActiveValues[i][j] == true)
+                    if (frameCount >= FRAME_DROP_RATE)
                     {
-                        playBoardActiveValues[i][j] = false;
-                        playBoardActiveValues[i - 1][j] = true;
+                        if (playBoardActiveValues[i][j] == true)
+                        {
+                            playBoardActiveValues[i][j] = false;
+                            playBoardActiveValues[i - 1][j] = true;
+                        }
+                        playBoardValues[i - 1][j] = playBoardValues[i][j];
+                        playBoardValues[i][j] = GridValue::EMPTY;
+                        resetPanelSprite(i, j);
+                        resetPanelSprite(i - 1, j);
                     }
-                    playBoardValues[i - 1][j] = playBoardValues[i][j];
-                    playBoardValues[i][j] = GridValue::EMPTY;
-                    resetPanelSprite(i, j);
-                    resetPanelSprite(i - 1, j);
                     finished = false;
                 }
-                else
-                {
-                    else if (playBoardActiveValues[i - 1][j] == false)
-                    {
-                        if (lockDelayCount >= LOCK_DELAY)
-                        {
-                            lockDelayCount = 0;
-                            finished = true;
-                        } else {
-                            lockDelayCount++;
-                            finished = false; 
-                        }   
-                    }
-                }
             }
+        }
+    }if (frameCount >= FRAME_DROP_RATE)
+    {
+        frameCount = 0;
+    }
+    if (finished == true)
+    {
+        if (lockDelayCount >= LOCK_DELAY)
+        {
+            finished = true;
+            lockDelayCount = 0;
+        }
+        else {
+            finished = false;
+            lockDelayCount++;
         }
     }
     return finished;
