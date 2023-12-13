@@ -183,7 +183,7 @@
       <frames>
         <frame
           index ="1"
-          filename = "data/images/Columns/bg.png"
+          filename = "data/images/Columns/bg2.png"
           stepcount = "-1"
           xscale = "1"
           xpos = "0"
@@ -200,7 +200,7 @@
       <frames>
         <frame
           index ="1"
-          filename = "data/images/Columns/fg.png"
+          filename = "data/images/Columns/fg2.png"
           stepcount = "-1"
           xscale = "1"
           xpos = "-20"
@@ -217,60 +217,6 @@
       name = "Ultimate Gohan"
       author = "EthanTheHuman"
       filename = "data/images/ghn/Pal_Default.pal">
-    </palette>
-    <palette
-      index = "2"
-      name = "Super Saiyan"
-      author = "EthanTheHuman"
-      filename = "data/images/ghn/Pal_SSJ.pal">
-    </palette>
-    <palette
-      index = "3"
-      name = "Training Gear"
-      author = "EthanTheHuman"
-      filename = "data/images/ghn/Pal_Training2.pal">
-    </palette>
-    <palette
-      index = "4"
-      name = "Training Gear (Super Saiyan)"
-      author = "EthanTheHuman"
-      filename = "data/images/ghn/Pal_Training.pal">
-    </palette>
-    <palette
-      index = "5"
-      name = "Super Super Hero (Super Saiyan)"
-      author = "EthanTheHuman"
-      filename = "data/images/ghn/Pal_SuperSuperHero4.pal">
-    </palette>
-    <palette
-      index = "6"
-      name = "Gohan Beast"
-      author = "EthanTheHuman"
-      filename = "data/images/ghn/Pal_Beast1.pal">
-    </palette>
-    <palette
-      index = "7"
-      name = "The Gold Fighter"
-      author = "EthanTheHuman"
-      filename = "data/images/ghn/Pal_GoldFighter.pal">
-    </palette>
-    <palette
-      index = "8"
-      name = "Great Saiyaman"
-      author = "EthanTheHuman"
-      filename = "data/images/ghn/Pal_Saiyaman.pal">
-    </palette>
-    <palette
-      index = "8"
-      name = "Saiyaman Costume (No Cape)"
-      author = "EthanTheHuman"
-      filename = "data/images/ghn/Pal_Saiyaman3.pal">
-    </palette>
-    <palette
-      index = "9"
-      name = "Kai"
-      author = "EthanTheHuman"
-      filename = "data/images/ghn/Pal_Kai.pal">
     </palette>
   </palettes>
 </character>
