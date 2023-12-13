@@ -186,6 +186,7 @@ bool ColumnsBoard::isFallingFinished()
                         playBoardValues[i][j] = GridValue::EMPTY;
                         resetPanelSprite(i, j);
                         resetPanelSprite(i - 1, j);
+                        lockDelayCount = 0;
                     }
                     finished = false;
                 }
