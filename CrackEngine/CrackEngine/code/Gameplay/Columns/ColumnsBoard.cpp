@@ -6,8 +6,8 @@
 
 const int BOARD_WIDTH = 6;
 const int BOARD_HEIGHT = 13;
-const int FRAME_DROP_RATE = 32;
-const int FRAME_DROP_RATE_DROP = 16;
+const int FRAME_DROP_RATE = 76;
+const int FRAME_DROP_RATE_DROP = 52;
 const int LOCK_DELAY = 25;
 int lockDelayCount = 0;
 const int SPAWN_DELAY = 15;
