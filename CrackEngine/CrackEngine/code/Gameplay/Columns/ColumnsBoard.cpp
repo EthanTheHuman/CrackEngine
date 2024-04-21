@@ -39,6 +39,16 @@ void ColumnsBoard::update() {
     case GameState::FALLING:
         {
             bool input = false;
+            if (controls->getButtonDown(controls->X) == true)
+            {
+                rotateDown();
+                // move left
+            }
+            if (controls->getButtonDown(controls->Y) == true)
+            {
+                rotateUp();
+                // move left
+            }
             if (controls->getButtonDown(controls->WEST) == true)
             {
                 if (canMoveLeft())
@@ -439,6 +449,80 @@ bool ColumnsBoard::isPiecePlaced()
     return true;
 }
 
+bool ColumnsBoard::rotateDown()
+{
+    glm::vec3 top = glm::vec3(0.f, 0.f, 0.f);
+    glm::vec3 middle = glm::vec3(0.f, 0.f, 0.f);
+    glm::vec3 bottom = glm::vec3(0.f, 0.f, 0.f);
+
+    for (int y = 0; y < BOARD_HEIGHT; y++)
+    {
+        for (int x = 0; x < BOARD_WIDTH - 1; x++)
+        {
+            if (playBoardActiveValues[y][x] == true)    // If the piece is true
+            {
+                if (bottom.z == 0.f)
+				{
+					bottom = glm::vec3(x, y, 1);
+				}
+                else if (middle.z == 0.f)
+                {
+                    middle = glm::vec3(x, y, 1);
+                }
+                else
+                {
+                    top = glm::vec3(x, y, 1);
+                }
+            }
+        }
+    }
+    auto temp = playBoardValues[(int)bottom.y][(int)bottom.x];
+    playBoardValues[(int)bottom.y][(int)bottom.x] = playBoardValues[(int)middle.y][(int)middle.x];
+    playBoardValues[(int)middle.y][(int)middle.x] = playBoardValues[(int)top.y][(int)top.x];
+    playBoardValues[(int)top.y][(int)top.x] = temp;
+    resetPanelSprite((int)bottom.y, (int)bottom.x);
+    resetPanelSprite((int)middle.y, (int)middle.x);
+    resetPanelSprite((int)top.y, (int)top.x);
+    return false;
+}
+
+bool ColumnsBoard::rotateUp()
+{
+    glm::vec3 top = glm::vec3(0.f, 0.f, 0.f);
+    glm::vec3 middle = glm::vec3(0.f, 0.f, 0.f);
+    glm::vec3 bottom = glm::vec3(0.f, 0.f, 0.f);
+
+    for (int y = 0; y < BOARD_HEIGHT; y++)
+    {
+        for (int x = 0; x < BOARD_WIDTH - 1; x++)
+        {
+            if (playBoardActiveValues[y][x] == true)    // If the piece is true
+            {
+                if (bottom.z == 0.f)
+                {
+                    bottom = glm::vec3(x, y, 1);
+                }
+                else if (middle.z == 0.f)
+                {
+                    middle = glm::vec3(x, y, 1);
+                }
+                else
+                {
+                    top = glm::vec3(x, y, 1);
+                }
+            }
+        }
+    }
+    auto temp = playBoardValues[(int)top.y][(int)top.x];
+    playBoardValues[(int)top.y][(int)top.x] = playBoardValues[(int)middle.y][(int)middle.x];
+    playBoardValues[(int)middle.y][(int)middle.x] = playBoardValues[(int)bottom.y][(int)bottom.x];
+    playBoardValues[(int)bottom.y][(int)bottom.x] = temp;
+    resetPanelSprite((int)bottom.y, (int)bottom.x);
+    resetPanelSprite((int)middle.y, (int)middle.x);
+    resetPanelSprite((int)top.y, (int)top.x);
+    return false;
+}
+
 void ColumnsBoard::init() {
     // Initial setup
     initializeBag();
@@ -462,9 +546,9 @@ void ColumnsBoard::initializeBoard() {
 }
 
 void ColumnsBoard::initializeGraphics() {
-    background = new AnimManager((std::string)"data/characters/RedPiece.xml", glm::vec3(left, bottom, 0.f));
+    background = new AnimManager((std::string)"data/characters/RedPiece.xml", glm::vec3(left, bottom, -1.f));
     background->changeAnimation(101);
-    foreground = new AnimManager((std::string)"data/characters/RedPiece.xml", glm::vec3(left, bottom, 0.f));
+    foreground = new AnimManager((std::string)"data/characters/RedPiece.xml", glm::vec3(left, bottom, 1.f));
     foreground->changeAnimation(102);
     // Setup initial graphics state
 }

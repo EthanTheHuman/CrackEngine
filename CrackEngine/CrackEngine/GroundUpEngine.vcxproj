@@ -183,6 +183,8 @@
     <None Include="data\shaders\shad_flat_color.vs" />
     <None Include="data\shaders\shad_flat_texture.fs" />
     <None Include="data\shaders\shad_flat_texture.vs" />
+    <None Include="data\shaders\shad_Legends.fs" />
+    <None Include="data\shaders\shad_Legends.vs" />
     <None Include="data\shaders\shad_light_cube.fs" />
     <None Include="data\shaders\shad_light_cube.vs" />
     <None Include="data\shaders\shad_materials.fs" />
@@ -234,6 +236,7 @@
     <ClCompile Include="code\sound\SoundManager.cpp" />
     <ClCompile Include="code\Engine\Rectangle.cpp" />
     <ClCompile Include="code\Gameplay\Columns\ColumnsBoard.cpp" />
+    <ClCompile Include="code\Graphics\ModelImport.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
@@ -278,6 +281,7 @@
     <ClInclude Include="includes\xml\pugixml.hpp" />
     <ClInclude Include="code\Engine\Rectangle.h" />
     <ClInclude Include="code\Gameplay\Columns\ColumnsBoard.h" />
+    <ClInclude Include="code\Graphics\ModelImport.h" />
     <ClInclude Include="Shader_m.h" />
     <ClInclude Include="code\sound\SoundManager.h" />
     <ClInclude Include="Stage.h" />

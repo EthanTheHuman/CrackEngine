@@ -55,6 +55,8 @@
     <None Include="data\shaders\shad_renderbackground.vs" />
     <None Include="portaudio_x64.dll" />
     <None Include="sndfile.dll" />
+    <None Include="data\shaders\shad_Legends.vs" />
+    <None Include="data\shaders\shad_Legends.fs" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Config.cpp">
@@ -175,6 +177,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\Gameplay\Columns\ColumnsActivePiece.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Graphics\ModelImport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -312,6 +317,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\Gameplay\Columns\ColumnsActivePiece.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Graphics\ModelImport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

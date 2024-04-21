@@ -16,6 +16,7 @@
 #include "../../Shader_m.h"
 #include "../Graphics/Camera.h"
 #include "../Graphics/Sprite.h"
+#include "../Graphics/ModelImport.h"
 #include "../Graphics/Model.h"
 
 #include "../Log.h"
@@ -55,6 +56,7 @@ namespace Crack {
         AnimManager* player2Manager;
         ColumnsBoard* columnsBoard;
         Sprite* Shadow;
+        ModelImport* gokuModel;
         std::vector<Sprite> stageElements;
 
         unsigned int SCR_WIDTH = 1536;
