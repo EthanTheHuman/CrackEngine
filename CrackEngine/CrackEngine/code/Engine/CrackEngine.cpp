@@ -113,9 +113,14 @@ namespace Crack {
 
         // configure global opengl state
         // -----------------------------
-        //glEnable(GL_DEPTH_TEST);
-        //glDepthFunc(GL_LEQUAL);
+        glFrontFace(GL_CCW); // Set counterclockwise winding order as front-facing
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
+        glfwWindowHint(GLFW_DEPTH_BITS, 24); // 24-bit depth buffer
+        glDepthRange(0.0, 1.0); // Default depth range
+        glCullFace(GL_BACK); // Cull back faces
         glEnable(GL_BLEND);
+        glEnable(GL_CULL_FACE);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // Create framebuffer for game view
@@ -183,26 +188,29 @@ namespace Crack {
         //Player2.setPosition(glm::vec3((Sprite::pixelsPerUnit - 20), 20.f, 0.f));
         Shadow = new Sprite("data/images/Shadow.png");
         Shadow->setPosition(glm::vec3(-50, 8, 0));
+        gokuModel = new ModelImport("data/models/goku.fbx", "data/models/goku2.png", "data/models/goku3.png");
+        gokuModel->setPosition(glm::vec3(2, 0.25, 2));
+        gokuModel->setScale(glm::vec3(0.3, 0.3, 0.3));
 
         Sprite SkyBG("data/images/Maps/RedRibbonBase/001.png");
-        SkyBG.setPosition(glm::vec3(-640, 0.f, 0.f));
+        SkyBG.setPosition(glm::vec3(-640, 0.f, -100.f));
         SkyBG.setScale(glm::vec3(2, 2, 1));
         stageElements.push_back(SkyBG);
         Sprite PlainsBG("data/images/Maps/RedRibbonBase/002.png");
-        PlainsBG.setPosition(glm::vec3(-640, 0.f, 0.f));
+        PlainsBG.setPosition(glm::vec3(-640, 0.f, -99.f));
         PlainsBG.setScale(glm::vec3(2, 2, 1));
         stageElements.push_back(PlainsBG);
         Sprite GroundBG("data/images/Maps/RedRibbonBase/003.png");
-        GroundBG.setPosition(glm::vec3(-640, 0.f, 0.f));
+        GroundBG.setPosition(glm::vec3(-640, 0.f, -98.f));
         GroundBG.setScale(glm::vec3(2, 2, 1));
         stageElements.push_back(GroundBG);
         Sprite ScreenBG("data/images/Maps/DirtDesert/003.png");
-        ScreenBG.setPosition(glm::vec3(214, 121, 0.f));
+        ScreenBG.setPosition(glm::vec3(214, 121, -97.f));
         ScreenBG.setScale(glm::vec3(0.1, -0.1, 1));
         ScreenBG.setImage(textureColorbuffer);
         stageElements.push_back(ScreenBG);
         Sprite GroundBG2("data/images/Maps/DirtDesert/003.png");
-        GroundBG2.setPosition(glm::vec3(-640, 0.f, 0.f));
+        GroundBG2.setPosition(glm::vec3(-640, 0.f, -96.f));
         GroundBG2.setScale(glm::vec3(2, 2, 1));
         stageElements.push_back(GroundBG2);
 
@@ -306,6 +314,8 @@ namespace Crack {
         glViewport(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
         glClearColor(0.f, 0.f, 0.f, 1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glClear(GL_DEPTH_BUFFER_BIT);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         Model::cameraPos = camera.Position;
@@ -328,6 +338,7 @@ namespace Crack {
         player1Manager->render();
         player2Manager->render();
         columnsBoard->render();
+        gokuModel->render();
 
 		// get window size
         int width, height;
@@ -510,7 +521,7 @@ namespace Crack {
         {
 			bF2Pressed = false;
         }
-        /*if (Player1Inputs.getButton(InputManager::eInputs::X))
+       /* if (Player1Inputs.getButton(InputManager::eInputs::X))
         {
             camera.ProcessKeyboard(LEFT);
         }

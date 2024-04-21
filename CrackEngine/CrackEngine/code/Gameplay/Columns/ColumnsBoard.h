@@ -65,6 +65,8 @@ public:
 	bool checkForDamage();
 	bool isDamageHandled();
 	bool isPiecePlaced();
+	bool rotateDown();
+	bool rotateUp();
 private:
 	GameState state;
 	InputManager* controls;
