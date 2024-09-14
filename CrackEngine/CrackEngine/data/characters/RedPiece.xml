@@ -34,6 +34,71 @@
       <inputactions>
       </inputactions>
     </anim>
+	  <anim
+ index = "20"
+ name = "GreenFlash"
+ fallback = "2">
+		  <frames>
+			  <frame
+				index ="1"
+				filename = "data/images/Columns/GreenFlash1.png"
+				stepcount = "3"
+				xscale = "1"
+				xpos = "0"
+				ypos = "0">
+			  </frame>
+			  <frame
+			  index ="2"
+			  filename = "data/images/Columns/GreenFlash2.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="3"
+			  filename = "data/images/Columns/GreenFlash3.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="4"
+			  filename = "data/images/Columns/GreenFlash4.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="5"
+			  filename = "data/images/Columns/GreenFlash5.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			index ="6"
+			filename = "data/images/Columns/GreenFlash6.png"
+			stepcount = "3"
+			xscale = "1"
+			xpos = "0"
+			ypos = "0">
+			  </frame>
+			  <frame
+			index ="7"
+			filename = "data/images/Columns/GreenFlash7.png"
+			stepcount = "3"
+			xscale = "1"
+			xpos = "0"
+			ypos = "0">
+			  </frame>
+		  </frames>
+		  <inputactions>
+		  </inputactions>
+	  </anim>
     <anim
       index = "3"
       name = "Orange"
@@ -51,6 +116,63 @@
       <inputactions>
       </inputactions>
     </anim>
+	  <anim
+	index = "30"
+	name = "OrangeFlash"
+	fallback = "3">
+		  <frames>
+			  <frame
+				index ="1"
+				filename = "data/images/Columns/OrangeFlash1.png"
+				stepcount = "3"
+				xscale = "1"
+				xpos = "0"
+				ypos = "0">
+			  </frame>
+			  <frame
+			  index ="2"
+			  filename = "data/images/Columns/OrangeFlash2.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="3"
+			  filename = "data/images/Columns/OrangeFlash3.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="4"
+			  filename = "data/images/Columns/OrangeFlash4.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="5"
+			  filename = "data/images/Columns/OrangeFlash5.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="6"
+			  filename = "data/images/Columns/OrangeFlash6.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+		  </frames>
+		  <inputactions>
+		  </inputactions>
+	  </anim>
     <anim
       index = "4"
       name = "Red"
@@ -68,6 +190,63 @@
       <inputactions>
       </inputactions>
     </anim>
+	  <anim
+	index = "40"
+	name = "RedFlash"
+	fallback = "4">
+		  <frames>
+			  <frame
+				index ="1"
+				filename = "data/images/Columns/RedFlash1.png"
+				stepcount = "3"
+				xscale = "1"
+				xpos = "0"
+				ypos = "0">
+			  </frame>
+			  <frame
+			  index ="2"
+			  filename = "data/images/Columns/RedFlash2.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="3"
+			  filename = "data/images/Columns/RedFlash3.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="4"
+			  filename = "data/images/Columns/RedFlash4.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="5"
+			  filename = "data/images/Columns/RedFlash5.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="6"
+			  filename = "data/images/Columns/RedFlash6.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+		  </frames>
+		  <inputactions>
+		  </inputactions>
+	  </anim>
     <anim
       index = "5"
       name = "Blue"
@@ -85,6 +264,63 @@
       <inputactions>
       </inputactions>
     </anim>
+	  <anim
+   index = "50"
+   name = "BlueFlash"
+   fallback = "5">
+		  <frames>
+			  <frame
+				index ="1"
+				filename = "data/images/Columns/BlueFlash1.png"
+				stepcount = "3"
+				xscale = "1"
+				xpos = "0"
+				ypos = "0">
+			  </frame>
+			  <frame
+			  index ="2"
+			  filename = "data/images/Columns/BlueFlash2.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="3"
+			  filename = "data/images/Columns/BlueFlash3.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="4"
+			  filename = "data/images/Columns/BlueFlash4.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="5"
+			  filename = "data/images/Columns/BlueFlash5.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="6"
+			  filename = "data/images/Columns/BlueFlash6.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+		  </frames>
+		  <inputactions>
+		  </inputactions>
+	  </anim>
     <anim
       index = "6"
       name = "Purple"
@@ -102,6 +338,71 @@
       <inputactions>
       </inputactions>
     </anim>
+	  <anim
+ index = "60"
+ name = "PurpleFlash"
+ fallback = "6">
+		  <frames>
+			  <frame
+				index ="1"
+				filename = "data/images/Columns/PurpleFlash1.png"
+				stepcount = "3"
+				xscale = "1"
+				xpos = "0"
+				ypos = "0">
+			  </frame>
+			  <frame
+			  index ="2"
+			  filename = "data/images/Columns/PurpleFlash2.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="3"
+			  filename = "data/images/Columns/PurpleFlash3.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="4"
+			  filename = "data/images/Columns/PurpleFlash4.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="5"
+			  filename = "data/images/Columns/PurpleFlash5.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="6"
+			  filename = "data/images/Columns/PurpleFlash6.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="7"
+			  filename = "data/images/Columns/PurpleFlash7.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+		  </frames>
+		  <inputactions>
+		  </inputactions>
+	  </anim>
     <anim
       index = "7"
       name = "Teal"
@@ -119,6 +420,55 @@
       <inputactions>
       </inputactions>
     </anim>
+	  <anim
+ index = "70"
+ name = "TealFlash"
+ fallback = "7">
+		  <frames>
+			  <frame
+				index ="1"
+				filename = "data/images/Columns/TealFlash1.png"
+				stepcount = "3"
+				xscale = "1"
+				xpos = "0"
+				ypos = "0">
+			  </frame>
+			  <frame
+			  index ="2"
+			  filename = "data/images/Columns/TealFlash2.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="3"
+			  filename = "data/images/Columns/TealFlash3.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="4"
+			  filename = "data/images/Columns/TealFlash4.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+			  <frame
+			  index ="5"
+			  filename = "data/images/Columns/TealFlash5.png"
+			  stepcount = "3"
+			  xscale = "1"
+			  xpos = "0"
+			  ypos = "0">
+			  </frame>
+		  </frames>
+		  <inputactions>
+		  </inputactions>
+	  </anim>
     <anim
       index = "3000"
       name = "Red"
