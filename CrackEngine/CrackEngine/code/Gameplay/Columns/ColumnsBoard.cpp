@@ -12,6 +12,10 @@ const int LOCK_DELAY = 25;
 int lockDelayCount = 0;
 const int SPAWN_DELAY = 15;
 int spawnDelayCount = 0;
+int blocksToChain = 3;
+bool verticalChaining = true;
+bool horizontalChaining = true;
+bool diagonalChaining = true;
 
 ColumnsBoard::ColumnsBoard() {
     state = GameState::FALLING;
@@ -323,74 +327,160 @@ bool ColumnsBoard::isClearingFinished()
 
     // look for 3 of the same color in any direction
     bool finished = true;
+    std::vector<glm::vec2> cellsToClear;
     // Scan horizontally
-    for (int i = 0; i < 13; i++) {
-        for (int j = 0; j < 4; j++) {
-            if (playBoardValues[i][j] != GridValue::EMPTY &&
-                playBoardValues[i][j] == playBoardValues[i][j + 1] &&
-                playBoardValues[i][j] == playBoardValues[i][j + 2])
-            {
-                playBoardValues[i][j] = GridValue::EMPTY;
-                resetPanelSprite(i, j);
-                playBoardValues[i][j + 1] = GridValue::EMPTY;
-                resetPanelSprite(i, j + 1);
-                playBoardValues[i][j + 2] = GridValue::EMPTY;
-                resetPanelSprite(i, j + 2);
-                finished = false;
+    for (int i = 0; i < BOARD_HEIGHT; i++) {
+        for (int j = 0; j < BOARD_WIDTH; j++) {
+            if (playBoardValues[i][j] != GridValue::EMPTY) {
+                if (verticalChaining) { // Vertical chaining
+                    int matchedPieces = 1;
+                    int currentY = i;
+                    int currentX = j;
+                    bool matching = true;
+                    auto colourToMatch = playBoardValues[i][j];
+                    std::vector<glm::vec2> cells;
+                    cells.push_back(glm::vec2(currentX, currentY));
+                    currentY++;
+                    while (matching == true) {
+                        // check the value above if it is the same
+                        if (currentY > BOARD_HEIGHT) {
+                            matching = false;
+                        }
+                        else if (playBoardValues[currentY][currentX] == colourToMatch) {
+                            matching = true;
+                            cells.push_back(glm::vec2(currentX, currentY));
+                            matchedPieces++;
+                            currentY++;
+                        }
+                        else {
+                            matching = false;
+                        }
+                    }
+                    if (matchedPieces >= blocksToChain)
+                    {
+                        // Chain successful! Mark it as ready to delete
+                        cellsToClear.insert(cellsToClear.end(), cells.begin(), cells.end());
+                        cells.clear();
+                    }
+                    matchedPieces = 1;
+                }
+                if (horizontalChaining) { // Horizontal chaining
+                    int matchedPieces = 1;
+                    int currentY = i;
+                    int currentX = j;
+                    bool matching = true;
+                    auto colourToMatch = playBoardValues[i][j];
+                    std::vector<glm::vec2> cells;
+                    cells.push_back(glm::vec2(currentX, currentY));
+                    currentX++;
+                    while (matching == true) {
+                        // check the value above if it is the same
+                        if (currentX > BOARD_WIDTH) {
+                            matching = false;
+                        }
+                        else if (playBoardValues[currentY][currentX] == colourToMatch) {
+                            matching = true;
+                            cells.push_back(glm::vec2(currentX, currentY));
+                            matchedPieces++;
+                            currentX++;
+                        }
+                        else {
+                            matching = false;
+                        }
+                    }
+                    if (matchedPieces >= blocksToChain)
+                    {
+                        // Chain successful! Mark it as ready to delete
+                        cellsToClear.insert(cellsToClear.end(), cells.begin(), cells.end());
+                        cells.clear();
+                    }
+                    matchedPieces = 1;
+                }
+                if (diagonalChaining) { // Forward slash chaining
+                    int matchedPieces = 1;
+                    int currentY = i;
+                    int currentX = j;
+                    bool matching = true;
+                    auto colourToMatch = playBoardValues[i][j];
+                    std::vector<glm::vec2> cells;
+                    cells.push_back(glm::vec2(currentX, currentY));
+                    currentX++;
+                    currentY++;
+                    while (matching == true) {
+                        // check the value above if it is the same
+                        if (currentX > BOARD_WIDTH || currentY > BOARD_HEIGHT) {
+                            matching = false;
+                        }
+                        else if (playBoardValues[currentY][currentX] == colourToMatch) {
+                            matching = true;
+                            cells.push_back(glm::vec2(currentX, currentY));
+                            matchedPieces++;
+                            currentX++;
+                            currentY++;
+                        }
+                        else {
+                            matching = false;
+                        }
+                    }
+                    if (matchedPieces >= blocksToChain)
+                    {
+                        // Chain successful! Mark it as ready to delete
+                        cellsToClear.insert(cellsToClear.end(), cells.begin(), cells.end());
+                        cells.clear();
+                    }
+                    matchedPieces = 1;
+                }
+                if (diagonalChaining) { // Backslash chaining
+                    int matchedPieces = 1;
+                    int currentY = i;
+                    int currentX = j;
+                    bool matching = true;
+                    auto colourToMatch = playBoardValues[i][j];
+                    std::vector<glm::vec2> cells;
+                    cells.push_back(glm::vec2(currentX, currentY));
+                    currentX--;
+                    currentY++;
+                    while (matching == true) {
+                        // check the value above if it is the same
+                        if (currentX < 0 || currentY > BOARD_HEIGHT) {
+                            matching = false;
+                        }
+                        else if (playBoardValues[currentY][currentX] == colourToMatch) {
+                            matching = true;
+                            cells.push_back(glm::vec2(currentX, currentY));
+                            matchedPieces++;
+                            currentX--;
+                            currentY++;
+                        }
+                        else {
+                            matching = false;
+                        }
+                    }
+                    if (matchedPieces >= blocksToChain)
+                    {
+                        // Chain successful! Mark it as ready to delete
+                        cellsToClear.insert(cellsToClear.end(), cells.begin(), cells.end());
+                        cells.clear();
+                    }
+                    matchedPieces = 1;
+                }
             }
         }
     }
 
-    // Scan vertically
-    for (int j = 0; j < 6; j++) {
-        for (int i = 0; i < 11; i++) {
-            if (playBoardValues[i][j] != GridValue::EMPTY &&
-                playBoardValues[i][j] == playBoardValues[i + 1][j] &&
-                playBoardValues[i][j] == playBoardValues[i + 2][j]) {
-                playBoardValues[i][j] = GridValue::EMPTY;
-                resetPanelSprite(i, j);
-                playBoardValues[i + 1][j] = GridValue::EMPTY;
-                resetPanelSprite(i + 1, j);
-                playBoardValues[i + 2][j] = GridValue::EMPTY;
-                resetPanelSprite(i + 2, j);
-                finished = false;
-            }
+    if (cellsToClear.size() > 0) {
+        for (int i = 0; i < cellsToClear.size(); i++) {
+            glm::vec2 newCell = cellsToClear[i];
+            playBoardValues[(int)newCell.y][(int)newCell.x] = GridValue::EMPTY;
+            resetPanelSprite((int)newCell.y, newCell.x);
         }
+        cellsToClear.clear();
+        return false;
+    }
+    else {
+        return true;
     }
 
-    // Scan diagonally (top-left to bottom-right)
-    for (int i = 0; i < 11; i++) {
-        for (int j = 0; j < 4; j++) {
-            if (playBoardValues[i][j] != GridValue::EMPTY &&
-                playBoardValues[i][j] == playBoardValues[i + 1][j + 1] &&
-                playBoardValues[i][j] == playBoardValues[i + 2][j + 2]) {
-                playBoardValues[i][j] = GridValue::EMPTY;
-                resetPanelSprite(i, j);
-                playBoardValues[i + 1][j + 1] = GridValue::EMPTY;
-                resetPanelSprite(i + 1, j + 1);
-                playBoardValues[i + 2][j + 2] = GridValue::EMPTY;
-                resetPanelSprite(i + 2, j + 2);
-                finished = false;
-            }
-        }
-    }
-
-    // Scan diagonally (top-right to bottom-left)
-    for (int i = 0; i < 11; i++) {
-        for (int j = 2; j < 6; j++) {
-            if (playBoardValues[i][j] != GridValue::EMPTY && 
-                playBoardValues[i][j] == playBoardValues[i + 1][j - 1] &&
-                playBoardValues[i][j] == playBoardValues[i + 2][j - 2]) {
-                playBoardValues[i][j] = GridValue::EMPTY;
-                resetPanelSprite(i, j);
-                playBoardValues[i + 1][j - 1] = GridValue::EMPTY;
-                resetPanelSprite(i + 1, j - 1);
-                playBoardValues[i + 2][j - 2] = GridValue::EMPTY;
-                resetPanelSprite(i + 2, j - 2);
-                finished = false;
-            }
-        }
-    }
 
     return finished;
 }
@@ -457,7 +547,7 @@ bool ColumnsBoard::rotateDown()
 
     for (int y = 0; y < BOARD_HEIGHT; y++)
     {
-        for (int x = 0; x < BOARD_WIDTH - 1; x++)
+        for (int x = 0; x < BOARD_WIDTH; x++)
         {
             if (playBoardActiveValues[y][x] == true)    // If the piece is true
             {
@@ -494,7 +584,7 @@ bool ColumnsBoard::rotateUp()
 
     for (int y = 0; y < BOARD_HEIGHT; y++)
     {
-        for (int x = 0; x < BOARD_WIDTH - 1; x++)
+        for (int x = 0; x < BOARD_WIDTH; x++)
         {
             if (playBoardActiveValues[y][x] == true)    // If the piece is true
             {
