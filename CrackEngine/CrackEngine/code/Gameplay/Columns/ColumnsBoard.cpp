@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <random>
 
+// Game constants
 const int BOARD_WIDTH = 6;
 const int BOARD_HEIGHT = 13;
 const int FRAME_DROP_RATE = 76;
@@ -16,6 +17,10 @@ int blocksToChain = 3;
 bool verticalChaining = true;
 bool horizontalChaining = true;
 bool diagonalChaining = true;
+const int AUTO_REPEAT_DELAY = 10;
+const int AUTO_REPEAT_RATE = 5;
+int westHoldFrames = 0;
+int eastHoldFrames = 0;
 
 ColumnsBoard::ColumnsBoard() {
     state = GameState::FALLING;
@@ -53,31 +58,41 @@ void ColumnsBoard::update() {
                 rotateUp();
                 // move left
             }
-            if (controls->getButtonDown(controls->WEST) == true)
-            {
-                if (canMoveLeft())
-                {
-                    input = true;
-                    frameCount = 0;
+            // Handle left movement
+            if (controls->getButton(controls->WEST)) {
+                westHoldFrames++;
+                if (controls->getButtonDown(controls->WEST) || 
+                    (westHoldFrames > ColumnsConfig::getInstance().getAutoRepeatDelay() && 
+                     (westHoldFrames - ColumnsConfig::getInstance().getAutoRepeatDelay()) % ColumnsConfig::getInstance().getAutoRepeatRate() == 0)) {
+                    if (canMoveLeft()) {
+                        input = true;
+                        frameCount = 0;
+                    }
                 }
-                // move left
+            } else {
+                westHoldFrames = 0;
             }
-            if (controls->getButtonDown(controls->EAST) == true)
-            {
-                if (canMoveRight())
-                {
-                    input = true;
-                    frameCount = 0;
-                    lockDelayCount = LOCK_DELAY;
+            // Handle right movement
+            if (controls->getButton(controls->EAST)) {
+                eastHoldFrames++;
+                if (controls->getButtonDown(controls->EAST) || 
+                    (eastHoldFrames > ColumnsConfig::getInstance().getAutoRepeatDelay() && 
+                     (eastHoldFrames - ColumnsConfig::getInstance().getAutoRepeatDelay()) % ColumnsConfig::getInstance().getAutoRepeatRate() == 0)) {
+                    if (canMoveRight()) {
+                        input = true;
+                        frameCount = 0;
+                        lockDelayCount = ColumnsConfig::getInstance().getLockDelay();
+                    }
                 }
-                // move right
+            } else {
+                eastHoldFrames = 0;
             }
             if (controls->getButtonDown(controls->NORTH) == true)
             {
-                lockDelayCount = LOCK_DELAY;
+                lockDelayCount = ColumnsConfig::getInstance().getLockDelay();
                 input = true;
                 while (!isFallingFinished()) {
-                    frameCount = FRAME_DROP_RATE;
+                    frameCount = ColumnsConfig::getInstance().getFrameDropRate();
                     // do nothing
                 }
                 transitionTo(GameState::CLEAR);
@@ -85,7 +100,7 @@ void ColumnsBoard::update() {
             }
             if (controls->getButton(controls->SOUTH) == true)
             {
-                frameCount += FRAME_DROP_RATE_DROP;
+                frameCount += ColumnsConfig::getInstance().getFrameDropRateDrop();
             }
             if (input == false)
             {
@@ -189,7 +204,7 @@ bool ColumnsBoard::isFallingFinished()
             {
                 if (playBoardValues[i - 1][j] == GridValue::EMPTY)
                 {
-                    if (frameCount >= FRAME_DROP_RATE)
+                    if (frameCount >= ColumnsConfig::getInstance().getFrameDropRate())
                     {
                         if (playBoardActiveValues[i][j] == true)
                         {
@@ -206,13 +221,14 @@ bool ColumnsBoard::isFallingFinished()
                 }
             }
         }
-    }if (frameCount >= FRAME_DROP_RATE)
+    }
+    if (frameCount >= ColumnsConfig::getInstance().getFrameDropRate())
     {
         frameCount = 0;
     }
     if (finished == true)
     {
-        if (lockDelayCount >= LOCK_DELAY)
+        if (lockDelayCount >= ColumnsConfig::getInstance().getLockDelay())
         {
             finished = true;
             lockDelayCount = 0;
@@ -332,7 +348,7 @@ bool ColumnsBoard::isClearingFinished()
     for (int i = 0; i < BOARD_HEIGHT; i++) {
         for (int j = 0; j < BOARD_WIDTH; j++) {
             if (playBoardValues[i][j] != GridValue::EMPTY) {
-                if (verticalChaining) { // Vertical chaining
+                if (ColumnsConfig::getInstance().getVerticalChaining()) { // Vertical chaining
                     int matchedPieces = 1;
                     int currentY = i;
                     int currentX = j;
@@ -356,7 +372,7 @@ bool ColumnsBoard::isClearingFinished()
                             matching = false;
                         }
                     }
-                    if (matchedPieces >= blocksToChain)
+                    if (matchedPieces >= ColumnsConfig::getInstance().getBlocksToChain())
                     {
                         // Chain successful! Mark it as ready to delete
                         cellsToClear.insert(cellsToClear.end(), cells.begin(), cells.end());
@@ -364,7 +380,7 @@ bool ColumnsBoard::isClearingFinished()
                     }
                     matchedPieces = 1;
                 }
-                if (horizontalChaining) { // Horizontal chaining
+                if (ColumnsConfig::getInstance().getHorizontalChaining()) { // Horizontal chaining
                     int matchedPieces = 1;
                     int currentY = i;
                     int currentX = j;
@@ -388,7 +404,7 @@ bool ColumnsBoard::isClearingFinished()
                             matching = false;
                         }
                     }
-                    if (matchedPieces >= blocksToChain)
+                    if (matchedPieces >= ColumnsConfig::getInstance().getBlocksToChain())
                     {
                         // Chain successful! Mark it as ready to delete
                         cellsToClear.insert(cellsToClear.end(), cells.begin(), cells.end());
@@ -396,7 +412,7 @@ bool ColumnsBoard::isClearingFinished()
                     }
                     matchedPieces = 1;
                 }
-                if (diagonalChaining) { // Forward slash chaining
+                if (ColumnsConfig::getInstance().getDiagonalChaining()) { // Forward slash chaining
                     int matchedPieces = 1;
                     int currentY = i;
                     int currentX = j;
@@ -422,7 +438,7 @@ bool ColumnsBoard::isClearingFinished()
                             matching = false;
                         }
                     }
-                    if (matchedPieces >= blocksToChain)
+                    if (matchedPieces >= ColumnsConfig::getInstance().getBlocksToChain())
                     {
                         // Chain successful! Mark it as ready to delete
                         cellsToClear.insert(cellsToClear.end(), cells.begin(), cells.end());
@@ -430,7 +446,7 @@ bool ColumnsBoard::isClearingFinished()
                     }
                     matchedPieces = 1;
                 }
-                if (diagonalChaining) { // Backslash chaining
+                if (ColumnsConfig::getInstance().getDiagonalChaining()) { // Backslash chaining
                     int matchedPieces = 1;
                     int currentY = i;
                     int currentX = j;
@@ -456,7 +472,7 @@ bool ColumnsBoard::isClearingFinished()
                             matching = false;
                         }
                     }
-                    if (matchedPieces >= blocksToChain)
+                    if (matchedPieces >= ColumnsConfig::getInstance().getBlocksToChain())
                     {
                         // Chain successful! Mark it as ready to delete
                         cellsToClear.insert(cellsToClear.end(), cells.begin(), cells.end());
@@ -480,9 +496,6 @@ bool ColumnsBoard::isClearingFinished()
     else {
         return true;
     }
-
-
-    return finished;
 }
 
 bool ColumnsBoard::isClearFallFinished()
@@ -512,7 +525,7 @@ bool ColumnsBoard::isClearFallFinished()
 
 bool ColumnsBoard::isPostClearFinished()
 {
-    if (spawnDelayCount < SPAWN_DELAY)
+    if (spawnDelayCount < ColumnsConfig::getInstance().getSpawnDelay())
     {
         spawnDelayCount++;
         return false;
@@ -615,6 +628,7 @@ bool ColumnsBoard::rotateUp()
 
 void ColumnsBoard::init() {
     // Initial setup
+    ColumnsConfig::getInstance().setConfigFile("data/config/columns_config.json");
     initializeBag();
     initializeBoard();
     initializeGraphics();

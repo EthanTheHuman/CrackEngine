@@ -185,6 +185,9 @@
     <ClCompile Include="code\AnimManagerEditorUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="code\Gameplay\Columns\ColumnsConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Config.h">
@@ -326,6 +329,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\AnimManagerEditorUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Gameplay\Columns\ColumnsConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

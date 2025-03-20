@@ -219,6 +219,7 @@
     <ClCompile Include="code\Gameplay\Anim Actions\Act_SetXVel.cpp" />
     <ClCompile Include="code\Gameplay\AnimAction.cpp" />
     <ClCompile Include="code\Gameplay\Columns\ColumnsActivePiece.cpp" />
+    <ClCompile Include="code\Gameplay\Columns\ColumnsConfig.cpp" />
     <ClCompile Include="code\Graphics\AnimManager.cpp" />
     <ClCompile Include="code\Graphics\Animation.cpp" />
     <ClCompile Include="code\Config.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="code\AnimManagerEditorUI.h" />
     <ClInclude Include="code\Gameplay\Anim Actions\Act_PlaySound.h" />
     <ClInclude Include="code\Gameplay\Columns\ColumnsActivePiece.h" />
+    <ClInclude Include="code\Gameplay\Columns\ColumnsConfig.h" />
     <ClInclude Include="code\sound\AudioPlayer.h" />
     <ClInclude Include="code\Gameplay\Anim Actions\Act_MoveDelta.h" />
     <ClInclude Include="code\Gameplay\Anim Actions\Act_AddYAccel.h" />
