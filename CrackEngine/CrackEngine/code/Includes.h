@@ -24,8 +24,6 @@
 #include <iostream>
 #include "Log.h"
 
-#include "ImGuiUI.h"
-
 #include <chrono>
 #include <thread>
 #include "../includes/json.hpp"

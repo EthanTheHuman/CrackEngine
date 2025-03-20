@@ -21,6 +21,12 @@ public:
 	virtual void execute(int _stepCount);
 	virtual void execute(int _stepCount, AnimManager* _manager);
 	std::string type = "";
+	int stepCount = 0;
+	std::string frequency = "always";
+
+	virtual ~AnimAction() = default;
+	virtual void saveToXml(pugi::xml_node& node);
+	virtual void loadFromXml(pugi::xml_node& node);
 protected:
 	virtual void init(pugi::xml_node _xmlData);
 };

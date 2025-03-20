@@ -6,6 +6,10 @@
 #include "../vendor/imgui/imgui.h"
 #include "../vendor/imgui/imgui_impl_glfw.h"
 #include "../vendor/imgui/imgui_impl_opengl3.h"
+#include "Graphics/AnimManager.h"
+#include "Graphics/Frame.h"
+#include "Engine/CrkBox.h"
+#include "AnimManagerEditorUI.h"
 
 class AnimManager;
 class Frame;
@@ -21,35 +25,30 @@ public:
 	void render();
 	void addCharacter(AnimManager* _character);
 
+	// Performance metrics
+	float deltaTime = 0.0f;
+	float fps = 0.0f;
+
 	// Our state
 	bool isPressed = false;
-	bool show_demo_window = false;
-	bool show_fps = false;
+	bool show_demo_window = true;
+	bool show_fps = true;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	const char* glsl_version = "#version 130";
 	unsigned int tex;
 
-	float deltaTime = 0.f;
-	float fps = 0.f;
 	std::vector<std::string> consoleMessages;
 	
 private:
-	std::vector<AnimManager*> characters;
-
-	// Render functions
+	void initStyle();
 	void ProcessToggle();
 	void ToggleMouseCursor();
 	void ShowFPSWindow();
 	void ShowGameView();
 	void ShowCharacterView(AnimManager* _character);
-	void ShowAnimManagerEditorWindow();
 	void ShowConsoleWindow();
 
-	// Animation Manager Editor functions
-	void ProcessAnimManagerInputs(ImVec2& _originPos, float& _spriteXPos, float& _spriteYPos, float& _canvasScale);
-	Frame* RefreshAnimManagerCharacterInfo(AnimManager* _character, int _animIndex, int _frameIndex, float& spriteXPos, float& spriteYPos, ImVector<ImVec2>* _points, CrkBox* _rect);
-	void RefreshAnimManagerKeysLists(std::vector<int>& _animKeys, std::vector<int>& _frameKeys, AnimManager* _character, int _animIndex);
-	std::vector<int> RefreshAnimManagerAnimKeysList(AnimManager* _character);
-	std::vector<int> RefreshAnimManagerFrameKeysList(AnimManager* _character, int _animIndex);
+	std::vector<AnimManager*> characters;
+	AnimManagerEditorUI animManagerEditor;
 };
 

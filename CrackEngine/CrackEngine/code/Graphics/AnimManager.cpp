@@ -1,5 +1,14 @@
 #include "AnimManager.h"
 #include "../Gameplay/Anim Actions/Act_SetXVel.h"
+#include "../Gameplay/Anim Actions/Act_SetYVel.h"
+#include "../Gameplay/Anim Actions/Act_AddXVel.h"
+#include "../Gameplay/Anim Actions/Act_AddYVel.h"
+#include "../Gameplay/Anim Actions/Act_SetXAccel.h"
+#include "../Gameplay/Anim Actions/Act_SetYAccel.h"
+#include "../Gameplay/Anim Actions/Act_AddXAccel.h"
+#include "../Gameplay/Anim Actions/Act_AddYAccel.h"
+#include "../Gameplay/Anim Actions/Act_MoveDelta.h"
+#include "../Gameplay/Anim Actions/Act_PlaySound.h"
 
 glm::vec3& AnimManager::setScale(glm::vec3 _scale)
 {
@@ -7,7 +16,7 @@ glm::vec3& AnimManager::setScale(glm::vec3 _scale)
 	return _scale;
 }
 
-void AnimManager::processInputs(GLFWwindow* window, InputManager _inputs)
+void AnimManager::processInputs(GLFWwindow* window, InputManager& _inputs)
 {
 	std::vector<Frame::InputAction> actions;
 	actions.reserve(currentFrame->inputActions.size() + currentAnim->inputActions.size());
@@ -285,12 +294,12 @@ void AnimManager::processActions()
 AnimManager::AnimManager(Sprite* _sprite, std::string _characterData)
 {
 	sprite = _sprite;
+	dataFilePath = _characterData;  // Store the file path
 
 	std::ifstream configfile(_characterData, std::ios::out | std::ios::app | std::ios::binary);
 	if (configfile.is_open())
 	{
 		// Proceed with output
-
 		parseXml(_characterData.c_str());
 	}
 	else
@@ -305,6 +314,7 @@ AnimManager::AnimManager(std::string _characterData, glm::vec3 _position)
 {
 	sprite = new Sprite("");
 	startPosition = sprite->setPosition(_position);
+	dataFilePath = _characterData;  // Store the file path
 
 	parseXml(_characterData.c_str());
 }
@@ -557,4 +567,303 @@ bool AnimManager::checkJumpLand()
 		return true;
 	}
 	return false;
+}
+
+void AnimManager::saveToXml(const char* filename) const {
+	pugi::xml_document doc;
+	
+	// Create root character node
+	pugi::xml_node character = doc.append_child("character");
+	character.append_attribute("characterName") = characterName.c_str();
+	
+	// Save palette information
+	if (!paletteList.empty()) {
+		if (sprite && sprite->mainPalette.getTemplateFile() != "" && sprite->mainPalette.getPaletteFile() != "") {
+			character.append_attribute("paletteTemplate") = sprite->mainPalette.getTemplateFile().c_str();
+			character.append_attribute("paletteFile") = sprite->mainPalette.getPaletteFile().c_str();
+		}
+		
+		pugi::xml_node palettes = character.append_child("palettes");
+		for (const auto& palette : paletteList) {
+			pugi::xml_node pal = palettes.append_child("palette");
+			// Save palette colors using the palette's save method
+			palette.saveToXml(pal);
+		}
+	}
+	
+	// Save animations
+	pugi::xml_node anims = character.append_child("anims");
+	for (const auto& [index, anim] : animList) {
+		if (index == 0) continue;  // Skip index 0 as it's usually empty/invalid
+		
+		pugi::xml_node animNode = anims.append_child("anim");
+		animNode.append_attribute("index") = index;
+		animNode.append_attribute("name") = anim.name.c_str();
+		animNode.append_attribute("fallback") = anim.fallbackindex;
+		animNode.append_attribute("keepVelocity") = anim.keepVelocity;
+		animNode.append_attribute("keepAcceleration") = anim.keepAcceleration;
+		
+		// Save frames
+		pugi::xml_node frames = animNode.append_child("frames");
+		for (const auto& [frameIndex, frame] : anim.frameList) {
+			if (frameIndex == 0) continue;  // Skip index 0
+			
+			pugi::xml_node frameNode = frames.append_child("frame");
+			frameNode.append_attribute("index") = frame.index;
+			frameNode.append_attribute("filename") = frame.spriteFileName.c_str();
+			frameNode.append_attribute("stepcount") = frame.frameCount;
+			frameNode.append_attribute("xscale") = frame.xScale;
+			frameNode.append_attribute("yscale") = frame.yScale;
+			frameNode.append_attribute("xpos") = frame.xPos;
+			frameNode.append_attribute("ypos") = frame.yPos;
+			if (frame.looping) {
+				frameNode.append_attribute("loop") = frame.looping;
+			}
+			
+			// Save hitboxes
+			if (frame.hitbox) {
+				pugi::xml_node hitboxNode = frameNode.append_child("hitbox");
+				hitboxNode.append_attribute("left") = frame.hitbox->left;
+				hitboxNode.append_attribute("right") = frame.hitbox->right;
+				hitboxNode.append_attribute("up") = frame.hitbox->up;
+				hitboxNode.append_attribute("down") = frame.hitbox->down;
+			}
+			
+			for (const auto& box : frame.hitboxes) {
+				pugi::xml_node hitboxNode = frameNode.append_child("additionalHitbox");
+				hitboxNode.append_attribute("left") = box->left;
+				hitboxNode.append_attribute("right") = box->right;
+				hitboxNode.append_attribute("up") = box->up;
+				hitboxNode.append_attribute("down") = box->down;
+			}
+			
+			// Save frame input actions
+			if (!frame.inputActions.empty()) {
+				pugi::xml_node inputActions = frameNode.append_child("inputactions");
+				for (const auto& action : frame.inputActions) {
+					pugi::xml_node inputAction = inputActions.append_child("inputaction");
+					inputAction.append_attribute("animset") = action.animChangeIndex;
+					
+					// Convert input command enum to string
+					std::string inputCmd;
+					switch (action.inputCommand) {
+						case Frame::InputCommand::FORWARD: inputCmd = "FORWARD"; break;
+						case Frame::InputCommand::BACK: inputCmd = "BACK"; break;
+						case Frame::InputCommand::UP: inputCmd = "UP"; break;
+						case Frame::InputCommand::DOWN: inputCmd = "DOWN"; break;
+						case Frame::InputCommand::UPFORWARD: inputCmd = "UPFORWARD"; break;
+						case Frame::InputCommand::UPBACK: inputCmd = "UPBACK"; break;
+						case Frame::InputCommand::NONE: inputCmd = "NONE"; break;
+						case Frame::InputCommand::ANY: inputCmd = "ANY"; break;
+						case Frame::InputCommand::DOUBLEFORWARD: inputCmd = "DOUBLEFORWARD"; break;
+						case Frame::InputCommand::DOUBLEBACK: inputCmd = "DOUBLEBACK"; break;
+						default: inputCmd = "NONE"; break;
+					}
+					inputAction.append_attribute("input") = inputCmd.c_str();
+					
+					// Save input string if not empty
+					if (!action.inputString.empty()) {
+						inputAction.append_attribute("inputString") = action.inputString.c_str();
+					}
+					
+					// Convert input button enum to string if it's not ANY
+					if (action.inputButton != Frame::InputButton::ANY) {
+						std::string buttonStr;
+						switch (action.inputButton) {
+							case Frame::InputButton::A: buttonStr = "A"; break;
+							case Frame::InputButton::B: buttonStr = "B"; break;
+							case Frame::InputButton::C: buttonStr = "C"; break;
+							case Frame::InputButton::X: buttonStr = "X"; break;
+							case Frame::InputButton::Y: buttonStr = "Y"; break;
+							case Frame::InputButton::Z: buttonStr = "Z"; break;
+							default: break;
+						}
+						if (!buttonStr.empty()) {
+							inputAction.append_attribute("button") = buttonStr.c_str();
+						}
+					}
+				}
+			}
+			
+			// Save frame animation actions
+			if (!frame.animActions.empty()) {
+				pugi::xml_node animActions = frameNode.append_child("animactions");
+				for (const auto& action : frame.animActions) {
+					pugi::xml_node animAction = animActions.append_child("animaction");
+					
+					// Convert type to lowercase for consistency
+					std::string actionType = action->type;
+					std::transform(actionType.begin(), actionType.end(), actionType.begin(), ::tolower);
+					animAction.append_attribute("type") = actionType.c_str();
+					
+					// Add frequency and stepCount for all action types
+					if (auto* baseAction = dynamic_cast<AnimAction*>(action)) {
+						animAction.append_attribute("frequency") = "always";  // Default frequency
+						animAction.append_attribute("stepCount") = 0;        // Default step count
+					}
+					
+					// Add specific attributes based on action type
+					if (auto* setXVel = dynamic_cast<Act_SetXVel*>(action)) {
+						animAction.append_attribute("xVel") = setXVel->getXVel();
+					}
+					else if (auto* setYVel = dynamic_cast<Act_SetYVel*>(action)) {
+						animAction.append_attribute("yVel") = setYVel->getYVel();
+					}
+					else if (auto* addXVel = dynamic_cast<Act_AddXVel*>(action)) {
+						animAction.append_attribute("xVel") = addXVel->getXVel();
+					}
+					else if (auto* addYVel = dynamic_cast<Act_AddYVel*>(action)) {
+						animAction.append_attribute("yVel") = addYVel->getYVel();
+					}
+					else if (auto* setXAccel = dynamic_cast<Act_SetXAccel*>(action)) {
+						animAction.append_attribute("xAccel") = setXAccel->getXAccel();
+					}
+					else if (auto* setYAccel = dynamic_cast<Act_SetYAccel*>(action)) {
+						animAction.append_attribute("yAccel") = setYAccel->getYAccel();
+					}
+					else if (auto* addXAccel = dynamic_cast<Act_AddXAccel*>(action)) {
+						animAction.append_attribute("xAccel") = addXAccel->getXAccel();
+					}
+					else if (auto* addYAccel = dynamic_cast<Act_AddYAccel*>(action)) {
+						animAction.append_attribute("yAccel") = addYAccel->getYAccel();
+					}
+					else if (auto* moveDelta = dynamic_cast<Act_MoveDelta*>(action)) {
+						animAction.append_attribute("xDelta") = moveDelta->getXDelta();
+						animAction.append_attribute("yDelta") = moveDelta->getYDelta();
+					}
+					else if (auto* playSound = dynamic_cast<Act_PlaySound*>(action)) {
+						animAction.append_attribute("filename") = playSound->getFilename().c_str();
+						animAction.append_attribute("volume") = playSound->getVolume();
+					}
+				}
+			}
+		}
+		
+		// Save animation input actions
+		if (!anim.inputActions.empty()) {
+			pugi::xml_node inputActions = animNode.append_child("inputactions");
+			for (const auto& action : anim.inputActions) {
+				pugi::xml_node inputAction = inputActions.append_child("inputaction");
+				inputAction.append_attribute("animset") = action.animChangeIndex;
+				
+				// Convert input command enum to string
+				std::string inputCmd;
+				switch (action.inputCommand) {
+					case Frame::InputCommand::FORWARD: inputCmd = "FORWARD"; break;
+					case Frame::InputCommand::BACK: inputCmd = "BACK"; break;
+					case Frame::InputCommand::UP: inputCmd = "UP"; break;
+					case Frame::InputCommand::DOWN: inputCmd = "DOWN"; break;
+					case Frame::InputCommand::UPFORWARD: inputCmd = "UPFORWARD"; break;
+					case Frame::InputCommand::UPBACK: inputCmd = "UPBACK"; break;
+					case Frame::InputCommand::NONE: inputCmd = "NONE"; break;
+					case Frame::InputCommand::ANY: inputCmd = "ANY"; break;
+					case Frame::InputCommand::DOUBLEFORWARD: inputCmd = "DOUBLEFORWARD"; break;
+					case Frame::InputCommand::DOUBLEBACK: inputCmd = "DOUBLEBACK"; break;
+					default: inputCmd = "NONE"; break;
+				}
+				inputAction.append_attribute("input") = inputCmd.c_str();
+				
+				// Save input string if not empty
+				if (!action.inputString.empty()) {
+					inputAction.append_attribute("inputString") = action.inputString.c_str();
+				}
+				
+				// Convert input button enum to string if it's not ANY
+				if (action.inputButton != Frame::InputButton::ANY) {
+					std::string buttonStr;
+					switch (action.inputButton) {
+						case Frame::InputButton::A: buttonStr = "A"; break;
+						case Frame::InputButton::B: buttonStr = "B"; break;
+						case Frame::InputButton::C: buttonStr = "C"; break;
+						case Frame::InputButton::X: buttonStr = "X"; break;
+						case Frame::InputButton::Y: buttonStr = "Y"; break;
+						case Frame::InputButton::Z: buttonStr = "Z"; break;
+						default: break;
+					}
+					if (!buttonStr.empty()) {
+						inputAction.append_attribute("button") = buttonStr.c_str();
+					}
+				}
+			}
+		}
+		
+		// Save animation actions
+		if (!anim.animActions.empty()) {
+			pugi::xml_node animActions = animNode.append_child("animactions");
+			for (const auto& action : anim.animActions) {
+				pugi::xml_node animAction = animActions.append_child("animaction");
+				
+				// Convert type to lowercase for consistency
+				std::string actionType = action->type;
+				std::transform(actionType.begin(), actionType.end(), actionType.begin(), ::tolower);
+				animAction.append_attribute("type") = actionType.c_str();
+				
+				// Add frequency and stepCount for all action types
+				if (auto* baseAction = dynamic_cast<AnimAction*>(action)) {
+					animAction.append_attribute("frequency") = "always";  // Default frequency
+					animAction.append_attribute("stepCount") = 0;        // Default step count
+				}
+				
+				// Add specific attributes based on action type
+				if (auto* setXVel = dynamic_cast<Act_SetXVel*>(action)) {
+					animAction.append_attribute("xVel") = setXVel->getXVel();
+				}
+				else if (auto* setYVel = dynamic_cast<Act_SetYVel*>(action)) {
+					animAction.append_attribute("yVel") = setYVel->getYVel();
+				}
+				else if (auto* addXVel = dynamic_cast<Act_AddXVel*>(action)) {
+					animAction.append_attribute("xVel") = addXVel->getXVel();
+				}
+				else if (auto* addYVel = dynamic_cast<Act_AddYVel*>(action)) {
+					animAction.append_attribute("yVel") = addYVel->getYVel();
+				}
+				else if (auto* setXAccel = dynamic_cast<Act_SetXAccel*>(action)) {
+					animAction.append_attribute("xAccel") = setXAccel->getXAccel();
+				}
+				else if (auto* setYAccel = dynamic_cast<Act_SetYAccel*>(action)) {
+					animAction.append_attribute("yAccel") = setYAccel->getYAccel();
+				}
+				else if (auto* addXAccel = dynamic_cast<Act_AddXAccel*>(action)) {
+					animAction.append_attribute("xAccel") = addXAccel->getXAccel();
+				}
+				else if (auto* addYAccel = dynamic_cast<Act_AddYAccel*>(action)) {
+					animAction.append_attribute("yAccel") = addYAccel->getYAccel();
+				}
+				else if (auto* moveDelta = dynamic_cast<Act_MoveDelta*>(action)) {
+					animAction.append_attribute("xDelta") = moveDelta->getXDelta();
+					animAction.append_attribute("yDelta") = moveDelta->getYDelta();
+				}
+				else if (auto* playSound = dynamic_cast<Act_PlaySound*>(action)) {
+					animAction.append_attribute("filename") = playSound->getFilename().c_str();
+					animAction.append_attribute("volume") = playSound->getVolume();
+				}
+			}
+		}
+	}
+	
+	// Save the document
+	bool saveSucceeded = doc.save_file(filename);
+	if (!saveSucceeded) {
+		std::cout << "Failed to save character data to " << filename << std::endl;
+	}
+}
+
+bool AnimManager::tryChangeAnimationByString(const std::string& inputString) {
+	// First check current frame's input actions
+	for (const auto& action : currentFrame->inputActions) {
+		if (!action.inputString.empty() && action.inputString == inputString) {
+			changeAnimation(action.animChangeIndex);
+			return true;
+		}
+	}
+
+	// Then check current animation's input actions
+	for (const auto& action : currentAnim->inputActions) {
+		if (!action.inputString.empty() && action.inputString == inputString) {
+			changeAnimation(action.animChangeIndex);
+			return true;
+		}
+	}
+
+	return false;  // No matching input string found
 }

@@ -153,6 +153,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(ProjectDir)vendor</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -205,6 +206,7 @@
     <None Include="sndfile.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="code\AnimManagerEditorUI.cpp" />
     <ClCompile Include="code\Gameplay\Anim Actions\Act_PlaySound.cpp" />
     <ClCompile Include="code\Gameplay\Anim Actions\Act_MoveDelta.cpp" />
     <ClCompile Include="code\Gameplay\Anim Actions\Act_AddYAccel.cpp" />
@@ -248,6 +250,7 @@
     <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="code\AnimManagerEditorUI.h" />
     <ClInclude Include="code\Gameplay\Anim Actions\Act_PlaySound.h" />
     <ClInclude Include="code\Gameplay\Columns\ColumnsActivePiece.h" />
     <ClInclude Include="code\sound\AudioPlayer.h" />

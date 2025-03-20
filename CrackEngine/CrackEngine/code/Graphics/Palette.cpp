@@ -21,6 +21,7 @@ Palette::Palette(pugi::xml_node _data, std::string _baseFileName)
 {
 	paletteName = _data.attribute("name").as_string();
 	paletteAuthor = _data.attribute("author").as_string();
+	paletteIndex = _data.attribute("index").as_int(1); // Default to 1 if not specified
 	init(_data.attribute("filename").as_string(), _baseFileName);
 }
 
@@ -175,4 +176,11 @@ void Palette::init(std::string _fileName, std::string _baseFileName)
 	{
 		std::cout << "Could not load palette file at " + _baseFileName << std::endl;
 	}
+}
+
+void Palette::saveToXml(pugi::xml_node& node) const {
+	node.append_attribute("index") = paletteIndex;
+	node.append_attribute("name") = paletteName.c_str();
+	node.append_attribute("author") = paletteAuthor.c_str();
+	node.append_attribute("filename") = paletteFileName.c_str();
 }

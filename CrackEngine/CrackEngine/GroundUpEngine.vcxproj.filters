@@ -182,6 +182,9 @@
     <ClCompile Include="code\Graphics\ModelImport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="code\AnimManagerEditorUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Config.h">
@@ -320,6 +323,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\Graphics\ModelImport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\AnimManagerEditorUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

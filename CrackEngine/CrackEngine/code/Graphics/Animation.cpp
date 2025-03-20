@@ -35,6 +35,8 @@ Animation::Animation(pugi::xml_node _animData)
 	if (_animData.attribute("fallback").as_int() != NULL) fallbackindex = _animData.attribute("fallback").as_int();
 	if (_animData.attribute("keepVelocity").as_bool() != NULL) keepVelocity = _animData.attribute("keepVelocity").as_bool();
 	if (_animData.attribute("keepAcceleration").as_bool() != NULL) keepAcceleration = _animData.attribute("keepAcceleration").as_bool();
+	if (_animData.attribute("name").as_string() != NULL) name = _animData.attribute("name").as_string();
+	else name = "Animation " + std::to_string(index);  // Default name if none provided
 	inputActions = Frame::readInputActionsFromXML(_animData);
 	animActions = readAnimActionsFromXML(_animData);
 }

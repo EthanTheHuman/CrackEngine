@@ -16,6 +16,7 @@ public:
 	Animation(std::map<int, Frame> _frameList, int _index);
 	~Animation();
 	int index;
+	std::string name;  // Name of the animation
 	std::map<int, Frame> frameList;
 	std::vector<Frame::InputAction> inputActions;
 	std::vector<AnimAction*> animActions;

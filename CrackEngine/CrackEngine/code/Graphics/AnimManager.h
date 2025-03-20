@@ -29,8 +29,11 @@ public:
 	//glm::vec3& setRotation(glm::vec3 _rot) override;
 	//glm::vec3 getScale() override;
 	glm::vec3& setScale(glm::vec3 _scale) override;
-	void processInputs(GLFWwindow* _window, InputManager _inputs);
+	void processInputs(GLFWwindow* _window, InputManager& _inputs);
 	void processActions();
+	void saveToXml(const char* filename) const;
+	const std::string& getDataFilePath() const { return dataFilePath; }
+	bool tryChangeAnimationByString(const std::string& inputString);
 
 	AnimManager(Sprite* _sprite, std::string _characterData);
 	AnimManager(Sprite* _sprite, std::map<Animation, int> _anims);
@@ -62,6 +65,7 @@ protected:
 	glm::vec2 velocity = glm::vec2(0, 0);
 	glm::vec3 startPosition = glm::vec3(0, 0, 0);
 	glm::vec2 acceleration = glm::vec2(0, 0);
+	std::string dataFilePath;  // Store the character's data file path
 
 	int loopIndex = 0;
 };

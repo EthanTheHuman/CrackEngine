@@ -49,6 +49,7 @@ public:
 		int animChangeIndex = 0;
 		Frame::InputCommand inputCommand = Frame::InputCommand::NONE;
 		Frame::InputButton inputButton = Frame::InputButton::ANY;
+		std::string inputString;  // String identifier for this input action
 	};
 
 	Frame(json _frameData);
@@ -70,6 +71,6 @@ public:
 	AnimAction* readAnimActionFromXML(pugi::xml_node _xml);
 	std::vector<CrkBox*> hitboxes;
 	CrkBox* hitbox;
-protected:
 	std::string spriteFileName;
+protected:
 };
