@@ -91,5 +91,6 @@ private:
 
 	void resetPanelSprite(int x, int y);
 	void spawnNewBlocks();
+	bool isActivePieceOnGround();
 };
 
