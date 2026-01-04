@@ -6,6 +6,10 @@
 class ColumnsActivePiece;
 class InputManager;
 
+// Board dimensions
+constexpr int BOARD_WIDTH = 6;
+constexpr int BOARD_HEIGHT = 16; // adjusted height
+
 class ColumnsBoard
 {
 public:
@@ -31,6 +35,7 @@ public:
 		POSTCLEAR,
 		FALLING,
 		DAMAGE,
+		GAMEOVER
 	};
 	/*
 		Start at falling,
@@ -38,11 +43,15 @@ public:
 		If damage, do the fall->clear->postclear again
 		If no damage, can go to fall
 	*/
-	AnimManager* playBoardGraphics[13][6];
+	AnimManager* playBoardGraphics[BOARD_HEIGHT][BOARD_WIDTH];
 	AnimManager* background;
 	AnimManager* foreground;
-	GridValue playBoardValues[13][6];
-	bool playBoardActiveValues[13][6];
+	GridValue playBoardValues[BOARD_HEIGHT][BOARD_WIDTH];
+	bool playBoardActiveValues[BOARD_HEIGHT][BOARD_WIDTH];
+
+	// Preview (2 sets of 3 blocks)
+	AnimManager* previewGraphics[2][3];
+	GridValue previewValues[2][3];
 
 	// Game state
 	GameState state = GameState::FALLING;
@@ -68,6 +77,7 @@ public:
 	void render();
 	void updateBlockMovements();
 	void handleCollisions();
+	void updatePreviewGraphics();
 	void updateGraphics();
 	void transitionTo(GameState newState);
 	bool isFallingFinished();
@@ -76,6 +86,7 @@ public:
 	bool isClearingFinished();
 	bool isClearFallFinished();
 	bool isPostClearFinished();
+	bool checkLostGame();
 	bool checkForDamage();
 	bool isDamageHandled();
 	bool isPiecePlaced();
@@ -89,7 +100,12 @@ private:
 	int bagIndex = 0;
 	std::vector<GridValue> randomBag;
 
+	// Preview layout origin (to the side of the board)
+	float previewLeft = left + (spriteWidth * BOARD_WIDTH) + 20.f; // right side with padding
+	float previewBottom = bottom + (spriteWidth * (BOARD_HEIGHT - 3)); // align vertically with spawn top
+
 	void resetPanelSprite(int x, int y);
+	void resetPreviewSprite(int setIndex, int slotIndex);
 	void spawnNewBlocks();
 	bool isActivePieceOnGround();
 };

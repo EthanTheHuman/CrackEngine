@@ -291,16 +291,44 @@ void AnimManager::processActions()
 	}
 }
 
+// Define static cache
+std::unordered_map<std::string, std::shared_ptr<AnimManager::CachedAnimData>> AnimManager::s_animCache;
+
 AnimManager::AnimManager(Sprite* _sprite, std::string _characterData)
 {
 	sprite = _sprite;
 	dataFilePath = _characterData;  // Store the file path
 
+	// Try cache first
+	auto it = s_animCache.find(_characterData);
+	if (it != s_animCache.end())
+	{
+		animList = it->second->animList;
+		paletteList = it->second->paletteList;
+		characterName = it->second->characterName;
+		// Initialize current anim/frame from cached defaults
+		currentAnim = &animList[it->second->initialAnimIndex];
+		currentFrame = &currentAnim->frameList[it->second->initialFrameIndex];
+		sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
+		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
+		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
+		return;
+	}
+
+	// Fallback: load from file once, then cache
 	std::ifstream configfile(_characterData, std::ios::out | std::ios::app | std::ios::binary);
 	if (configfile.is_open())
 	{
 		// Proceed with output
 		parseXml(_characterData.c_str());
+		// Store in cache
+		auto cached = std::make_shared<CachedAnimData>();
+		cached->animList = animList;
+		cached->paletteList = paletteList;
+		cached->characterName = characterName;
+		cached->initialAnimIndex = currentAnim ? currentAnim->index : 1;
+		cached->initialFrameIndex = currentFrame ? currentFrame->index : 1;
+		s_animCache[_characterData] = cached;
 	}
 	else
 	{
@@ -316,7 +344,30 @@ AnimManager::AnimManager(std::string _characterData, glm::vec3 _position)
 	startPosition = sprite->setPosition(_position);
 	dataFilePath = _characterData;  // Store the file path
 
+	// Try cache
+	auto it = s_animCache.find(_characterData);
+	if (it != s_animCache.end())
+	{
+		animList = it->second->animList;
+		paletteList = it->second->paletteList;
+		characterName = it->second->characterName;
+		currentAnim = &animList[it->second->initialAnimIndex];
+		currentFrame = &currentAnim->frameList[it->second->initialFrameIndex];
+		sprite->setImage(currentFrame->spriteImage, currentFrame->spriteWidth, currentFrame->spriteHeight);
+		sprite->frameScale = glm::vec3(currentFrame->xScale, currentFrame->yScale, 1);
+		sprite->framePos = glm::vec3(currentFrame->xPos, currentFrame->yPos, 0);
+		return;
+	}
+
 	parseXml(_characterData.c_str());
+	// Cache
+	auto cached = std::make_shared<CachedAnimData>();
+	cached->animList = animList;
+	cached->paletteList = paletteList;
+	cached->characterName = characterName;
+	cached->initialAnimIndex = currentAnim ? currentAnim->index : 1;
+	cached->initialFrameIndex = currentFrame ? currentFrame->index : 1;
+	s_animCache[_characterData] = cached;
 }
 
 Palette AnimManager::getPalette() {
@@ -494,7 +545,7 @@ void AnimManager::changeAnimation(int _index)
 	}
 }
 
-void AnimManager::setVelocity(glm::vec2 _vel, bool _additive = false)
+void AnimManager::setVelocity(glm::vec2 _vel, bool _additive)
 {
 	glm::vec2 vel = glm::vec2(0, 0);
 	if (_additive)
@@ -561,7 +612,7 @@ bool AnimManager::checkJumpLand()
 		glm::vec3 floorPos = getPosition();
 		floorPos.y = startPosition.y;
 		setPosition(floorPos);
-		setVelocity(glm::vec2(0, 0));
+		setVelocity(glm::vec2(0, 0), false);
 		setAcceleration(glm::vec2(0, 0));
 		changeAnimation(14);
 		return true;
@@ -684,59 +735,6 @@ void AnimManager::saveToXml(const char* filename) const {
 					}
 				}
 			}
-			
-			// Save frame animation actions
-			if (!frame.animActions.empty()) {
-				pugi::xml_node animActions = frameNode.append_child("animactions");
-				for (const auto& action : frame.animActions) {
-					pugi::xml_node animAction = animActions.append_child("animaction");
-					
-					// Convert type to lowercase for consistency
-					std::string actionType = action->type;
-					std::transform(actionType.begin(), actionType.end(), actionType.begin(), ::tolower);
-					animAction.append_attribute("type") = actionType.c_str();
-					
-					// Add frequency and stepCount for all action types
-					if (auto* baseAction = dynamic_cast<AnimAction*>(action)) {
-						animAction.append_attribute("frequency") = "always";  // Default frequency
-						animAction.append_attribute("stepCount") = 0;        // Default step count
-					}
-					
-					// Add specific attributes based on action type
-					if (auto* setXVel = dynamic_cast<Act_SetXVel*>(action)) {
-						animAction.append_attribute("xVel") = setXVel->getXVel();
-					}
-					else if (auto* setYVel = dynamic_cast<Act_SetYVel*>(action)) {
-						animAction.append_attribute("yVel") = setYVel->getYVel();
-					}
-					else if (auto* addXVel = dynamic_cast<Act_AddXVel*>(action)) {
-						animAction.append_attribute("xVel") = addXVel->getXVel();
-					}
-					else if (auto* addYVel = dynamic_cast<Act_AddYVel*>(action)) {
-						animAction.append_attribute("yVel") = addYVel->getYVel();
-					}
-					else if (auto* setXAccel = dynamic_cast<Act_SetXAccel*>(action)) {
-						animAction.append_attribute("xAccel") = setXAccel->getXAccel();
-					}
-					else if (auto* setYAccel = dynamic_cast<Act_SetYAccel*>(action)) {
-						animAction.append_attribute("yAccel") = setYAccel->getYAccel();
-					}
-					else if (auto* addXAccel = dynamic_cast<Act_AddXAccel*>(action)) {
-						animAction.append_attribute("xAccel") = addXAccel->getXAccel();
-					}
-					else if (auto* addYAccel = dynamic_cast<Act_AddYAccel*>(action)) {
-						animAction.append_attribute("yAccel") = addYAccel->getYAccel();
-					}
-					else if (auto* moveDelta = dynamic_cast<Act_MoveDelta*>(action)) {
-						animAction.append_attribute("xDelta") = moveDelta->getXDelta();
-						animAction.append_attribute("yDelta") = moveDelta->getYDelta();
-					}
-					else if (auto* playSound = dynamic_cast<Act_PlaySound*>(action)) {
-						animAction.append_attribute("filename") = playSound->getFilename().c_str();
-						animAction.append_attribute("volume") = playSound->getVolume();
-					}
-				}
-			}
 		}
 		
 		// Save animation input actions
@@ -783,59 +781,6 @@ void AnimManager::saveToXml(const char* filename) const {
 					if (!buttonStr.empty()) {
 						inputAction.append_attribute("button") = buttonStr.c_str();
 					}
-				}
-			}
-		}
-		
-		// Save animation actions
-		if (!anim.animActions.empty()) {
-			pugi::xml_node animActions = animNode.append_child("animactions");
-			for (const auto& action : anim.animActions) {
-				pugi::xml_node animAction = animActions.append_child("animaction");
-				
-				// Convert type to lowercase for consistency
-				std::string actionType = action->type;
-				std::transform(actionType.begin(), actionType.end(), actionType.begin(), ::tolower);
-				animAction.append_attribute("type") = actionType.c_str();
-				
-				// Add frequency and stepCount for all action types
-				if (auto* baseAction = dynamic_cast<AnimAction*>(action)) {
-					animAction.append_attribute("frequency") = "always";  // Default frequency
-					animAction.append_attribute("stepCount") = 0;        // Default step count
-				}
-				
-				// Add specific attributes based on action type
-				if (auto* setXVel = dynamic_cast<Act_SetXVel*>(action)) {
-					animAction.append_attribute("xVel") = setXVel->getXVel();
-				}
-				else if (auto* setYVel = dynamic_cast<Act_SetYVel*>(action)) {
-					animAction.append_attribute("yVel") = setYVel->getYVel();
-				}
-				else if (auto* addXVel = dynamic_cast<Act_AddXVel*>(action)) {
-					animAction.append_attribute("xVel") = addXVel->getXVel();
-				}
-				else if (auto* addYVel = dynamic_cast<Act_AddYVel*>(action)) {
-					animAction.append_attribute("yVel") = addYVel->getYVel();
-				}
-				else if (auto* setXAccel = dynamic_cast<Act_SetXAccel*>(action)) {
-					animAction.append_attribute("xAccel") = setXAccel->getXAccel();
-				}
-				else if (auto* setYAccel = dynamic_cast<Act_SetYAccel*>(action)) {
-					animAction.append_attribute("yAccel") = setYAccel->getYAccel();
-				}
-				else if (auto* addXAccel = dynamic_cast<Act_AddXAccel*>(action)) {
-					animAction.append_attribute("xAccel") = addXAccel->getXAccel();
-				}
-				else if (auto* addYAccel = dynamic_cast<Act_AddYAccel*>(action)) {
-					animAction.append_attribute("yAccel") = addYAccel->getYAccel();
-				}
-				else if (auto* moveDelta = dynamic_cast<Act_MoveDelta*>(action)) {
-					animAction.append_attribute("xDelta") = moveDelta->getXDelta();
-					animAction.append_attribute("yDelta") = moveDelta->getYDelta();
-				}
-				else if (auto* playSound = dynamic_cast<Act_PlaySound*>(action)) {
-					animAction.append_attribute("filename") = playSound->getFilename().c_str();
-					animAction.append_attribute("volume") = playSound->getVolume();
 				}
 			}
 		}

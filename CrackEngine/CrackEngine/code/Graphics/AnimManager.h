@@ -9,6 +9,8 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <memory>
+#include <unordered_map>
 
 // forward declare AnimAction classes
 class AnimAction;
@@ -68,5 +70,16 @@ protected:
 	std::string dataFilePath;  // Store the character's data file path
 
 	int loopIndex = 0;
+
+	// Cached animation data to avoid re-parsing the same XML many times
+	struct CachedAnimData {
+		std::map<int, Animation> animList;
+		std::vector<Palette> paletteList;
+		std::string characterName;
+		// Optionally store initial frame indices
+		int initialAnimIndex = 1;
+		int initialFrameIndex = 1;
+	};
+	static std::unordered_map<std::string, std::shared_ptr<CachedAnimData>> s_animCache;
 };
 
